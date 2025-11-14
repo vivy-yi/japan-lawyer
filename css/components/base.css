@@ -1,0 +1,94 @@
+/* 基础重置和通用样式 */
+
+/* ==================== 全局样式 ==================== */
+/* 注意：变量系统由 main.css 统一导入，此处无需重复导入 */
+
+/* 全局重置 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    overflow-x: hidden;
+}
+
+/* 基础容器 */
+.container {
+    max-width: var(--responsive-container-max);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+}
+
+/* 通用样式 */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* 选择文本样式 */
+::selection {
+    background: var(--primary-color);
+    color: white;
+}
+
+::-moz-selection {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* 焦点样式 */
+:focus {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gray-300);
+    border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-400);
+}
+
+/* 页面间距控制 */
+.main-content,
+.page-content {
+    margin-top: var(--header-height);
+    min-height: calc(100vh - var(--header-height));
+}

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI财务服务 - 智能财务解决方案 | 日本商务通</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AI财务服务 - 提供智能会计、税务筹划、投资分析、风控管理、财务报表、预算管理等全方位财务科技解决方案。日本商务通助力企业财务数字化转型。">
+    <meta name="keywords" content="AI财务,智能会计,税务筹划,投资分析,风控管理,财务报表,预算管理,日本商务通,财务科技,一站式解决方案">
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AI财务服务 - 智能财务解决方案">
+    <meta property="og:description" content="提供智能会计、税务筹划、投资分析等专业财务服务">
+    <meta property="og:type" content="website">
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/modern-ai-pages.css">
+
+    <style>
+        /* AI财务服务特定样式 */
+        .hero-section {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%);
+            color: white;
+            padding: 120px 0 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: var(--responsive-font-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: var(--responsive-font-xl);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .service-features {
+            background: var(--bg-secondary);
+            padding: var(--responsive-spacing-2xl) 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--responsive-card-gap);
+            margin-top: var(--responsive-spacing-xl);
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: var(--responsive-spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: #7c3aed;
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-md);
+            display: block;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-title {
+            font-size: var(--responsive-font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .process-section {
+            padding: var(--responsive-spacing-2xl) 0;
+            background: white;
+        }
+
+        .process-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--responsive-spacing-xl);
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            width: 2px;
+            height: calc(100% + var(--spacing-md));
+            background: #7c3aed;
+            opacity: 0.3;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--responsive-font-lg);
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: var(--spacing-lg);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: var(--responsive-font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            color: white;
+            padding: var(--responsive-spacing-2xl) 0;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: var(--responsive-font-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta-subtitle {
+            font-size: var(--responsive-font-lg);
+            opacity: 0.9;
+            margin-bottom: var(--responsive-spacing-xl);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta {
+            padding: var(--spacing-md) var(--responsive-spacing-xl);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: var(--responsive-font-base);
+            transition: all var(--transition-base);
+            display: inline-block;
+            min-width: 180px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-cta-primary {
+            background: white;
+            color: #7c3aed;
+        }
+
+        .btn-cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-cta-secondary:hover {
+            background: white;
+            color: #7c3aed;
+            transform: translateY(-2px);
+        }
+
+        .benefits-section {
+            background: var(--bg-tertiary);
+            padding: var(--responsive-spacing-2xl) 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--responsive-card-gap);
+            margin-top: var(--responsive-spacing-xl);
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: var(--spacing-md);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+            color: #7c3aed;
+        }
+
+        .benefit-title {
+            font-size: var(--responsive-font-base);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .benefit-description {
+            color: var(--text-secondary);
+            font-size: var(--responsive-font-sm);
+        }
+
+        /* 模态框样式 */
+        .ai-service-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: var(--radius-xl);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal-content {
+            padding: var(--spacing-lg);
+        }
+
+        .modal-controls {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all var(--transition-base);
+        }
+
+        .btn-primary {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-container {
+            margin: var(--spacing-md) 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: var(--spacing-xs);
+            font-size: var(--responsive-font-sm);
+            color: var(--text-secondary);
+        }
+
+        .processing-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--bg-secondary);
+            border-top: 4px solid #7c3aed;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--spacing-md);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .completion-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            background: #10b981;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto var(--spacing-lg);
+        }
+
+        .reference-number {
+            font-family: monospace;
+            background: var(--bg-secondary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            margin: var(--spacing-sm) 0;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: var(--breakpoint-md)) {
+            .hero-title {
+                font-size: var(--responsive-font-2xl);
+            }
+
+            .hero-subtitle {
+                font-size: var(--responsive-font-lg);
+            }
+
+            .process-step {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .process-step:not(:last-child)::after {
+                display: none;
+            }
+
+            .step-number {
+                margin-right: 0;
+                margin-bottom: var(--spacing-md);
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-cta {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">AI财务服务</h1>
+                <p class="hero-subtitle">智能会计处理、AI税务筹划、投资分析风控，让财务管理更智能、更高效、更精准</p>
+                <div class="hero-cta">
+                    <button class="btn-cta btn-cta-primary" onclick="startService()">开始体验</button>
+                    <button class="btn-cta btn-cta-secondary" onclick="showDemo()">查看演示</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Features Section -->
+    <section class="service-features">
+        <div class="container">
+            <h2 class="capabilities-title">核心功能特色</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧾</div>
+                    <h3 class="feature-title">AI智能会计</h3>
+                    <p class="feature-description">自动记账处理，智能费用分类，发票识别与校验，会计效率提升95%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">AI税务筹划</h3>
+                    <p class="feature-description">智能税务优化，自动申报合规，税务风险预警，节税率提升30%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">AI投资分析</h3>
+                    <p class="feature-description">市场趋势预测，投资组合优化，风险评估模型，收益率提升25%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">AI风控管理</h3>
+                    <p class="feature-description">实时风险监测，欺诈检测系统，信用评估模型，风险控制率99%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">AI财务报表</h3>
+                    <p class="feature-description">自动生成报表，数据可视化分析，智能异常检测，报表准确率99.5%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="feature-title">AI预算管理</h3>
+                    <p class="feature-description">智能预算编制，执行监控预警，成本优化建议，预算准确率90%</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <h2 class="capabilities-title">服务流程</h2>
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">数据集成</h3>
+                        <p class="step-description">连接银行、支付、ERP等系统，实现财务数据自动同步与标准化</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">智能处理</h3>
+                        <p class="step-description">AI自动进行会计核算、税务处理、风险控制等财务处理流程</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">分析洞察</h3>
+                        <p class="step-description">深度分析财务数据，提供商业洞察与决策支持，优化财务策略</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">报告输出</h3>
+                        <p class="step-description">自动生成各类财务报表和管理仪表板，实时展示财务状况</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="capabilities-title">服务优势</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎯</div>
+                    <h3 class="benefit-title">一站式财务解决方案</h3>
+                    <p class="benefit-description">涵盖会计、税务、投资、风控等全方位财务服务</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚡</div>
+                    <h3 class="benefit-title">AI提升财务效率95%</h3>
+                    <p class="benefit-description">自动化处理减少人工操作，大幅提升工作效率</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">💧</div>
+                    <h3 class="benefit-title">实时现金流管理</h3>
+                    <p class="benefit-description">实时监控现金流变化，预警财务风险</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🚨</div>
+                    <h3 class="benefit-title">智能风险预警</h3>
+                    <p class="benefit-description">提前识别财务风险，提供防控建议</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">准备好优化财务管理系统了吗？</h2>
+            <p class="cta-subtitle">立即体验我们的AI财务服务，让智能科技为您的财务管理赋能</p>
+            <div class="cta-buttons">
+                <button class="btn-cta btn-cta-primary" onclick="contactUs()">立即咨询</button>
+                <button class="btn-cta btn-cta-secondary" onclick="learnMore()">了解更多</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // AI财务服务配置
+        window.SERVICE_CONFIG = {
+            name: 'AI财务服务',
+            type: 'finance',
+            tagline: '智能会计处理、AI税务筹划、投资分析风控',
+            description: '提供AI智能会计、税务筹划、投资分析、风控管理等全方位财务科技解决方案',
+            keywords: 'AI财务,智能会计,税务筹划,投资分析',
+            features: [
+                'AI智能会计（自动记账、费用管理）',
+                'AI税务筹划（智能优化、自动申报）',
+                'AI投资分析（市场预测、投资组合优化）',
+                'AI风控管理（风险评估、欺诈检测）',
+                'AI财务报表（自动生成、数据可视化）',
+                'AI预算管理（智能编制、执行监控）'
+            ],
+            processSteps: [
+                {
+                    title: '数据集成',
+                    description: '连接银行、支付、ERP等系统，实现财务数据自动同步与标准化',
+                    inputs: [
+                        {
+                            id: 'company-type',
+                            name: 'company_type',
+                            type: 'select',
+                            label: '企业类型',
+                            required: true
+                        },
+                        {
+                            id: 'financial-systems',
+                            name: 'financial_systems',
+                            type: 'checkbox',
+                            label: '现有财务系统',
+                            required: true
+                        },
+                        {
+                            id: 'monthly-revenue',
+                            name: 'monthly_revenue',
+                            type: 'select',
+                            label: '月营收规模',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '智能处理',
+                    description: 'AI自动进行会计核算、税务处理、风险控制等财务处理流程',
+                    inputs: [
+                        {
+                            id: 'pain-points',
+                            name: 'pain_points',
+                            type: 'textarea',
+                            label: '当前财务痛点',
+                            placeholder: '请描述您在财务管理中遇到的主要问题...',
+                            required: true
+                        },
+                        {
+                            id: 'automation-needs',
+                            name: 'automation_needs',
+                            type: 'checkbox',
+                            label: '希望自动化的财务流程',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '分析洞察',
+                    description: '深度分析财务数据，提供商业洞察与决策支持，优化财务策略',
+                    inputs: [
+                        {
+                            id: 'reporting-needs',
+                            name: 'reporting_needs',
+                            type: 'select',
+                            label: '报表需求类型',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '报告输出',
+                    description: '自动生成各类财务报表和管理仪表板，实时展示财务状况',
+                    inputs: [
+                        {
+                            id: 'dashboard-requirements',
+                            name: 'dashboard_requirements',
+                            type: 'checkbox',
+                            label: '管理仪表板需求',
+                            required: true
+                        }
+                    ]
+                }
+            ],
+            benefits: [
+                '一站式财务解决方案',
+                'AI提升财务效率95%',
+                '实时现金流管理',
+                '智能风险预警',
+                '多地区税务合规'
+            ],
+            contactMethod: 'form'
+        };
+    </script>
+    <script src="template-service-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,635 @@
+/* Preferences UI Component Styles - 用户偏好设置界面样式 */
+
+/* 主容器 */
+.preferences-ui {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--background);
+    z-index: var(--z-modal);
+    display: none;
+    overflow: hidden;
+}
+
+.preferences-open {
+    overflow: hidden;
+}
+
+/* 头部区域 */
+.preferences-header {
+    padding: 24px 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--header-bg);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+}
+
+.preferences-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 8px 0;
+}
+
+.preferences-description {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.preferences-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 8px;
+    border-radius: 6px;
+    transition: all var(--transition-fast);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preferences-close:hover {
+    background: var(--hover-bg);
+    color: var(--text);
+}
+
+/* 主要内容区域 */
+.preferences-main {
+    display: flex;
+    height: calc(100vh - 180px);
+    overflow: hidden;
+}
+
+/* 侧边栏导航 */
+.preferences-sidebar {
+    width: 280px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    overflow-y: auto;
+}
+
+.preferences-nav-item {
+    width: 100%;
+    padding: 12px 24px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.preferences-nav-item:hover {
+    background: var(--hover-bg);
+    color: var(--text);
+}
+
+.preferences-nav-item.active {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.nav-icon {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.nav-label {
+    font-weight: 500;
+}
+
+/* 面板容器 */
+.preferences-panels {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px;
+}
+
+.preferences-panel {
+    display: none;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.preferences-panel.active {
+    display: block;
+}
+
+/* 面板内容 */
+.panel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 设置组 */
+.setting-group {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-bg);
+}
+
+.setting-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 8px 0;
+}
+
+.setting-description {
+    color: var(--text-secondary);
+    margin: 0 0 16px 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* 单选按钮组 */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.radio-option:hover {
+    border-color: var(--primary);
+    background: var(--hover-bg);
+}
+
+.radio-option input[type="radio"] {
+    margin: 0;
+}
+
+.option-icon {
+    font-size: 1.2rem;
+}
+
+.option-label {
+    font-weight: 500;
+    color: var(--text);
+}
+
+/* 下拉选择框 */
+.select-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--background);
+    color: var(--text);
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+}
+
+.select-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+}
+
+/* 复选框 */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-slider {
+    width: 48px;
+    height: 24px;
+    background: var(--border);
+    border-radius: 12px;
+    position: relative;
+    transition: all var(--transition-fast);
+}
+
+.checkbox-slider::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: var(--white);
+    border-radius: 50%;
+    transition: all var(--transition-fast);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-slider {
+    background: var(--primary);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-slider::before {
+    transform: translateX(24px);
+}
+
+/* 颜色选择器 */
+input[type="color"] {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 0;
+    background: var(--background);
+}
+
+input[type="color"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+}
+
+/* 底部操作栏 */
+.preferences-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    border-top: 1px solid var(--border);
+    background: var(--footer-bg);
+}
+
+.footer-left,
+.footer-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* 按钮样式 */
+.preferences-button {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--background);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.preferences-button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.preferences-button.primary {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+}
+
+.preferences-button.primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.preferences-button.secondary {
+    background: var(--secondary);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.preferences-button.secondary:hover {
+    background: var(--secondary-dark);
+    border-color: var(--secondary-dark);
+}
+
+.preferences-button.reset {
+    background: var(--danger);
+    color: var(--white);
+    border-color: var(--danger);
+}
+
+.preferences-button.reset:hover {
+    background: var(--danger-dark);
+    border-color: var(--danger-dark);
+}
+
+/* 标签样式 */
+.preferences-ui label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text);
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .preferences-sidebar {
+        width: 240px;
+    }
+
+    .preferences-panels {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .preferences-main {
+        flex-direction: column;
+        height: calc(100vh - 160px);
+    }
+
+    .preferences-sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 16px 0;
+        display: flex;
+        overflow-x: auto;
+        gap: 8px;
+    }
+
+    .preferences-nav-item {
+        flex-shrink: 0;
+        padding: 8px 16px;
+        font-size: 0.8rem;
+        gap: 8px;
+    }
+
+    .nav-icon {
+        font-size: 1rem;
+        width: 16px;
+    }
+
+    .preferences-panels {
+        flex: 1;
+        padding: 16px;
+        overflow-y: auto;
+    }
+
+    .preferences-header {
+        padding: 16px 20px;
+    }
+
+    .preferences-title {
+        font-size: 1.3rem;
+    }
+
+    .preferences-footer {
+        padding: 12px 16px;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .footer-left,
+    .footer-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .preferences-button {
+        font-size: 0.8rem;
+        padding: 8px 16px;
+    }
+
+    .setting-group {
+        padding: 16px;
+    }
+
+    .radio-option {
+        padding: 8px;
+    }
+
+    .checkbox-slider {
+        width: 40px;
+        height: 20px;
+    }
+
+    .checkbox-slider::before {
+        width: 16px;
+        height: 16px;
+    }
+
+    .checkbox-label input[type="checkbox"]:checked + .checkbox-slider::before {
+        transform: translateX(20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .preferences-header {
+        padding: 12px 16px;
+    }
+
+    .preferences-title {
+        font-size: 1.2rem;
+    }
+
+    .preferences-description {
+        font-size: 0.8rem;
+    }
+
+    .preferences-panels {
+        padding: 12px;
+    }
+
+    .setting-group {
+        padding: 12px;
+    }
+
+    .setting-title {
+        font-size: 1rem;
+    }
+
+    .setting-description {
+        font-size: 0.8rem;
+    }
+
+    .select-input {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+    }
+
+    .preferences-button {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+    }
+
+    input[type="color"] {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* 暗色主题适配 */
+[data-theme="dark"] .preferences-ui {
+    background: var(--theme-bg);
+}
+
+[data-theme="dark"] .preferences-header {
+    background: var(--theme-nav-bg);
+    border-color: var(--theme-border);
+}
+
+[data-theme="dark"] .preferences-sidebar {
+    background: var(--theme-card-bg);
+    border-color: var(--theme-border);
+}
+
+[data-theme="dark"] .setting-group {
+    background: var(--theme-card-bg);
+    border-color: var(--theme-border);
+}
+
+[data-theme="dark"] .radio-option {
+    border-color: var(--theme-border);
+}
+
+[data-theme="dark"] .radio-option:hover {
+    border-color: var(--accent);
+    background: var(--theme-border);
+}
+
+[data-theme="dark"] .select-input {
+    background: var(--theme-bg);
+    border-color: var(--theme-border);
+    color: var(--theme-text);
+}
+
+[data-theme="dark"] .checkbox-slider {
+    background: var(--theme-border);
+}
+
+[data-theme="dark"] .preferences-footer {
+    background: var(--theme-nav-bg);
+    border-color: var(--theme-border);
+}
+
+[data-theme="dark"] .preferences-button {
+    background: var(--theme-bg);
+    border-color: var(--theme-border);
+    color: var(--theme-text);
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .preferences-ui {
+        border: 2px solid var(--text);
+    }
+
+    .preferences-header,
+    .preferences-sidebar,
+    .preferences-footer {
+        border-width: 2px;
+    }
+
+    .setting-group {
+        border-width: 2px;
+    }
+
+    .radio-option {
+        border-width: 2px;
+    }
+
+    .preferences-button {
+        border-width: 2px;
+    }
+}
+
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+    .preferences-nav-item,
+    .radio-option,
+    .preferences-button,
+    .checkbox-slider,
+    .select-input {
+        transition: none;
+    }
+
+    .checkbox-slider::before {
+        transition: none;
+    }
+}
+
+/* 大字体模式 */
+.large-text-mode .preferences-ui {
+    font-size: 1.1rem;
+}
+
+.large-text-mode .preferences-title {
+    font-size: 1.8rem;
+}
+
+.large-text-mode .preferences-button {
+    font-size: 1rem;
+    padding: 12px 24px;
+}
+
+.large-text-mode .select-input {
+    font-size: 1rem;
+    padding: 12px 16px;
+}
+
+/* 无障碍支持 */
+.preferences-nav-item:focus-visible,
+.radio-option:focus-visible,
+.preferences-button:focus-visible,
+.select-input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* 滚动条样式 */
+.preferences-sidebar::-webkit-scrollbar,
+.preferences-panels::-webkit-scrollbar {
+    width: 6px;
+}
+
+.preferences-sidebar::-webkit-scrollbar-track,
+.preferences-panels::-webkit-scrollbar-track {
+    background: var(--border);
+}
+
+.preferences-sidebar::-webkit-scrollbar-thumb,
+.preferences-panels::-webkit-scrollbar-thumb {
+    background: var(--text-secondary);
+    border-radius: 3px;
+}
+
+.preferences-sidebar::-webkit-scrollbar-thumb:hover,
+.preferences-panels::-webkit-scrollbar-thumb:hover {
+    background: var(--text);
+}
+
+/* 打印样式 */
+@media print {
+    .preferences-ui {
+        display: none !important;
+    }
+}

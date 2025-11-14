@@ -1,0 +1,580 @@
+/* 统一Logo系统 - 工业级水准 */
+/* Created: 2025-11-14 */
+/* Purpose: 为不同业务场景提供专业统一的Logo系统 */
+
+/* ==================== Logo系统变量 ==================== */
+:root {
+    /* Logo基础尺寸 */
+    --logo-size-xs: 24px;
+    --logo-size-sm: 32px;
+    --logo-size-md: 40px;
+    --logo-size-lg: 48px;
+    --logo-size-xl: 64px;
+    --logo-size-2xl: 80px;
+
+    /* Logo间距 */
+    --logo-spacing-xs: 4px;
+    --logo-spacing-sm: 8px;
+    --logo-spacing-md: 12px;
+    --logo-spacing-lg: 16px;
+    --logo-spacing-xl: 20px;
+
+    /* Logo字体 */
+    --logo-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --logo-font-weight: 700;
+    --logo-letter-spacing: -0.02em;
+
+    /* Logo颜色 - 基础色系 */
+    --logo-primary: #1e3a8f;
+    --logo-secondary: #6366f1;
+    --logo-accent: #ec4899;
+    --logo-text: #1f2937;
+    --logo-light: #ffffff;
+
+    /* Logo主题适配 */
+    --logo-tech-primary: #2563eb;
+    --logo-tech-secondary: #06b6d4;
+    --logo-legal-primary: #d97706;
+    --logo-legal-secondary: #1e3a8a;
+    --logo-business-primary: #7c3aed;
+    --logo-business-secondary: #a855f7;
+    --logo-lifestyle-primary: #10b981;
+    --logo-lifestyle-secondary: #14b8a6;
+    --logo-pet-primary: #f59e0b;
+    --logo-pet-secondary: #ef4444;
+}
+
+/* ==================== 基础Logo组件 ==================== */
+
+/* Logo容器 */
+.logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-family: var(--logo-font-family);
+    font-weight: var(--logo-font-weight);
+    letter-spacing: var(--logo-letter-spacing);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    line-height: 1;
+}
+
+/* Logo图标 - 通用样式 */
+.logo__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+/* Logo文字 - 通用样式 */
+.logo__text {
+    margin-left: var(--logo-spacing-md);
+    font-weight: inherit;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+/* Logo副标题 */
+.logo__tagline {
+    display: block;
+    font-size: 0.7em;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+}
+
+/* ==================== Logo尺寸变体 ==================== */
+
+/* 超小尺寸 - 移动端导航栏 */
+.logo--xs {
+    height: var(--logo-size-xs);
+    font-size: 12px;
+}
+
+.logo--xs .logo__icon {
+    width: var(--logo-size-xs);
+    height: var(--logo-size-xs);
+    font-size: 14px;
+}
+
+/* 小尺寸 - 桌面导航栏 */
+.logo--sm {
+    height: var(--logo-size-sm);
+    font-size: 14px;
+}
+
+.logo--sm .logo__icon {
+    width: var(--logo-size-sm);
+    height: var(--logo-size-sm);
+    font-size: 16px;
+}
+
+/* 中等尺寸 - 页面标题 */
+.logo--md {
+    height: var(--logo-size-md);
+    font-size: 18px;
+}
+
+.logo--md .logo__icon {
+    width: var(--logo-size-md);
+    height: var(--logo-size-md);
+    font-size: 20px;
+}
+
+/* 大尺寸 - Hero区域 */
+.logo--lg {
+    height: var(--logo-size-lg);
+    font-size: 24px;
+}
+
+.logo--lg .logo__icon {
+    width: var(--logo-size-lg);
+    height: var(--logo-size-lg);
+    font-size: 28px;
+}
+
+/* 超大尺寸 - 页面头部 */
+.logo--xl {
+    height: var(--logo-size-xl);
+    font-size: 32px;
+}
+
+.logo--xl .logo__icon {
+    width: var(--logo-size-xl);
+    height: var(--logo-size-xl);
+    font-size: 36px;
+}
+
+/* 2倍超大尺寸 - 特殊展示 */
+.logo--2xl {
+    height: var(--logo-size-2xl);
+    font-size: 40px;
+}
+
+.logo--2xl .logo__icon {
+    width: var(--logo-size-2xl);
+    height: var(--logo-size-2xl);
+    font-size: 44px;
+}
+
+/* ==================== Logo样式变体 ==================== */
+
+/* 现代简约风格 */
+.logo--modern {
+    color: var(--logo-primary);
+}
+
+.logo--modern .logo__icon {
+    background: linear-gradient(135deg, var(--logo-primary) 0%, var(--logo-secondary) 100%);
+    color: var(--logo-light);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 商务专业风格 */
+.logo--business {
+    color: var(--logo-text);
+}
+
+.logo--business .logo__icon {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+    color: var(--logo-light);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 科技感风格 */
+.logo--tech {
+    color: var(--logo-tech-primary);
+}
+
+.logo--tech .logo__icon {
+    background: linear-gradient(135deg, var(--logo-tech-primary) 0%, var(--logo-tech-secondary) 100%);
+    color: var(--logo-light);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.logo--tech .logo__icon::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: techGlow 3s ease-in-out infinite;
+}
+
+@keyframes techGlow {
+    0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* 法律专业风格 */
+.logo--legal {
+    color: var(--logo-legal-primary);
+}
+
+.logo--legal .logo__icon {
+    background: linear-gradient(135deg, var(--logo-legal-primary) 0%, var(--logo-legal-secondary) 100%);
+    color: var(--logo-light);
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    box-shadow: 0 4px 16px rgba(217, 119, 6, 0.3);
+    position: relative;
+}
+
+.logo--legal .logo__icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: rgba(255, 255, 255, 0.1);
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+
+/* 生活服务风格 */
+.logo--lifestyle {
+    color: var(--logo-lifestyle-primary);
+}
+
+.logo--lifestyle .logo__icon {
+    background: linear-gradient(135deg, var(--logo-lifestyle-primary) 0%, var(--logo-lifestyle-secondary) 100%);
+    color: var(--logo-light);
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.logo--lifestyle .logo__icon::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 30%;
+    height: 30%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: lifestyleBubble 4s ease-in-out infinite;
+}
+
+@keyframes lifestyleBubble {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.6; }
+}
+
+/* 宠物服务风格 */
+.logo--pet {
+    color: var(--logo-pet-primary);
+}
+
+.logo--pet .logo__icon {
+    background: linear-gradient(135deg, var(--logo-pet-primary) 0%, var(--logo-pet-secondary) 100%);
+    color: var(--logo-light);
+    border-radius: 50% 50% 45% 45%;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    position: relative;
+    transform: rotate(-5deg);
+    transition: transform 0.3s ease;
+}
+
+.logo--pet .logo__icon::before {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 20%;
+    height: 20%;
+    background: var(--logo-light);
+    border-radius: 50%;
+    box-shadow: 15px 0 0 var(--logo-light);
+}
+
+.logo--pet .logo__icon::after {
+    content: '';
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 8%;
+    background: var(--logo-light);
+    border-radius: 4px;
+}
+
+.logo--pet:hover .logo__icon {
+    transform: rotate(0deg) scale(1.1);
+}
+
+/* ==================== Logo悬停效果 ==================== */
+
+.logo:hover {
+    transform: translateY(-2px);
+}
+
+.logo:hover .logo__icon {
+    transform: scale(1.05);
+}
+
+/* 特殊悬停效果 */
+.logo--modern:hover .logo__icon {
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+}
+
+.logo--tech:hover .logo__icon {
+    box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
+}
+
+.logo--legal:hover .logo__icon {
+    transform: scale(1.05) rotate(5deg);
+}
+
+.logo--lifestyle:hover .logo__icon {
+    transform: rotate(-2deg) scale(1.05);
+}
+
+/* ==================== Logo主题适配 ==================== */
+
+/* 默认主题适配 */
+[data-theme="default"] .logo--modern,
+[data-theme="default"] .logo--business,
+[data-theme="default"] .logo--tech,
+[data-theme="default"] .logo--legal,
+[data-theme="default"] .logo--lifestyle,
+[data-theme="default"] .logo--pet {
+    color: var(--logo-primary);
+}
+
+/* 科技蓝主题适配 */
+[data-theme="tech-blue"] .logo--modern {
+    color: var(--logo-tech-primary);
+}
+
+[data-theme="tech-blue"] .logo--modern .logo__icon {
+    background: linear-gradient(135deg, var(--logo-tech-primary) 0%, var(--logo-tech-secondary) 100%);
+}
+
+[data-theme="tech-blue"] .logo--business .logo__icon {
+    background: linear-gradient(135deg, var(--logo-tech-primary) 0%, var(--logo-tech-secondary) 100%);
+}
+
+/* 法律金主题适配 */
+[data-theme="legal-gold"] .logo--modern {
+    color: var(--logo-legal-primary);
+}
+
+[data-theme="legal-gold"] .logo--modern .logo__icon {
+    background: linear-gradient(135deg, var(--logo-legal-primary) 0%, var(--logo-legal-secondary) 100%);
+}
+
+[data-theme="legal-gold"] .logo--business .logo__icon {
+    background: linear-gradient(135deg, var(--logo-legal-primary) 0%, var(--logo-legal-secondary) 100%);
+}
+
+/* 商务紫主题适配 */
+[data-theme="business-purple"] .logo--modern {
+    color: var(--logo-business-primary);
+}
+
+[data-theme="business-purple"] .logo--modern .logo__icon {
+    background: linear-gradient(135deg, var(--logo-business-primary) 0%, var(--logo-business-secondary) 100%);
+}
+
+[data-theme="business-purple"] .logo--business .logo__icon {
+    background: linear-gradient(135deg, var(--logo-business-primary) 0%, var(--logo-business-secondary) 100%);
+}
+
+/* ==================== Logo布局变体 ==================== */
+
+/* 水平布局 - 默认 */
+.logo--horizontal {
+    flex-direction: row;
+}
+
+/* 垂直布局 */
+.logo--vertical {
+    flex-direction: column;
+}
+
+.logo--vertical .logo__text {
+    margin-left: 0;
+    margin-top: var(--logo-spacing-sm);
+    text-align: center;
+}
+
+/* 紧凑布局 */
+.logo--compact .logo__text {
+    margin-left: var(--logo-spacing-sm);
+}
+
+/* 宽松布局 */
+.logo--spacious .logo__text {
+    margin-left: var(--logo-spacing-lg);
+}
+
+/* ==================== 响应式适配 ==================== */
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .logo {
+        font-size: inherit !important;
+    }
+
+    .logo--xl,
+    .logo--2xl {
+        height: var(--logo-size-lg);
+        font-size: 20px;
+    }
+
+    .logo--xl .logo__icon,
+    .logo--2xl .logo__icon {
+        width: var(--logo-size-lg);
+        height: var(--logo-size-lg);
+        font-size: 24px;
+    }
+
+    .logo__tagline {
+        display: none;
+    }
+
+    .logo--vertical .logo__text {
+        margin-top: var(--logo-spacing-xs);
+    }
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 480px) {
+    .logo--lg,
+    .logo--xl,
+    .logo--2xl {
+        height: var(--logo-size-md);
+        font-size: 16px;
+    }
+
+    .logo--lg .logo__icon,
+    .logo--xl .logo__icon,
+    .logo--2xl .logo__icon {
+        width: var(--logo-size-md);
+        height: var(--logo-size-md);
+        font-size: 18px;
+    }
+}
+
+/* ==================== Logo状态变体 ==================== */
+
+/* 激活状态 */
+.logo--active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 禁用状态 */
+.logo--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.logo--disabled:hover {
+    transform: none;
+}
+
+/* 加载状态 */
+.logo--loading .logo__icon {
+    animation: logoSpin 2s linear infinite;
+}
+
+@keyframes logoSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ==================== Logo工具类 ==================== */
+
+/* 无文字图标 */
+.logo--icon-only .logo__text {
+    display: none;
+}
+
+/* 无图标文字 */
+.logo--text-only .logo__icon {
+    display: none;
+}
+
+/* 带边框 */
+.logo--bordered .logo__icon {
+    border: 2px solid currentColor;
+    background: transparent;
+    color: currentColor;
+}
+
+/* 阴影效果 */
+.logo--shadowed .logo__icon {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 发光效果 */
+.logo--glowing .logo__icon {
+    box-shadow: 0 0 20px currentColor;
+}
+
+/* ==================== 可访问性支持 ==================== */
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .logo {
+        color: #000000;
+    }
+
+    .logo .logo__icon {
+        background: #000000;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .logo,
+    .logo__icon,
+    .logo__text {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* 焦点状态 */
+.logo:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* ==================== 深色模式适配 ==================== */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --logo-primary: #60a5fa;
+        --logo-secondary: #a78bfa;
+        --logo-accent: #f472b6;
+        --logo-text: #f3f4f6;
+    }
+
+    .logo--business .logo__icon {
+        background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+        border-color: #6b7280;
+    }
+}

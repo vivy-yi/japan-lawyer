@@ -1,0 +1,228 @@
+/* 语义化容器系统 - 解决AI生成代码与section+container模式冲突 */
+/* Created: 2025-11-14 */
+/* Purpose: Provide semantic container classes that work with section-specific layouts */
+
+/* ==================== 核心容器系统 ==================== */
+
+/* 基础容器类 - 使用响应式变量系统 */
+.container {
+    max-width: var(--responsive-container-max);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* ==================== 语义化容器类 ==================== */
+
+/* 内容区域容器 - 用于主要内容区域 */
+.container-content {
+    max-width: var(--responsive-content-max);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* 宽屏容器 - 用于hero等需要全宽的区域 */
+.container-wide {
+    max-width: var(--responsive-container-max);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* 紧凑容器 - 用于footer等不需要全宽的区域 */
+.container-compact {
+    max-width: min(1000px, 85vw);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* ==================== Section特定容器 ==================== */
+
+/* Hero section容器 - 全屏效果 */
+.hero-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+/* Features section容器 - 限制宽度以利于阅读 */
+.features-container {
+    max-width: var(--responsive-content-max);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Services section容器 - 适合服务展示 */
+.services-container {
+    max-width: var(--responsive-container-max);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* AI Capabilities容器 - 突出AI特色 */
+.ai-capabilities-container {
+    max-width: min(1300px, 92vw);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Stats section容器 - 数据展示区域 */
+.stats-container {
+    max-width: var(--responsive-content-max);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* CTA section容器 - 行动召唤区域 */
+.cta-container {
+    max-width: min(900px, 80vw);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* ==================== 响应式容器适配 ==================== */
+
+/* 移动端容器优化 */
+@media (max-width: 768px) {
+    .container-compact {
+        max-width: 100%;
+        padding: 0 clamp(1rem, 5vw, 1.5rem);
+    }
+
+    .cta-container {
+        max-width: 95%;
+        padding: 0 clamp(1rem, 5vw, 1.5rem);
+    }
+
+    .features-container {
+        padding: 0 clamp(1.5rem, 6vw, 2rem);
+    }
+}
+
+/* 超大屏幕容器限制 */
+@media (min-width: 1400px) {
+    .container-content {
+        max-width: 1200px;
+    }
+
+    .features-container {
+        max-width: 1100px;
+    }
+
+    .ai-capabilities-container {
+        max-width: 1400px;
+    }
+}
+
+/* ==================== 容器修饰符 ==================== */
+
+/* 容器内边距修饰符 */
+.container-padding-sm {
+    padding: 0 var(--responsive-container-padding);
+}
+
+.container-padding-md {
+    padding: 0 calc(var(--responsive-container-padding) * 1.5);
+}
+
+.container-padding-lg {
+    padding: 0 calc(var(--responsive-container-padding) * 2);
+}
+
+/* 容器无边距版本 */
+.container-no-margin {
+    margin: 0;
+}
+
+/* 容器全宽版本 */
+.container-full-width {
+    max-width: 100%;
+}
+
+/* ==================== 特殊用途容器 ==================== */
+
+/* Flex容器 - 用于灵活布局 */
+.container-flex {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--responsive-container-max);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Grid容器 - 用于网格布局 */
+.container-grid {
+    display: grid;
+    max-width: var(--responsive-container-max);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* ==================== 防冲突机制 ==================== */
+
+/* 防止AI工具覆盖语义化容器 */
+[class*="container"] {
+    /* 确保所有容器类都使用响应式变量 */
+    max-width: var(--responsive-container-max, min(1400px, 95vw));
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--responsive-container-padding, clamp(1rem, 4vw, 2rem));
+    padding-right: var(--responsive-container-padding, clamp(1rem, 4vw, 2rem));
+}
+
+/* 如果AI工具生成通用.container样式，语义化容器会保持优先级 */
+.features-container,
+.services-container,
+.ai-capabilities-container,
+.stats-container,
+.cta-container,
+.hero-container {
+    max-width: var(--responsive-container-max, min(1400px, 95vw)) !important;
+    margin: 0 auto !important;
+    padding: 0 var(--responsive-container-padding, clamp(1rem, 4vw, 2rem)) !important;
+}
+
+/* ==================== 开发者指导 ==================== */
+
+/*
+使用指南：
+1. 通用布局：使用 .container
+2. 主要内容：使用 .container-content
+3. 特色区域：使用对应的语义化容器
+4. 防冲突：优先使用语义化容器而非通用.container
+
+示例：
+<section class="features-section">
+    <div class="features-container">  <!-- 语义化容器 -->
+        <!-- 内容 -->
+    </div>
+</section>
+
+而不是：
+<section class="features-section">
+    <div class="container">  <!-- 通用容器，可能被AI覆盖 -->
+        <!-- 内容 -->
+    </div>
+</section>
+*/

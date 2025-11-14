@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI一站式CRM管理系统 - 智能客户关系管理 | 日本商务通</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AI一站式CRM管理系统 - 提供智能客户管理、销售自动化、数据分析、营销管理等全方位客户关系管理解决方案。日本商务通助力企业提升客户管理效率。">
+    <meta name="keywords" content="AI CRM,智能客户管理,销售自动化,数据分析,营销管理,客户关系管理,日本商务通,CRM系统,一站式解决方案">
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AI一站式CRM管理系统 - 智能客户关系管理">
+    <meta property="og:description" content="提供智能客户管理、销售自动化、数据分析等专业CRM服务">
+    <meta property="og:type" content="website">
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/modern-ai-pages.css">
+
+    <style>
+        /* AI CRM特定样式 */
+        .hero-section {
+            background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
+            color: white;
+            padding: 120px 0 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: var(--responsive-font-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: var(--responsive-font-xl);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .service-features {
+            background: var(--bg-secondary);
+            padding: var(--responsive-spacing-2xl) 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--responsive-card-gap);
+            margin-top: var(--responsive-spacing-xl);
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: var(--responsive-spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: #059669;
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-md);
+            display: block;
+            background: linear-gradient(135deg, #059669, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-title {
+            font-size: var(--responsive-font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .process-section {
+            padding: var(--responsive-spacing-2xl) 0;
+            background: white;
+        }
+
+        .process-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--responsive-spacing-xl);
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            width: 2px;
+            height: calc(100% + var(--spacing-md));
+            background: #059669;
+            opacity: 0.3;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--responsive-font-lg);
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: var(--spacing-lg);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: var(--responsive-font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: var(--responsive-spacing-2xl) 0;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: var(--responsive-font-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta-subtitle {
+            font-size: var(--responsive-font-lg);
+            opacity: 0.9;
+            margin-bottom: var(--responsive-spacing-xl);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta {
+            padding: var(--spacing-md) var(--responsive-spacing-xl);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: var(--responsive-font-base);
+            transition: all var(--transition-base);
+            display: inline-block;
+            min-width: 180px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-cta-primary {
+            background: white;
+            color: #059669;
+        }
+
+        .btn-cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-cta-secondary:hover {
+            background: white;
+            color: #059669;
+            transform: translateY(-2px);
+        }
+
+        .benefits-section {
+            background: var(--bg-tertiary);
+            padding: var(--responsive-spacing-2xl) 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--responsive-card-gap);
+            margin-top: var(--responsive-spacing-xl);
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: var(--spacing-md);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+            color: #059669;
+        }
+
+        .benefit-title {
+            font-size: var(--responsive-font-base);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .benefit-description {
+            color: var(--text-secondary);
+            font-size: var(--responsive-font-sm);
+        }
+
+        /* 模态框样式 */
+        .ai-service-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: var(--radius-xl);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal-content {
+            padding: var(--spacing-lg);
+        }
+
+        .modal-controls {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all var(--transition-base);
+        }
+
+        .btn-primary {
+            background: #059669;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-container {
+            margin: var(--spacing-md) 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #059669, #10b981);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: var(--spacing-xs);
+            font-size: var(--responsive-font-sm);
+            color: var(--text-secondary);
+        }
+
+        .processing-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--bg-secondary);
+            border-top: 4px solid #059669;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--spacing-md);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .completion-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            background: #10b981;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto var(--spacing-lg);
+        }
+
+        .reference-number {
+            font-family: monospace;
+            background: var(--bg-secondary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            margin: var(--spacing-sm) 0;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: var(--breakpoint-md)) {
+            .hero-title {
+                font-size: var(--responsive-font-2xl);
+            }
+
+            .hero-subtitle {
+                font-size: var(--responsive-font-lg);
+            }
+
+            .process-step {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .process-step:not(:last-child)::after {
+                display: none;
+            }
+
+            .step-number {
+                margin-right: 0;
+                margin-bottom: var(--spacing-md);
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-cta {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">AI一站式CRM管理系统</h1>
+                <p class="hero-subtitle">360度智能客户管理，AI驱动的销售自动化与数据分析，让客户关系管理进入智能化时代</p>
+                <div class="hero-cta">
+                    <button class="btn-cta btn-cta-primary" onclick="startService()">开始体验</button>
+                    <button class="btn-cta btn-cta-secondary" onclick="showDemo()">查看演示</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Features Section -->
+    <section class="service-features">
+        <div class="container">
+            <h2 class="capabilities-title">核心功能特色</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3 class="feature-title">AI智能客户管理</h3>
+                    <p class="feature-description">360度客户全景视图，智能客户画像分析，客户行为预测与推荐</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">销售自动化</h3>
+                    <p class="feature-description">智能销售评分，自动跟进提醒，销售漏斗可视化，转化率提升80%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">数据分析</h3>
+                    <p class="feature-description">实时数据可视化，趋势预测，智能报表生成，决策支持系统</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">营销管理</h3>
+                    <p class="feature-description">精准用户画像，多渠道营销协调，个性化营销，ROI提升65%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI智能客服</h3>
+                    <p class="feature-description">24/7多语言客服支持，智能问答，情感分析，满意度自动跟踪</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">业务流程自动化</h3>
+                    <p class="feature-description">工作流自动化，智能审批，任务分配，效率提升90%</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <h2 class="capabilities-title">服务流程</h2>
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">客户数据整合</h3>
+                        <p class="step-description">整合分散的客户数据，建立统一客户档案，AI智能数据清洗与标准化</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">智能分析处理</h3>
+                        <p class="step-description">AI深度分析客户行为模式，智能评分分层，预测客户需求</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">营销执行跟进</h3>
+                        <p class="step-description">自动化营销执行，智能推荐最佳接触时机，个性化沟通策略</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">效果监控优化</h3>
+                        <p class="step-description">实时监控关键指标，AI优化建议，持续改进营销策略</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="capabilities-title">服务优势</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">🔄</div>
+                    <h3 class="benefit-title">全链路客户管理</h3>
+                    <p class="benefit-description">从获客到留存，全流程客户生命周期管理</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🧠</div>
+                    <h3 class="benefit-title">AI驱动的精准决策</h3>
+                    <p class="benefit-description">基于大数据分析，提供科学的商业决策支持</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚙️</div>
+                    <h3 class="benefit-title">自动化提升效率</h3>
+                    <p class="benefit-description">减少90%重复工作，让团队专注于高价值活动</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🌏</div>
+                    <h3 class="benefit-title">多语言支持国际化</h3>
+                    <p class="benefit-description">支持25种语言，助力企业全球化发展</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">准备好提升客户管理效率了吗？</h2>
+            <p class="cta-subtitle">立即体验我们的AI CRM管理系统，让智能科技助力您的业务增长</p>
+            <div class="cta-buttons">
+                <button class="btn-cta btn-cta-primary" onclick="contactUs()">立即咨询</button>
+                <button class="btn-cta btn-cta-secondary" onclick="learnMore()">了解更多</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // AI CRM管理系统配置
+        window.SERVICE_CONFIG = {
+            name: 'AI CRM管理系统',
+            type: 'crm',
+            tagline: '360度智能客户管理，AI驱动的销售自动化与数据分析',
+            description: '提供智能客户管理、销售自动化、数据分析、营销管理等全方位CRM解决方案',
+            keywords: 'AI CRM,智能客户管理,销售自动化,数据分析',
+            features: [
+                'AI智能客户管理（360度客户视图）',
+                '销售自动化（智能评分、自动跟进）',
+                '数据分析（实时数据可视化、趋势预测）',
+                '营销管理（精准用户画像、多渠道协调）',
+                'AI智能客服（24/7支持、多语言）',
+                '业务流程自动化'
+            ],
+            processSteps: [
+                {
+                    title: '客户数据整合',
+                    description: '整合分散的客户数据，建立统一客户档案，AI智能数据清洗与标准化',
+                    inputs: [
+                        {
+                            id: 'company-size',
+                            name: 'company_size',
+                            type: 'select',
+                            label: '企业规模',
+                            required: true
+                        },
+                        {
+                            id: 'industry-type',
+                            name: 'industry_type',
+                            type: 'select',
+                            label: '行业类型',
+                            required: true
+                        },
+                        {
+                            id: 'current-crm',
+                            name: 'current_crm',
+                            type: 'text',
+                            label: '当前使用CRM系统',
+                            placeholder: '如无，请填写"无"',
+                            required: false
+                        }
+                    ]
+                },
+                {
+                    title: '智能分析处理',
+                    description: 'AI深度分析客户行为模式，智能评分分层，预测客户需求',
+                    inputs: [
+                        {
+                            id: 'business-goals',
+                            name: 'business_goals',
+                            type: 'textarea',
+                            label: '业务目标',
+                            placeholder: '请描述您希望通过CRM达成的业务目标...',
+                            required: true
+                        },
+                        {
+                            id: 'customer-count',
+                            name: 'customer_count',
+                            type: 'number',
+                            label: '客户数量',
+                            placeholder: '当前客户数量',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '营销执行跟进',
+                    description: '自动化营销执行，智能推荐最佳接触时机，个性化沟通策略',
+                    inputs: [
+                        {
+                            id: 'marketing-channels',
+                            name: 'marketing_channels',
+                            type: 'checkbox',
+                            label: '主要营销渠道',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '效果监控优化',
+                    description: '实时监控关键指标，AI优化建议，持续改进营销策略',
+                    inputs: [
+                        {
+                            id: 'kpi-focus',
+                            name: 'kpi_focus',
+                            type: 'select',
+                            label: '关注的KPI指标',
+                            required: true
+                        }
+                    ]
+                }
+            ],
+            benefits: [
+                '全链路客户管理',
+                'AI驱动的精准决策',
+                '自动化提升效率',
+                '多语言支持国际化',
+                '实时数据监控'
+            ],
+            contactMethod: 'demo'
+        };
+    </script>
+    <script src="template-service-script.js"></script>
+</body>
+</html>

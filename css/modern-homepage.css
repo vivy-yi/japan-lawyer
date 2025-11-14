@@ -1,0 +1,357 @@
+/* 现代化主页样式 - 重构后的组件化架构 */
+/* Updated: 2025-11-14 - 使用统一变量系统 */
+
+/* ==================== 核心系统导入 ==================== */
+
+/* 统一变量系统 - 消除冗余，提供单一数据源 */
+@import url('./core/variables.css');
+@import url('./core/responsive-variables.css');
+@import url('./core/themes.css');
+
+/* CSS重置和基础样式 */
+@import url('./components/base.css');
+
+/* 关键布局和无障碍样式 - 必须早期加载 */
+@import url('./components/critical-layout.css');
+@import url('./components/accessibility.css');
+
+@import url('./base/fonts.css');
+
+/* ==================== 布局组件导入 ==================== */
+
+/* 语义化容器系统 - 解决AI代码冲突 */
+@import url('./components/semantic-containers.css');
+
+/* 核心布局组件 */
+@import url('./base/header.css');
+@import url('./base/footer.css');
+
+/* ==================== UI组件导入 ==================== */
+
+/* 交互组件 */
+@import url('./components/buttons.css');
+@import url('./components/hero.css');
+@import url('./components/utilities.css');
+
+/* 内容组件 */
+@import url('./components/homepage-content.css');
+
+/* 统一卡片组件 - 支持unified-card系列样式 */
+@import url('./components/unified-cards.css');
+
+/* Logo系统 - 工业级品牌标识系统 */
+@import url('./components/logo-system.css');
+
+/* 统一页面头部组件 - 支持page-header系列样式 */
+@import url('./components/page-headers.css');
+
+/* ==================== 功能组件导入 ==================== */
+/* 从main.css选择性导入有用的功能组件 */
+
+/* 排版系统 */
+@import url('./base/typography.css');
+
+/* 轮播组件 */
+@import url('./components/carousel.css');
+
+/* 功能性组件 */
+@import url('./components/theme-switcher.css');
+@import url('./components/search.css');
+@import url('./components/preferences.css');
+
+/* ==================== AI能力展示区域样式 ==================== */
+/* 使用独立的ai-capabilities.css组件，避免样式重复 */
+@import url('./components/ai-capabilities.css');
+
+/* ==================== 向后兼容性支持 ==================== */
+/* 确保使用旧类名的元素仍然正常工作 */
+
+/* 现代化导航栏 */
+.modern-header {
+    /* 继承 .site-header 的所有样式 */
+}
+
+/* 向后兼容的容器 */
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+}
+
+/* 向后兼容的品牌样式 */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.nav-brand:hover {
+    color: var(--primary-color);
+}
+
+.nav-brand-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--primary-gradient);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+}
+
+/* 响应式导航 */
+@media (max-width: var(--breakpoint-md)) {
+    .nav-menu.active {
+        display: flex;
+    }
+}
+
+/* ==================== Page Content 布局样式 ==================== */
+/* 确保page-content与footer对齐，考虑多端适配 */
+
+/* 主要内容区域 */
+#page-content,
+.page-content {
+    min-height: calc(100vh - var(--header-height) - var(--footer-height, 300px));
+    margin-top: var(--header-height);
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+/* 确保内容区域始终有足够的空间与footer分离 */
+.page-content::after {
+    content: '';
+    display: block;
+    height: var(--footer-spacing, 60px);
+    background: transparent;
+}
+
+/* 响应式适配 - 大屏幕设备 */
+@media (min-width: var(--breakpoint-xl)) {
+    #page-content,
+    .page-content {
+        min-height: calc(100vh - var(--header-height) - 350px);
+        margin-top: var(--header-height);
+    }
+
+    .page-content::after {
+        height: 80px;
+    }
+}
+
+/* 响应式适配 - 中等屏幕设备 */
+@media (min-width: var(--breakpoint-lg)) and (max-width: calc(var(--breakpoint-xl) - 1px)) {
+    #page-content,
+    .page-content {
+        min-height: calc(100vh - var(--header-height) - 320px);
+        margin-top: var(--header-height);
+    }
+
+    .page-content::after {
+        height: 70px;
+    }
+}
+
+/* 响应式适配 - 平板设备 */
+@media (min-width: var(--breakpoint-md)) and (max-width: calc(var(--breakpoint-lg) - 1px)) {
+    #page-content,
+    .page-content {
+        min-height: calc(100vh - var(--header-height) - 280px);
+        margin-top: var(--header-height);
+    }
+
+    .page-content::after {
+        height: 50px;
+    }
+}
+
+/* 响应式适配 - 手机设备 */
+@media (max-width: calc(var(--breakpoint-md) - 1px)) {
+    #page-content,
+    .page-content {
+        min-height: calc(100vh - var(--header-height) - 250px);
+        margin-top: var(--header-height);
+    }
+
+    .page-content::after {
+        height: 40px;
+    }
+}
+
+/* 小屏幕手机优化 */
+@media (max-width: 380px) {
+    #page-content,
+    .page-content {
+        min-height: calc(100vh - var(--header-height) - 220px);
+        margin-top: var(--header-height);
+    }
+
+    .page-content::after {
+        height: 30px;
+    }
+}
+
+/* 长内容页面适配 - 当内容超过一屏时 */
+.page-content.long-content {
+    min-height: auto;
+    padding-bottom: var(--footer-spacing, 60px);
+}
+
+/* 确保所有section在page-content内正确对齐 */
+.page-content > section {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* 固定footer的页面布局 */
+html.fixed-footer,
+body.fixed-footer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body.fixed-footer #page-content,
+body.fixed-footer .page-content {
+    flex: 1;
+    min-height: auto;
+}
+
+/* 确保与header的协调 */
+.page-content:first-child {
+    margin-top: 0;
+}
+
+/* 特殊内容区域适配 */
+.page-content .hero-section {
+    margin-top: 0;
+}
+
+/* 页面内容容器适配 */
+.page-content .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* 动态内容高度适配 */
+@media (min-height: 800px) {
+    #page-content,
+    .page-content {
+        min-height: calc(100vh - var(--header-height) - 300px);
+    }
+}
+
+@media (max-height: 600px) {
+    #page-content,
+    .page-content {
+        min-height: calc(100vh - var(--header-height) - 200px);
+    }
+
+    .page-content::after {
+        height: 20px;
+    }
+}
+
+/* ==================== AI Footer 高度对齐修复 ==================== */
+/* 解决 ai-footer 与 page-content 之间的高度冲突问题 */
+
+/* 当页面有 ai-footer 时，调整 page-content 的底部间距 */
+.page-content + .ai-footer,
+.page-content:has(+ .ai-footer) {
+    /* 移除page-content的底部间距，因为ai-footer有自己的margin-top */
+}
+
+.page-content + .ai-footer::before,
+.ai-footer:has(+ .page-content) {
+    /* 确保ai-footer与page-content之间有合适的间距 */
+    content: '';
+    display: none; /* 禁用ai-footer的margin-top，改用page-content的间距控制 */
+}
+
+/* 调整ai-footer的margin-top，避免双重间距 */
+.ai-footer {
+    margin-top: 60px; /* 减少默认的100px，与page-content的底部间距协调 */
+}
+
+/* 针对不同设备的ai-footer间距优化 */
+@media (min-width: var(--breakpoint-xl)) {
+    .ai-footer {
+        margin-top: 80px;
+    }
+}
+
+@media (min-width: var(--breakpoint-lg)) and (max-width: calc(var(--breakpoint-xl) - 1px)) {
+    .ai-footer {
+        margin-top: 70px;
+    }
+}
+
+@media (min-width: var(--breakpoint-md)) and (max-width: calc(var(--breakpoint-lg) - 1px)) {
+    .ai-footer {
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: calc(var(--breakpoint-md) - 1px)) {
+    .ai-footer {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 380px) {
+    .ai-footer {
+        margin-top: 30px;
+    }
+}
+
+/* 当页面包含ai-footer时，调整page-content的底部间距 */
+body:has(.ai-footer) .page-content,
+.page-content:has(+ .ai-footer ~ .ai-footer) {
+    /* 减少page-content的底部间距，因为ai-footer有自己的margin */
+}
+
+body:has(.ai-footer) .page-content::after {
+    height: 20px; /* 减少底部间距 */
+}
+
+/* 长内容页面与ai-footer的协调 */
+.page-content.long-content + .ai-footer {
+    margin-top: 40px;
+}
+
+/* 确保ai-footer在所有页面中正确显示 */
+.ai-footer {
+    z-index: 10;
+    position: relative;
+}
+
+/* 防止内容与footer重叠 */
+.page-content {
+    margin-bottom: 0; /* 确保没有额外的底部margin */
+}
+
+/* 响应式协调 */
+@media (max-width: 768px) {
+    .page-content + .ai-footer {
+        margin-top: 40px;
+    }
+
+    body:has(.ai-footer) .page-content::after {
+        height: 15px;
+    }
+}

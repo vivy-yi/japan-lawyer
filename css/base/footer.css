@@ -1,0 +1,625 @@
+/* 现代化AI页脚样式 */
+
+/* AI Footer 主要样式 */
+.ai-footer {
+    position: relative;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: #ffffff;
+    padding: 80px 0 30px;
+    margin-top: 100px;
+    overflow: hidden;
+}
+
+/* AI背景效果 */
+.ai-footer-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+/* 电路图案背景 */
+.ai-circuit-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.05;
+    background-image:
+        linear-gradient(90deg, transparent 97%, rgba(99, 102, 241, 0.3) 97%, rgba(99, 102, 241, 0.3) 100%, transparent 100%),
+        linear-gradient(0deg, transparent 97%, rgba(99, 102, 241, 0.3) 97%, rgba(99, 102, 241, 0.3) 100%, transparent 100%);
+    background-size: 50px 50px;
+    animation: circuitMove 20s linear infinite;
+}
+
+@keyframes circuitMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* 浮动AI元素 */
+.ai-floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.ai-element {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+}
+
+.ai-element-1 { top: 20%; left: 10%; animation-delay: 0s; }
+.ai-element-2 { top: 60%; right: 15%; animation-delay: 1.5s; }
+.ai-element-3 { bottom: 30%; left: 20%; animation-delay: 3s; }
+.ai-element-4 { top: 40%; right: 25%; animation-delay: 4.5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Footer容器 */
+.ai-footer-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.2fr 1.3fr;
+    gap: 60px;
+    margin-bottom: 50px;
+}
+
+/* Footer区块通用样式 */
+.footer-section {
+    position: relative;
+}
+
+.footer-section h4.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #ffffff;
+    border-bottom: 2px solid rgba(99, 102, 241, 0.3);
+    padding-bottom: 10px;
+}
+
+.title-icon {
+    font-size: 1.3rem;
+    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+}
+
+/* 公司信息区块 */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.logo-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    animation: logoGlow 3s ease-in-out infinite alternate;
+    transition: all var(--transition-normal);
+}
+
+/* Footer Logo Responsive Sizing - Consistent with Header */
+
+/* Mobile devices: 320px - 767px */
+@media (max-width: 767px) {
+    .footer-section .logo-icon {
+        width: 48px;          /* 20% smaller for mobile */
+        height: 48px;
+        min-width: 42px;      /* Minimum functional size */
+        min-height: 42px;
+        max-width: 54px;      /* Maximum on small mobile */
+        max-height: 54px;
+        font-size: 1.5rem;     /* 24px */
+    }
+
+    .logo-text h3 {
+        font-size: 1.4rem;    /* 22px - legible on mobile */
+        min-size: 1.25rem;    /* 20px minimum readability */
+        max-size: 1.5rem;     /* 24px maximum */
+    }
+
+    .logo-text .tagline {
+        font-size: 0.875rem;  /* 14px */
+    }
+}
+
+/* Small mobile: 320px - 374px */
+@media (max-width: 374px) {
+    .footer-section .logo-icon {
+        width: 42px;          /* Further reduced for very small screens */
+        height: 42px;
+        min-width: 36px;
+        min-height: 36px;
+        font-size: 1.25rem;   /* 20px */
+    }
+
+    .logo-text h3 {
+        font-size: 1.25rem;   /* 20px - absolute minimum */
+    }
+
+    .logo-text .tagline {
+        font-size: 0.8rem;    /* 13px */
+    }
+}
+
+/* Large mobile/Phablet: 375px - 767px */
+@media (min-width: 375px) and (max-width: 767px) {
+    .footer-section .logo-icon {
+        width: 54px;          /* Slightly larger for bigger mobile screens */
+        height: 54px;
+        min-width: 48px;
+        min-height: 48px;
+        max-width: 60px;
+        max-height: 60px;
+        font-size: 1.75rem;   /* 28px */
+    }
+
+    .logo-text h3 {
+        font-size: 1.5rem;    /* 24px */
+    }
+
+    .logo-text .tagline {
+        font-size: 0.9rem;    /* 14.4px */
+    }
+}
+
+/* Tablet devices: 768px - 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .footer-section .logo-icon {
+        width: 66px;          /* 10% larger than mobile */
+        height: 66px;
+        min-width: 60px;
+        min-height: 60px;
+        max-width: 72px;      /* Moderate size on tablet */
+        max-height: 72px;
+        font-size: 2.25rem;   /* 36px */
+    }
+
+    .logo-text h3 {
+        font-size: 1.75rem;   /* 28px - comfortable reading on tablet */
+    }
+
+    .logo-text .tagline {
+        font-size: 1rem;      /* 16px */
+    }
+}
+
+/* Large desktop: 1366px+ */
+@media (min-width: 1366px) {
+    .footer-section .logo-icon {
+        width: 72px;          /* 20% larger than original */
+        height: 72px;
+        min-width: 66px;
+        min-height: 66px;
+        max-width: 84px;      /* Allow growth on large screens */
+        max-height: 84px;
+        font-size: 2.5rem;    /* 40px */
+    }
+
+    .logo-text h3 {
+        font-size: 2rem;      /* 32px - larger for desktop */
+    }
+
+    .logo-text .tagline {
+        font-size: 1.1rem;    /* 17.6px */
+    }
+}
+
+/* Extra large desktop: 1920px+ */
+@media (min-width: 1920px) {
+    .footer-section .logo-icon {
+        width: 78px;          /* 30% larger than original */
+        height: 78px;
+        min-width: 72px;
+        min-height: 72px;
+        max-width: 90px;      /* Maximum growth for ultra-wide */
+        max-height: 90px;
+        font-size: 2.75rem;   /* 44px */
+    }
+
+    .logo-text h3 {
+        font-size: 2.25rem;   /* 36px - large screens */
+    }
+
+    .logo-text .tagline {
+        font-size: 1.2rem;    /* 19.2px */
+    }
+}
+
+@keyframes logoGlow {
+    0% { box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); }
+    100% { box-shadow: 0 10px 40px rgba(99, 102, 241, 0.5); }
+}
+
+.logo-text h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    background: linear-gradient(135deg, #ffffff, #e0e7ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo-text .tagline {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    margin: 0;
+    font-weight: 500;
+}
+
+.company-description {
+    margin-bottom: 30px;
+    line-height: 1.7;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+}
+
+/* AI能力展示 - 仅在footer中生效，避免与页面内容冲突 */
+.ai-footer .ai-capabilities {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* 使用更高特异性确保样式不被覆盖 - 仅在footer中生效 */
+.ai-footer .ai-capabilities .capability-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 15px;
+    background: rgba(99, 102, 241, 0.1) !important;
+    border: 1px solid rgba(99, 102, 241, 0.2) !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* 使用更高特异性确保样式不被覆盖 - 仅在footer中生效 */
+.ai-footer .ai-capabilities .capability-item:hover {
+    background: rgba(99, 102, 241, 0.15) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
+}
+
+.capability-icon {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.5));
+}
+
+.capability-text {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #e0e7ff;
+}
+
+/* 服务列表样式 */
+.service-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.service-list li {
+    margin-bottom: 18px;
+}
+
+.service-list a {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    border-radius: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-list a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.service-list a:hover::before {
+    left: 100%;
+}
+
+.service-list a:hover {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
+}
+
+.service-icon {
+    font-size: 1.1rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.3));
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.service-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 1;
+}
+
+.service-text {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+}
+
+.service-desc {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    line-height: 1.4;
+}
+
+/* 联系信息样式 */
+.contact-methods {
+    margin-bottom: 30px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding: 12px;
+    background: rgba(99, 102, 241, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.contact-icon {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.3));
+}
+
+.contact-text {
+    font-size: 0.9rem;
+    color: #e0e7ff;
+}
+
+/* AI状态显示 */
+.ai-status {
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.status-active {
+    background: #10b981;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+.status-text {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #e0e7ff;
+}
+
+.ai-stats {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+.stat-item {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 500;
+    background: rgba(99, 102, 241, 0.05);
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+/* 底部版权区域 */
+.footer-bottom {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 20px 0;
+    border-top: 1px solid rgba(99, 102, 241, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.copyright-section {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.copyright-section p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.trust-badges {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    background: rgba(99, 102, 241, 0.1);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    font-weight: 500;
+}
+
+.footer-tech-stack {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tech-label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.tech-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.tech-icon {
+    font-size: 1rem;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    cursor: help;
+}
+
+.tech-icon:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .ai-footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+
+    .ai-capabilities {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .ai-footer {
+        padding: 60px 0 20px;
+        margin-top: 80px;
+    }
+
+    .ai-footer-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .copyright-section {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .trust-badges {
+        justify-content: center;
+    }
+
+    .ai-stats {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .ai-footer-container {
+        padding: 0 15px;
+    }
+
+    .footer-logo {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .logo-text h3 {
+        font-size: 1.5rem;
+    }
+
+    .service-list a {
+        padding: 12px;
+    }
+
+    .trust-badges {
+        gap: 10px;
+    }
+
+    .tech-icons {
+        gap: 6px;
+    }
+}

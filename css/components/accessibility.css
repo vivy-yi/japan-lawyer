@@ -1,0 +1,167 @@
+/* 无障碍访问样式 - WCAG 2.1 AA 标准 */
+/* Created: 2025-11-14 */
+
+/* ==================== 跳转链接 ==================== */
+
+/* Enhanced Accessibility Skip Link */
+.skip-link {
+    position: fixed;
+    top: -60px;
+    left: 20px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 8px;
+    z-index: 10000;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(30, 58, 95, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Skip Link Icon */
+.skip-link::before {
+    content: '⌨️';
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* Skip Link Text */
+.skip-link-text {
+    position: relative;
+    z-index: 1;
+}
+
+/* Focus and Hover States */
+.skip-link:focus,
+.skip-link:hover {
+    top: 20px;
+    transform: translateY(0);
+    background: linear-gradient(135deg, #2c5282 0%, #4299e1 100%);
+    box-shadow: 0 8px 30px rgba(30, 58, 95, 0.4);
+    border-color: rgba(255, 255, 255, 0.4);
+    outline: none;
+}
+
+/* Active/Pressed State */
+.skip-link:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 10px rgba(30, 58, 95, 0.3);
+}
+
+/* Enhanced Focus Indicator */
+.skip-link:focus-visible {
+    outline: 3px solid #4299e1;
+    outline-offset: 3px;
+    outline-style: auto;
+}
+
+/* ==================== 屏幕阅读器专用样式 ==================== */
+
+/* Screen Reader Only Class for Announcements */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Announcement Region for Screen Readers */
+.skip-link-announcement {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.skip-link-announcement.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==================== 高对比度模式支持 ==================== */
+
+@media (prefers-contrast: high) {
+    .skip-link {
+        background: #000;
+        border: 3px solid #fff;
+        color: #fff;
+    }
+
+    .skip-link:focus,
+    .skip-link:hover {
+        background: #333;
+        border-color: #fff;
+        outline: 4px solid #ff0;
+    }
+}
+
+/* ==================== 减少动画偏好支持 ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .skip-link {
+        transition: none;
+        transform: none;
+    }
+
+    .skip-link:focus,
+    .skip-link:hover {
+        top: 20px;
+    }
+
+    .skip-link-announcement {
+        transition: none;
+    }
+}
+
+/* ==================== 移动端响应式支持 ==================== */
+
+@media (max-width: 768px) {
+    .skip-link {
+        left: 10px;
+        right: 10px;
+        top: -50px;
+        padding: 10px 16px;
+        font-size: 14px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .skip-link:focus,
+    .skip-link:hover {
+        top: 15px;
+    }
+}
+
+/* ==================== 打印样式 ==================== */
+
+@media print {
+    .skip-link {
+        display: none !important;
+    }
+
+    .skip-link-announcement {
+        display: none !important;
+    }
+}

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI一站式法律服务平台 - 智能法律解决方案 | 日本商务通</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AI一站式法律服务平台 - 提供24/7在线AI法律顾问、智能合同审查、法律风险评估、知识产权保护等服务。日本商务通为您提供专业可靠的法律科技解决方案。">
+    <meta name="keywords" content="AI法律服务,智能法律顾问,合同审查,法律风险评估,知识产权保护,企业合规,争议解决,法律科技,日本商务通,一站式解决方案">
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AI一站式法律服务平台 - 智能法律解决方案">
+    <meta property="og:description" content="提供24/7在线AI法律顾问、智能合同审查、法律风险评估等专业法律服务">
+    <meta property="og:type" content="website">
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/modern-ai-pages.css">
+
+    <style>
+        /* AI法律服务特定样式 */
+        .hero-section {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #4f46e5 100%);
+            color: white;
+            padding: 120px 0 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: var(--responsive-font-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: var(--responsive-font-xl);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .service-features {
+            background: var(--bg-secondary);
+            padding: var(--responsive-spacing-2xl) 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--responsive-card-gap);
+            margin-top: var(--responsive-spacing-xl);
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: var(--responsive-spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: #4f46e5;
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-md);
+            display: block;
+            background: linear-gradient(135deg, #1e3a8a, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-title {
+            font-size: var(--responsive-font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .process-section {
+            padding: var(--responsive-spacing-2xl) 0;
+            background: white;
+        }
+
+        .process-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--responsive-spacing-xl);
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            width: 2px;
+            height: calc(100% + var(--spacing-md));
+            background: #4f46e5;
+            opacity: 0.3;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3a8a, #4f46e5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--responsive-font-lg);
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: var(--spacing-lg);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: var(--responsive-font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #4f46e5 0%, #1e3a8a 100%);
+            color: white;
+            padding: var(--responsive-spacing-2xl) 0;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: var(--responsive-font-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta-subtitle {
+            font-size: var(--responsive-font-lg);
+            opacity: 0.9;
+            margin-bottom: var(--responsive-spacing-xl);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta {
+            padding: var(--spacing-md) var(--responsive-spacing-xl);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: var(--responsive-font-base);
+            transition: all var(--transition-base);
+            display: inline-block;
+            min-width: 180px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-cta-primary {
+            background: white;
+            color: #1e3a8a;
+        }
+
+        .btn-cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-cta-secondary:hover {
+            background: white;
+            color: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        .benefits-section {
+            background: var(--bg-tertiary);
+            padding: var(--responsive-spacing-2xl) 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--responsive-card-gap);
+            margin-top: var(--responsive-spacing-xl);
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: var(--spacing-md);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+            color: #4f46e5;
+        }
+
+        .benefit-title {
+            font-size: var(--responsive-font-base);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .benefit-description {
+            color: var(--text-secondary);
+            font-size: var(--responsive-font-sm);
+        }
+
+        /* 模态框样式 */
+        .ai-service-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: var(--radius-xl);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal-content {
+            padding: var(--spacing-lg);
+        }
+
+        .modal-controls {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all var(--transition-base);
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-container {
+            margin: var(--spacing-md) 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #1e3a8a, #4f46e5);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: var(--spacing-xs);
+            font-size: var(--responsive-font-sm);
+            color: var(--text-secondary);
+        }
+
+        .processing-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--bg-secondary);
+            border-top: 4px solid #4f46e5;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--spacing-md);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .completion-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            background: #10b981;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto var(--spacing-lg);
+        }
+
+        .reference-number {
+            font-family: monospace;
+            background: var(--bg-secondary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            margin: var(--spacing-sm) 0;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: var(--breakpoint-md)) {
+            .hero-title {
+                font-size: var(--responsive-font-2xl);
+            }
+
+            .hero-subtitle {
+                font-size: var(--responsive-font-lg);
+            }
+
+            .process-step {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .process-step:not(:last-child)::after {
+                display: none;
+            }
+
+            .step-number {
+                margin-right: 0;
+                margin-bottom: var(--spacing-md);
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-cta {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">AI一站式法律服务平台</h1>
+                <p class="hero-subtitle">24/7智能法律顾问，AI驱动的合同审查与风险评估，为您提供全方位的法律科技解决方案</p>
+                <div class="hero-cta">
+                    <button class="btn-cta btn-cta-primary" onclick="startService()">开始体验</button>
+                    <button class="btn-cta btn-cta-secondary" onclick="showDemo()">查看演示</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Features Section -->
+    <section class="service-features">
+        <div class="container">
+            <h2 class="capabilities-title">核心功能特色</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3 class="feature-title">24/7在线AI法律顾问</h3>
+                    <p class="feature-description">全天候智能法律咨询服务，3分钟内响应，95%准确率的专业解答</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3 class="feature-title">智能合同审查与分析</h3>
+                    <p class="feature-description">AI自动识别合同风险点，提供修改建议，降低法律风险90%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">法律风险评估系统</h3>
+                    <p class="feature-description">全方位企业合规检查，实时监控法律风险变化，主动预警</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3 class="feature-title">知识产权AI保护</h3>
+                    <p class="feature-description">智能商标专利检索，侵权监测，全方位保护知识产权</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">争议解决方案推荐</h3>
+                    <p class="feature-description">基于案例数据库分析，推荐最优争议解决方案</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3 class="feature-title">企业合规检查服务</h3>
+                    <p class="feature-description">自动化合规审计，确保企业运营符合各国法律法规</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <h2 class="capabilities-title">服务流程</h2>
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">需求分析</h3>
+                        <p class="step-description">AI智能识别您的法律需求，分析案件类型和复杂程度，匹配最佳服务方案</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">方案制定</h3>
+                        <p class="step-description">专业律师团队结合AI分析结果，制定个性化的法律解决方案</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">执行服务</h3>
+                        <p class="step-description">高效执行法律服务，实时跟踪进度，确保每个环节都符合预期</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">质量保证</h3>
+                        <p class="step-description">持续跟进服务效果，提供后续法律支持，确保问题彻底解决</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="capabilities-title">服务优势</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">🌍</div>
+                    <h3 class="benefit-title">全方位法律支持</h3>
+                    <p class="benefit-description">从法律咨询到执行代理，提供一站式法律服务</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🤖</div>
+                    <h3 class="benefit-title">AI智能分析</h3>
+                    <p class="benefit-description">3分钟内完成95%准确率的法律分析</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🔒</div>
+                    <h3 class="benefit-title">数据安全保障</h3>
+                    <p class="benefit-description">银行级加密保护，确保客户信息安全</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🌏</div>
+                    <h3 class="benefit-title">跨境法律服务</h3>
+                    <p class="benefit-description">覆盖50+国家，支持15种语言</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">准备好获得专业的法律支持了吗？</h2>
+            <p class="cta-subtitle">立即体验我们的AI法律服务平台，让智能科技为您的法律事务保驾护航</p>
+            <div class="cta-buttons">
+                <button class="btn-cta btn-cta-primary" onclick="contactUs()">立即咨询</button>
+                <button class="btn-cta btn-cta-secondary" onclick="learnMore()">了解更多</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // AI法律服务平台配置
+        window.SERVICE_CONFIG = {
+            name: 'AI法律服务平台',
+            type: 'legal',
+            tagline: '24/7智能法律顾问，AI驱动的合同审查与风险评估',
+            description: '提供24/7在线AI法律顾问、智能合同审查、法律风险评估等专业法律服务',
+            keywords: 'AI法律服务,智能法律顾问,合同审查,法律风险评估',
+            features: [
+                '24/7在线AI法律顾问',
+                '智能合同审查与分析',
+                '法律风险评估系统',
+                '知识产权AI保护',
+                '争议解决方案推荐',
+                '企业合规检查服务'
+            ],
+            processSteps: [
+                {
+                    title: '需求分析',
+                    description: 'AI智能识别您的法律需求，分析案件类型和复杂程度',
+                    inputs: [
+                        {
+                            id: 'legal-category',
+                            name: 'legal_category',
+                            type: 'select',
+                            label: '法律服务类别',
+                            required: true
+                        },
+                        {
+                            id: 'case-description',
+                            name: 'case_description',
+                            type: 'textarea',
+                            label: '案件描述',
+                            placeholder: '请详细描述您的法律问题...',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '方案制定',
+                    description: '专业律师团队结合AI分析结果，制定个性化解决方案',
+                    inputs: [
+                        {
+                            id: 'urgency-level',
+                            name: 'urgency_level',
+                            type: 'select',
+                            label: '紧急程度',
+                            required: true
+                        },
+                        {
+                            id: 'budget-range',
+                            name: 'budget_range',
+                            type: 'select',
+                            label: '预算范围',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '执行服务',
+                    description: '高效执行法律服务，实时跟踪进度',
+                    inputs: [
+                        {
+                            id: 'contact-preference',
+                            name: 'contact_preference',
+                            type: 'select',
+                            label: '联系方式偏好',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '质量保证',
+                    description: '持续跟进服务效果，提供后续支持',
+                    inputs: []
+                }
+            ],
+            benefits: [
+                '全方位法律支持（从咨询到执行）',
+                'AI智能分析（3分钟内完成95%准确率分析）',
+                '数据安全保障（银行级加密保护）',
+                '跨境法律服务（覆盖50+国家，15种语言）'
+            ],
+            contactMethod: 'chat'
+        };
+    </script>
+    <script src="template-service-script.js"></script>
+</body>
+</html>

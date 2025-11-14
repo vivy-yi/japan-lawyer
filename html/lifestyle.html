@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生活帮忙 - 日本商务通</title>
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="index, follow">
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary: #1e3a5f;
+            --secondary: #2c5282;
+            --accent: #3182ce;
+            --gold: #d69e2e;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #dd6b20;
+            --light: #f7fafc;
+            --gray: #4a5568;
+            --dark: #1a202c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles - Use nav.js injected navigation, no custom header styles needed */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--gold);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switcher button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .language-switcher button.active {
+            background: var(--gold);
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 100px;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* 页面标题区域 */
+        .page-header {
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, var(--light) 0%, white 100%);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 服务介绍区域 */
+        .services-intro {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .intro-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .intro-content h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .intro-content p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .intro-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .intro-feature {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--light);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .intro-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .intro-feature h3 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .intro-feature p {
+            color: var(--gray);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* 服务分类区域 */
+        .services-categories {
+            padding: 80px 0;
+            background: var(--light);
+        }
+
+        .categories-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .categories-header h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .service-category {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--primary));
+        }
+
+        .service-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .category-icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .category-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .category-description {
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .category-services {
+            list-style: none;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .category-services li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .category-services li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .category-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .category-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        /* 服务流程区域 */
+        .process-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .process-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .process-header h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            box-shadow: 0 5px 15px rgba(30, 58, 95, 0.3);
+        }
+
+        .step-title {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .step-description {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* 联系咨询区域 */
+        .contact-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .contact-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px 20px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-item p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--primary);
+                flex-direction: column;
+                gap: 0;
+                padding: 80px 20px 20px;
+                z-index: 1000;
+                transition: right 0.3s ease;
+            }
+
+            .nav-menu.active {
+                right: 0;
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                gap: 4px;
+                z-index: 1001;
+            }
+
+            .mobile-menu-toggle span {
+                width: 25px;
+                height: 3px;
+                background: white;
+                transition: all 0.3s ease;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .categories-grid,
+            .intro-features,
+            .process-steps,
+            .contact-info {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .process-step:not(:last-child)::after {
+                display: none;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+    </style>
+    <!-- Using local system fonts instead of Google Fonts for better performance and reliability -->
+
+        <!-- Modern AI Design -->
+    <link rel="stylesheet" href="css/modern-homepage.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/components/buttons.css">
+    <link rel="stylesheet" href="css/components/carousel.css">
+    <link rel="stylesheet" href="css/modern-ai-pages.css">
+    <link rel="stylesheet" href="css/ai-footer.css">
+    <style>
+        /* AI页面特定样式 */
+        body {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .ai-page-header {
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #8b5cf6 100%);
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            animation: headerShine 8s ease-in-out infinite;
+        }
+
+        @keyframes headerShine {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .ai-page-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ai-service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .ai-service-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.05), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .ai-service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .ai-service-card:hover::before {
+            left: 100%;
+        }
+
+        .ai-service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .ai-service-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .ai-service-description {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .ai-service-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .ai-service-features li {
+            padding: 8px 0;
+            color: #475569;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .ai-service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .ai-service-btn {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .ai-service-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .ai-service-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .ai-service-btn:hover::before {
+            left: 100%;
+        }
+
+        /* 保留现有按钮设计 */
+        .tag, .filter-tag, .btn-primary, .btn-secondary {
+            /* 保持现有按钮样式，但添加AI效果 */
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tag:hover, .filter-tag:hover, .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .ai-page-header {
+                padding: 60px 0;
+            }
+
+            .ai-service-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .ai-service-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+    <body>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- 页面标题区域 -->
+        <section class="page-header page-header--service">
+            <div class="container">
+                <h1 class="page-header__title" data-lang="lifestyle-title">生活帮忙</h1>
+                <p class="page-header__subtitle" data-lang="lifestyle-subtitle">翻译、代跑、维修、陪同等全方位生活服务</p>
+            </div>
+        </section>
+
+        <!-- 服务介绍区域 -->
+        <section class="services-intro">
+            <div class="container">
+                <div class="intro-content">
+                    <h2 data-lang="intro-title">一站式生活服务解决方案</h2>
+                    <p data-lang="intro-description">
+                        我们提供全方位的生活帮忙服务，让您在日本的日常生活更加便利。从语言沟通到日常事务处理，
+                        从专业服务到紧急求助，我们都有经验丰富的服务人员为您提供专业、可靠的协助。
+                    </p>
+                    <div class="intro-features">
+                        <div class="intro-feature">
+                            <div class="intro-feature-icon">⭐</div>
+                            <h3 data-lang="feature1-title">专业可靠</h3>
+                            <p data-lang="feature1-desc">经验丰富的服务人员，专业可靠</p>
+                        </div>
+                        <div class="intro-feature">
+                            <div class="intro-feature-icon">⚡</div>
+                            <h3 data-lang="feature2-title">快速响应</h3>
+                            <p data-lang="feature2-desc">24小时内响应您的服务需求</p>
+                        </div>
+                        <div class="intro-feature">
+                            <div class="intro-feature-icon">🛡️</div>
+                            <h3 data-lang="feature3-title">安全保障</h3>
+                            <p data-lang="feature3-desc">严格筛选，服务过程全程保障</p>
+                        </div>
+                        <div class="intro-feature">
+                            <div class="intro-feature-icon">💰</div>
+                            <h3 data-lang="feature4-title">价格透明</h3>
+                            <p data-lang="feature4-desc">明码标价，无隐形消费</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 服务分类区域 -->
+        <section class="services-categories">
+            <div class="container">
+                <div class="categories-header">
+                    <h2 data-lang="categories-title">服务分类</h2>
+                    <p data-lang="categories-subtitle">专业的服务团队，满足您的各种生活需求</p>
+                </div>
+
+                <div class="categories-grid">
+                    <!-- 翻译服务 -->
+                    <div class="service-category" onclick="showServiceDetails('translate')">
+                        <div class="category-icon">🗣️</div>
+                        <h3 class="category-title" data-lang="translate-title">翻译服务</h3>
+                        <p class="category-description" data-lang="translate-desc">专业多语种翻译，解决语言沟通障碍</p>
+                        <ul class="category-services">
+                            <li data-lang="translate-service1">文件翻译</li>
+                            <li data-lang="translate-service2">口译服务</li>
+                            <li data-lang="translate-service3">商务翻译</li>
+                            <li data-lang="translate-service4">生活翻译</li>
+                        </ul>
+                        <button class="category-btn" data-lang="learn-more">了解详情</button>
+                    </div>
+
+                    <!-- 代跑服务 -->
+                    <div class="service-category" onclick="showServiceDetails('errand')">
+                        <div class="category-icon">🏃</div>
+                        <h3 class="category-title" data-lang="errand-title">代跑服务</h3>
+                        <p class="category-description" data-lang="errand-desc">代办各种日常事务，节省您宝贵时间</p>
+                        <ul class="category-services">
+                            <li data-lang="errand-service1">政府机关代办</li>
+                            <li data-lang="errand-service2">银行业务代办</li>
+                            <li data-lang="errand-service3">购物代跑</li>
+                            <li data-lang="errand-service4">文件递送</li>
+                        </ul>
+                        <button class="category-btn" data-lang="learn-more">了解详情</button>
+                    </div>
+
+                    <!-- 维修服务 -->
+                    <div class="service-category" onclick="showServiceDetails('repair')">
+                        <div class="category-icon">🔧</div>
+                        <h3 class="category-title" data-lang="repair-title">维修服务</h3>
+                        <p class="category-description" data-lang="repair-desc">专业维修团队，解决各种设备问题</p>
+                        <ul class="category-services">
+                            <li data-lang="repair-service1">家电维修</li>
+                            <li data-lang="repair-service2">水电维修</li>
+                            <li data-lang="repair-service3">手机电脑维修</li>
+                            <li data-lang="repair-service4">家具安装</li>
+                        </ul>
+                        <button class="category-btn" data-lang="learn-more">了解详情</button>
+                    </div>
+
+                    <!-- 陪同就诊 -->
+                    <div class="service-category" onclick="showServiceDetails('medical')">
+                        <div class="category-icon">🏥</div>
+                        <h3 class="category-title" data-lang="medical-title">陪同就诊</h3>
+                        <p class="category-description" data-lang="medical-desc">专业医疗翻译陪同，就医无忧</p>
+                        <ul class="category-services">
+                            <li data-lang="medical-service1">医院挂号协助</li>
+                            <li data-lang="medical-service2">就诊翻译陪同</li>
+                            <li data-lang="medical-service3">药品购买协助</li>
+                            <li data-lang="medical-service4">复诊提醒服务</li>
+                        </ul>
+                        <button class="category-btn" data-lang="learn-more">了解详情</button>
+                    </div>
+
+                    <!-- 住房帮忙 -->
+                    <div class="service-category" onclick="showServiceDetails('housing')">
+                        <div class="category-icon">🏠</div>
+                        <h3 class="category-title" data-lang="housing-title">住房帮忙</h3>
+                        <p class="category-description" data-lang="housing-desc">租房买房协助，安家无忧</p>
+                        <ul class="category-services">
+                            <li data-lang="housing-service1">租房看房陪同</li>
+                            <li data-lang="housing-service2">合同审查协助</li>
+                            <li data-lang="housing-service3">搬家服务</li>
+                            <li data-lang="housing-service4">房屋清洁</li>
+                        </ul>
+                        <button class="category-btn" data-lang="learn-more">了解详情</button>
+                    </div>
+
+                    <!-- 交通协助 -->
+                    <div class="service-category" onclick="showServiceDetails('transport')">
+                        <div class="category-icon">🚗</div>
+                        <h3 class="category-title" data-lang="transport-title">交通协助</h3>
+                        <p class="category-description" data-lang="transport-desc">驾照办理、车辆相关事务协助</p>
+                        <ul class="category-services">
+                            <li data-lang="transport-service1">驾照办理协助</li>
+                            <li data-lang="transport-service2">车辆购买咨询</li>
+                            <li data-lang="transport-service3">车险办理协助</li>
+                            <li data-lang="transport-service4">年检代办服务</li>
+                        </ul>
+                        <button class="category-btn" data-lang="learn-more">了解详情</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 服务流程区域 -->
+        <section class="process-section">
+            <div class="container">
+                <div class="process-header">
+                    <h2 data-lang="process-title">服务流程</h2>
+                    <p data-lang="process-subtitle">简单便捷的服务流程，快速满足您的需求</p>
+                </div>
+
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title" data-lang="step1-title">提交需求</h3>
+                        <p class="step-description" data-lang="step1-desc">通过电话或在线表单提交您的服务需求</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title" data-lang="step2-title">需求确认</h3>
+                        <p class="step-description" data-lang="step2-desc">我们的服务人员会在1小时内联系您确认需求</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title" data-lang="step3-title">提供服务</h3>
+                        <p class="step-description" data-lang="step3-desc">专业服务人员按约定时间地点提供服务</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title" data-lang="step4-title">服务完成</h3>
+                        <p class="step-description" data-lang="step4-desc">服务完成后确认满意度，完成支付</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系咨询区域 -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-content">
+                    <h2 data-lang="contact-title">立即联系我们</h2>
+                    <p data-lang="contact-subtitle">有任何生活服务需求，随时联系我们</p>
+
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <h3 data-lang="contact-phone-title">服务热线</h3>
+                            <p data-lang="contact-phone">080-1234-5678</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">💬</div>
+                            <h3 data-lang="contact-wechat-title">微信客服</h3>
+                            <p data-lang="contact-wechat">JapanService2024</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <h3 data-lang="contact-email-title">邮箱咨询</h3>
+                            <p data-lang="contact-email">service@japan-business.jp</p>
+                        </div>
+                    </div>
+
+                    <button class="category-btn" style="background: var(--gold); color: var(--dark); padding: 15px 40px; font-size: 1.1rem;" onclick="window.location.href='index.html#contact'">
+                        <span data-lang="contact-btn">立即咨询</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript函数已移至 js/pages/services.js -->
+
+</body>
+
+</html>

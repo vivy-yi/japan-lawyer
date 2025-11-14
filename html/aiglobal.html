@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI出海服务 - 日本商务通</title>
+
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="index, follow">
+
+        <!-- <link rel="stylesheet" href="css/components/buttons.css"> -->
+        
+        <!-- <link rel="stylesheet" href="css/modern-ai-pages.css?v=202511140850"> -->
+        
+        <!-- <link rel="stylesheet" href="css/ai-footer.css"> -->
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary: #1e3a5f;
+            --secondary: #2c5282;
+            --accent: #3182ce;
+            --gold: #d69e2e;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #dd6b20;
+            --light: #f7fafc;
+            --gray: #4a5568;
+            --dark: #1a202c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles - Use nav.js injected navigation, no custom header styles needed */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--gold);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switcher button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .language-switcher button.active {
+            background: var(--gold);
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 100px;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* 页面标题区域 */
+        .page-header {
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-bottom: 2px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* AI出海内容区域 */
+        .global-content {
+            padding: 80px 0;
+        }
+
+        .search-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            border: 3px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(30, 58, 95, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* AI出海服务分类标签 */
+        .global-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        .tag {
+            background: white;
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .tag:hover,
+        .tag.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* AI出海服务卡片网格 */
+        .global-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .global-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .global-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .global-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+        }
+
+        .global-icon {
+            font-size: 60px;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .global-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .global-card p {
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .global-points {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .global-points li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .global-points li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .global-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .global-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        /* AI能力展示区域 */
+        .ai-capabilities {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 60px 0;
+            margin-top: 60px;
+            border-radius: 20px;
+        }
+
+        .capabilities-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+            justify-content: center;
+        }
+
+        /* 在中等屏幕上确保两行布局 */
+        @media (min-width: 769px) and (max-width: 1199px) {
+            .capabilities-grid {
+                grid-template-columns: repeat(2, 280px);
+                max-width: 600px;
+                gap: 25px;
+            }
+        }
+
+        /* 在大屏幕上限制最大列数，确保居中效果 */
+        @media (min-width: 1200px) {
+            .capabilities-grid {
+                grid-template-columns: repeat(3, 280px);
+                justify-content: center;
+                max-width: 900px;
+            }
+        }
+
+        .capability-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .capability-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .capability-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .capability-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .capability-desc {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* 一站式服务流程 */
+        .one-stop-process {
+            padding: 80px 0;
+        }
+
+        .process-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .process-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .step-desc {
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--primary);
+                flex-direction: column;
+                gap: 0;
+                padding: 80px 20px 20px;
+                z-index: 1000;
+                transition: right 0.3s ease;
+            }
+
+            .nav-menu.active {
+                right: 0;
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                gap: 4px;
+                z-index: 1001;
+            }
+
+            .mobile-menu-toggle span {
+                width: 25px;
+                height: 3px;
+                background: white;
+                transition: all 0.3s ease;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .global-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .process-flow {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .process-step {
+                width: 100%;
+            }
+
+            /* 移动端优化：确保合理布局 */
+            .capabilities-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                max-width: 550px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+
+        /* AI特效动画 */
+        @keyframes aiPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .ai-highlight {
+            animation: aiPulse 2s ease-in-out infinite;
+        }
+    </style>
+    <!-- Using local system fonts instead of Google Fonts for better performance and reliability -->
+</head>
+
+<body>
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- 页面标题区域 -->
+        <section class="page-header page-header--ai">
+            <div class="container">
+                <h1 class="page-header__title">🌍 AI出海服务</h1>
+                <p class="page-header__subtitle">智能化全球商业拓展平台，AI驱动的一站式出海解决方案，助力企业轻松走向世界</p>
+            </div>
+        </section>
+
+        <!-- AI出海服务内容区域 -->
+        <section class="global-content">
+            <div class="container">
+                <!-- 搜索功能 -->
+                <div class="search-section">
+                    <div class="search-container">
+                        <input type="text" class="search-input" data-lang-placeholder="search-placeholder"
+                            placeholder="搜索出海服务...">
+                        <button class="search-btn" onclick="searchGlobal()">🔍</button>
+                    </div>
+                </div>
+
+                <!-- AI出海服务分类标签 -->
+                <div class="global-tags">
+                    <div class="tag active" onclick="filterGlobal('all')">全部服务</div>
+                    <div class="tag" onclick="filterGlobal('market')">市场分析</div>
+                    <div class="tag" onclick="filterGlobal('legal')">法律合规</div>
+                    <div class="tag" onclick="filterGlobal('marketing')">营销推广</div>
+                    <div class="tag" onclick="filterGlobal('operation')">运营管理</div>
+                    <div class="tag" onclick="filterGlobal('finance')">财务税务</div>
+                </div>
+
+                <!-- AI出海服务卡片网格 -->
+                <div class="global-grid">
+                    <!-- AI市场分析卡片 -->
+                    <div class="global-card" data-category="market">
+                        <div class="global-icon">📊</div>
+                        <h3>AI智能市场分析</h3>
+                        <p>基于大数据和AI算法的全球市场洞察，精准识别商机，降低出海风险</p>
+                        <ul class="global-points">
+                            <li>目标市场AI评估与推荐</li>
+                            <li>竞争对手智能分析</li>
+                            <li>消费者行为预测</li>
+                            <li>市场规模与增长潜力分析</li>
+                            <li>实时市场动态监控</li>
+                        </ul>
+                        <button class="global-link" data-global-action="market-analysis">开始分析 →</button>
+                    </div>
+
+                    <!-- AI法律合规卡片 -->
+                    <div class="global-card" data-category="legal">
+                        <div class="global-icon">⚖️</div>
+                        <h3>AI法律合规助手</h3>
+                        <p>智能化的全球法律合规解决方案，确保企业在各国合法合规经营</p>
+                        <ul class="global-points">
+                            <li>各国法律法规AI解读</li>
+                            <li>智能合规风险评估</li>
+                            <li>合同与协议智能生成</li>
+                            <li>知识产权保护建议</li>
+                            <li>合规自动化监控</li>
+                        </ul>
+                        <button class="global-link" data-global-action="legal-compliance">合规检查 →</button>
+                    </div>
+
+                    <!-- AI营销推广卡片 -->
+                    <div class="global-card" data-category="marketing">
+                        <div class="global-icon">📱</div>
+                        <h3>AI全球化营销</h3>
+                        <p>基于AI的精准营销推广系统，自动适配不同文化和语言环境</p>
+                        <ul class="global-points">
+                            <li>多语言AI内容生成</li>
+                            <li>文化适应性优化</li>
+                            <li>精准用户画像定位</li>
+                            <li>营销效果AI预测</li>
+                            <li>社交媒体智能管理</li>
+                        </ul>
+                        <button class="global-link" data-global-action="global-marketing">开始营销 →</button>
+                    </div>
+
+                    <!-- AI运营管理卡片 -->
+                    <div class="global-card" data-category="operation">
+                        <div class="global-icon">⚙️</div>
+                        <h3>AI智能运营管理</h3>
+                        <p>全方位的AI运营支持系统，实现海外业务智能化管理</p>
+                        <ul class="global-points">
+                            <li>供应链智能优化</li>
+                            <li>库存需求AI预测</li>
+                            <li>客户服务AI助手</li>
+                            <li>业务流程自动化</li>
+                            <li>跨时区智能协调</li>
+                        </ul>
+                        <button class="global-link" data-global-action="operation-management">优化运营 →</button>
+                    </div>
+
+                    <!-- AI财务税务卡片 -->
+                    <div class="global-card" data-category="finance">
+                        <div class="global-icon">💰</div>
+                        <h3>AI财务税务管理</h3>
+                        <p>智能化的全球财务税务解决方案，优化资金配置，降低税务成本</p>
+                        <ul class="global-points">
+                            <li>全球税务AI筹划</li>
+                            <li>汇率风险智能管理</li>
+                            <li>跨境支付优化</li>
+                            <li>财务报表智能生成</li>
+                            <li>合规税务申报自动化</li>
+                        </ul>
+                        <button class="global-link" data-global-action="finance-tax">财务规划 →</button>
+                    </div>
+
+                    <!-- AI本地化服务卡片 -->
+                    <div class="global-card" data-category="marketing">
+                        <div class="global-icon">🌐</div>
+                        <h3>AI本地化解决方案</h3>
+                        <p>深度本地化AI服务，让产品和服务完美融入目标市场</p>
+                        <ul class="global-points">
+                            <li>文化差异AI识别</li>
+                            <li>产品本地化建议</li>
+                            <li>品牌适应性优化</li>
+                            <li>用户体验智能适配</li>
+                            <li>本地合作伙伴推荐</li>
+                        </ul>
+                        <button class="global-link" data-global-action="localization">开始本地化 →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI能力展示区域 -->
+        <section class="ai-capabilities">
+            <div class="container">
+                <h2 class="capabilities-title">🤖 核心AI能力</h2>
+                <div class="capabilities-grid">
+                    <div class="capability-card">
+                        <div class="capability-icon">🧠</div>
+                        <h3 class="capability-title">智能预测分析</h3>
+                        <p class="capability-desc">基于机器学习算法，预测市场趋势、用户行为和业务风险，为企业决策提供数据支持</p>
+                    </div>
+                    <div class="capability-card">
+                        <div class="capability-icon">🗣️</div>
+                        <h3 class="capability-title">多语言AI翻译</h3>
+                        <p class="capability-desc">支持100+语言的智能翻译，理解文化差异，确保内容在目标市场的准确性和吸引力</p>
+                    </div>
+                    <div class="capability-card">
+                        <div class="capability-icon">📈</div>
+                        <h3 class="capability-title">数据驱动洞察</h3>
+                        <p class="capability-desc">实时分析全球市场数据，提供深度商业洞察，发现隐藏的商业机会</p>
+                    </div>
+                    <div class="capability-card">
+                        <div class="capability-icon">🔍</div>
+                        <h3 class="capability-title">智能合规检测</h3>
+                        <p class="capability-desc">自动检测各国法律法规变化，确保企业始终符合当地合规要求</p>
+                    </div>
+                    <div class="capability-card">
+                        <div class="capability-icon">🎯</div>
+                        <h3 class="capability-title">精准用户画像</h3>
+                        <p class="capability-desc">基于大数据分析，构建精准的海外用户画像，实现个性化营销和服务</p>
+                    </div>
+                    <div class="capability-card">
+                        <div class="capability-icon">🤝</div>
+                        <h3 class="capability-title">智能资源匹配</h3>
+                        <p class="capability-desc">AI匹配最优的本地合作伙伴、供应商和服务商，构建高效的全球生态系统</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 一站式服务流程 -->
+        <section class="one-stop-process">
+            <div class="container">
+                <h2 class="process-title">🚀 一站式出海流程</h2>
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">需求评估</h3>
+                        <p class="step-desc">AI分析企业出海需求，制定个性化出海策略</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">市场调研</h3>
+                        <p class="step-desc">深度调研目标市场，评估商业机会与风险</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">方案制定</h3>
+                        <p class="step-desc">AI生成完整的出海方案，涵盖法律、营销、运营等</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title">执行落地</h3>
+                        <p class="step-desc">专业团队协助实施，全程AI监控和优化</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI出海服务页面脚本 -->
+    <script src="js/components/business-analyzer.js"></script>
+    <script src="js/pages/aiglobal.js"></script>
+</body>
+</html>

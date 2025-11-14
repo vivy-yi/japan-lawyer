@@ -1,0 +1,91 @@
+/* 按钮组件样式 */
+
+/* 基础按钮 */
+.button,
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+    text-decoration: none;
+    font-size: var(--responsive-font-base);
+    gap: var(--spacing-xs);
+    white-space: nowrap;
+}
+
+/* 主要按钮 */
+.button--primary,
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    color: var(--white, #ffffff);
+    box-shadow: var(--shadow-md);
+}
+
+.button--primary:hover,
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* 次要按钮 */
+.button--secondary,
+.btn-secondary {
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.button--secondary:hover,
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: var(--white, #ffffff);
+}
+
+/* CTA按钮 */
+.cta-button {
+    background: var(--primary-gradient);
+    color: white;
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    font-size: var(--responsive-font-lg);
+    min-width: 180px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-lg);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* 按钮尺寸变体 */
+.button--small,
+.btn-sm {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--responsive-font-sm);
+}
+
+.button--large,
+.btn-lg {
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--responsive-font-lg);
+}
+
+/* 禁用状态 */
+.button:disabled,
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}

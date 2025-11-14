@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI财务服务 - 日本商务通</title>
+
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src='self' data: https:; font-src='self' data:; connect-src='self'; media-src='self'; object-src='none'; base-uri='self'; form-action='self'; frame-ancestors='none'; upgrade-insecure-requests;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="index, follow">
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary: #1e3a5f;
+            --secondary: #2c5282;
+            --accent: #3182ce;
+            --gold: #d69e2e;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #dd6b20;
+            --light: #f7fafc;
+            --gray: #4a5568;
+            --dark: #1a202c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles - Use nav.js injected navigation, no custom header styles needed */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--gold);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switcher button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .language-switcher button.active {
+            background: var(--gold);
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 100px;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* 页面标题区域 */
+        .page-header {
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-bottom: 2px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* AI财务内容区域 */
+        .finance-content {
+            padding: 80px 0;
+        }
+
+        .search-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            border: 3px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(30, 58, 95, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--success);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--primary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* AI财务服务分类标签 */
+        .finance-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        .tag {
+            background: white;
+            color: var(--success);
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--success);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .tag:hover,
+        .tag.active {
+            background: var(--success);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* AI财务服务卡片网格 */
+        .finance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .finance-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .finance-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .finance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+        }
+
+        .finance-icon {
+            font-size: 60px;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .finance-card h3 {
+            color: var(--success);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .finance-card p {
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .finance-points {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .finance-points li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .finance-points li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .finance-link {
+            color: var(--success);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .finance-link:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        /* 一站式财务服务流程 */
+        .one-stop-finance {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            padding: 80px 0;
+            margin-top: 60px;
+            border-radius: 20px;
+        }
+
+        .one-stop-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--success);
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .finance-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .finance-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .finance-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            color: var(--success);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .step-desc {
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* AI财务仪表板 */
+        .ai-dashboard {
+            padding: 80px 0;
+            background: white;
+            border-radius: 20px;
+            margin-top: 60px;
+        }
+
+        .dashboard-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .dashboard-card {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--success);
+        }
+
+        .dashboard-title-small {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .dashboard-desc {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .metric-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .metric-value {
+            color: var(--success);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--primary);
+                flex-direction: column;
+                gap: 0;
+                padding: 80px 20px 20px;
+                z-index: 1000;
+                transition: right 0.3s ease;
+            }
+
+            .nav-menu.active {
+                right: 0;
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                gap: 4px;
+                z-index: 1001;
+            }
+
+            .mobile-menu-toggle span {
+                width: 25px;
+                height: 3px;
+                background: white;
+                transition: all 0.3s ease;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .finance-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .finance-flow {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .finance-step {
+                width: 100%;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+
+        /* AI特效动画 */
+        @keyframes aiPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .ai-highlight {
+            animation: aiPulse 2s ease-in-out infinite;
+        }
+    </style>
+    <!-- Using local system fonts instead of Google Fonts for better performance and reliability -->
+</head>
+
+<body>
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- 页面标题区域 -->
+        <section class="page-header page-header--finance">
+            <div class="container">
+                <h1 class="page-header__title">💰 AI财务服务</h1>
+                <p class="page-header__subtitle">智能化财务管理平台，AI驱动的一站式财务解决方案，让财务管理更精准、更高效</p>
+            </div>
+        </section>
+
+        <!-- AI财务服务内容区域 -->
+        <section class="finance-content">
+            <div class="container">
+                <!-- 搜索功能 -->
+                <div class="search-section">
+                    <div class="search-container">
+                        <input type="text" class="search-input" data-lang-placeholder="search-placeholder"
+                            placeholder="搜索财务服务...">
+                        <button class="search-btn" onclick="searchFinance()">🔍</button>
+                    </div>
+                </div>
+
+                <!-- AI财务服务分类标签 -->
+                <div class="finance-tags">
+                    <div class="tag active" onclick="filterFinance('all')">全部服务</div>
+                    <div class="tag" onclick="filterFinance('accounting')">智能会计</div>
+                    <div class="tag" onclick="filterFinance('tax')">税务管理</div>
+                    <div class="tag" onclick="filterFinance('investment')">投资分析</div>
+                    <div class="tag" onclick="filterFinance('risk')">风控管理</div>
+                    <div class="tag" onclick="filterFinance('reporting')">财务报表</div>
+                </div>
+
+                <!-- AI财务服务卡片网格 -->
+                <div class="finance-grid">
+                    <!-- AI智能会计卡片 -->
+                    <div class="finance-card" data-category="accounting">
+                        <div class="finance-icon">📊</div>
+                        <h3>AI智能会计</h3>
+                        <p>基于人工智能的智能会计系统，自动处理日常会计事务，提升财务工作效率</p>
+                        <ul class="finance-points">
+                            <li>自动记账凭证生成</li>
+                            <li>智能费用报销管理</li>
+                            <li>实时财务数据分析</li>
+                            <li>异常交易智能识别</li>
+                            <li>合规性自动检查</li>
+                        </ul>
+                        <button class="finance-link" data-finance-action="smart-accounting">开始使用 →</button>
+                    </div>
+
+                    <!-- AI税务管理卡片 -->
+                    <div class="finance-card" data-category="tax">
+                        <div class="finance-icon">📑</div>
+                        <h3>AI税务筹划</h3>
+                        <p>智能税务管理系统，自动优化税务结构，降低税负，确保税务合规</p>
+                        <ul class="finance-points">
+                            <li>智能税务筹划建议</li>
+                            <li>自动税务申报</li>
+                            <li>税务风险预警</li>
+                            <li>多地区税务合规</li>
+                            <li>税务政策智能更新</li>
+                        </ul>
+                        <button class="finance-link" data-finance-action="tax-planning">税务优化 →</button>
+                    </div>
+
+                    <!-- AI投资分析卡片 -->
+                    <div class="finance-card" data-category="investment">
+                        <div class="finance-icon">📈</div>
+                        <h3>AI投资分析</h3>
+                        <p>基于大数据和机器学习的投资分析系统，提供专业的投资决策支持</p>
+                        <ul class="finance-points">
+                            <li>市场趋势AI预测</li>
+                            <li>投资组合智能优化</li>
+                            <li>风险评估与控制</li>
+                            <li>实时市场监控</li>
+                            <li>投资回报智能分析</li>
+                        </ul>
+                        <button class="finance-link" data-finance-action="investment-analysis">投资分析 →</button>
+                    </div>
+
+                    <!-- AI风控管理卡片 -->
+                    <div class="finance-card" data-category="risk">
+                        <div class="finance-icon">🛡️</div>
+                        <h3>AI风控管理</h3>
+                        <p>全方位的财务风险管理系统，AI驱动的风险识别与预警</p>
+                        <ul class="finance-points">
+                            <li>信用风险智能评估</li>
+                            <li>流动性风险监控</li>
+                            <li>操作风险识别</li>
+                            <li>欺诈检测预警</li>
+                            <li>合规风险管控</li>
+                        </ul>
+                        <button class="finance-link" data-finance-action="risk-management">风控分析 →</button>
+                    </div>
+
+                    <!-- AI财务报表卡片 -->
+                    <div class="finance-card" data-category="reporting">
+                        <div class="finance-icon">📋</div>
+                        <h3>AI财务报表</h3>
+                        <p>自动化财务报表生成系统，智能分析和可视化财务数据</p>
+                        <ul class="finance-points">
+                            <li>智能报表自动生成</li>
+                            <li>财务数据可视化</li>
+                            <li>关键指标智能分析</li>
+                            <li>自定义报表模板</li>
+                            <li>实时数据更新</li>
+                        </ul>
+                        <button class="finance-link" data-finance-action="financial-reporting">生成报表 →</button>
+                    </div>
+
+                    <!-- AI预算管理卡片 -->
+                    <div class="finance-card" data-category="accounting">
+                        <div class="finance-icon">💎</div>
+                        <h3>AI预算管理</h3>
+                        <p>智能化预算编制和执行监控，AI辅助的财务规划与控制</p>
+                        <ul class="finance-points">
+                            <li>智能预算编制</li>
+                            <li>预算执行监控</li>
+                            <li>成本预测分析</li>
+                            <li>预算偏差智能分析</li>
+                            <li>预算优化建议</li>
+                        </ul>
+                        <button class="finance-link" data-finance-action="budget-management">预算规划 →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 一站式财务服务流程 -->
+        <section class="one-stop-finance">
+            <div class="container">
+                <h2 class="one-stop-title">🚀 一站式财务管理流程</h2>
+                <div class="finance-flow">
+                    <div class="finance-step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">数据集成</h3>
+                        <p class="step-desc">自动集成银行、支付、ERP等系统数据，构建统一财务数据平台</p>
+                    </div>
+                    <div class="finance-step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">智能处理</h3>
+                        <p class="step-desc">AI自动处理会计核算、税务计算、风险识别等财务工作</p>
+                    </div>
+                    <div class="finance-step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">分析洞察</h3>
+                        <p class="step-desc">深度分析财务数据，提供商业洞察和决策支持</p>
+                    </div>
+                    <div class="finance-step">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title">报告输出</h3>
+                        <p class="step-desc">自动生成各类财务报表和管理仪表板</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI财务仪表板 -->
+        <section class="ai-dashboard">
+            <div class="container">
+                <h2 class="dashboard-title">🤖 AI财务仪表板</h2>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="dashboard-icon">💰</div>
+                        <h3 class="dashboard-title-small">现金流管理</h3>
+                        <p class="dashboard-desc">实时监控现金流入流出，AI预测未来现金流</p>
+                        <div class="dashboard-metric">
+                            <span class="metric-label">预测准确率</span>
+                            <span class="metric-value">95%</span>
+                        </div>
+                        <div class="dashboard-metric">
+                            <span class="metric-label">风险预警</span>
+                            <span class="metric-value">实时</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-icon">📊</div>
+                        <h3 class="dashboard-title-small">盈利分析</h3>
+                        <p class="dashboard-desc">智能分析盈利能力，识别增长机会</p>
+                        <div class="dashboard-metric">
+                            <span class="metric-label">毛利率优化</span>
+                            <span class="metric-value">+12%</span>
+                        </div>
+                        <div class="dashboard-metric">
+                            <span class="metric-label">成本降低</span>
+                            <span class="metric-value">-8%</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-icon">🎯</div>
+                        <h3 class="dashboard-title-small">KPI监控</h3>
+                        <p class="dashboard-desc">关键财务指标实时监控和智能预警</p>
+                        <div class="dashboard-metric">
+                            <span class="metric-label">监控指标</span>
+                            <span class="metric-value">50+</span>
+                        </div>
+                        <div class="dashboard-metric">
+                            <span class="metric-label">预警及时率</span>
+                            <span class="metric-value">99%</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-icon">📈</div>
+                        <h3 class="dashboard-title-small">财务预测</h3>
+                        <p class="dashboard-desc">基于AI的财务趋势预测和情景分析</p>
+                        <div class="dashboard-metric">
+                            <span class="metric-label">预测精度</span>
+                            <span class="metric-value">93%</span>
+                        </div>
+                        <div class="dashboard-metric">
+                            <span class="metric-label">预测周期</span>
+                            <span class="metric-value">12个月</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI财务服务页面脚本 -->
+    <script src="js/components/finance-analyzer.js"></script>
+    <script src="js/pages/aifinance.js"></script>
+
+</body>
+</html>

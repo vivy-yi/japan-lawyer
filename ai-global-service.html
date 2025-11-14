@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI出海服务 - 全球商业拓展解决方案 | 日本商务通</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AI出海服务 - 提供智能市场分析、法律合规助手、全球化营销、智能运营管理、财务税务管理等全方位出海解决方案。日本商务通助力企业全球化发展。">
+    <meta name="keywords" content="AI出海,全球化服务,市场分析,法律合规,全球营销,运营管理,财务税务,日本商务通,商业拓展,一站式解决方案">
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AI出海服务 - 全球商业拓展解决方案">
+    <meta property="og:description" content="提供智能市场分析、法律合规助手、全球营销等专业出海服务">
+    <meta property="og:type" content="website">
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/modern-ai-pages.css">
+
+    <style>
+        /* AI出海服务特定样式 */
+        .hero-section {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
+            color: white;
+            padding: 120px 0 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: var(--responsive-font-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: var(--responsive-font-xl);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .service-features {
+            background: var(--bg-secondary);
+            padding: var(--responsive-spacing-2xl) 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--responsive-card-gap);
+            margin-top: var(--responsive-spacing-xl);
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: var(--responsive-spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: #0ea5e9;
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-md);
+            display: block;
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-title {
+            font-size: var(--responsive-font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .process-section {
+            padding: var(--responsive-spacing-2xl) 0;
+            background: white;
+        }
+
+        .process-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--responsive-spacing-xl);
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            width: 2px;
+            height: calc(100% + var(--spacing-md));
+            background: #0ea5e9;
+            opacity: 0.3;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--responsive-font-lg);
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: var(--spacing-lg);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: var(--responsive-font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+            color: white;
+            padding: var(--responsive-spacing-2xl) 0;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: var(--responsive-font-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta-subtitle {
+            font-size: var(--responsive-font-lg);
+            opacity: 0.9;
+            margin-bottom: var(--responsive-spacing-xl);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta {
+            padding: var(--spacing-md) var(--responsive-spacing-xl);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: var(--responsive-font-base);
+            transition: all var(--transition-base);
+            display: inline-block;
+            min-width: 180px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-cta-primary {
+            background: white;
+            color: #0ea5e9;
+        }
+
+        .btn-cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-cta-secondary:hover {
+            background: white;
+            color: #0ea5e9;
+            transform: translateY(-2px);
+        }
+
+        .benefits-section {
+            background: var(--bg-tertiary);
+            padding: var(--responsive-spacing-2xl) 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--responsive-card-gap);
+            margin-top: var(--responsive-spacing-xl);
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: var(--spacing-md);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+            color: #0ea5e9;
+        }
+
+        .benefit-title {
+            font-size: var(--responsive-font-base);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .benefit-description {
+            color: var(--text-secondary);
+            font-size: var(--responsive-font-sm);
+        }
+
+        /* 模态框样式 */
+        .ai-service-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: var(--radius-xl);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal-content {
+            padding: var(--spacing-lg);
+        }
+
+        .modal-controls {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all var(--transition-base);
+        }
+
+        .btn-primary {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-container {
+            margin: var(--spacing-md) 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: var(--spacing-xs);
+            font-size: var(--responsive-font-sm);
+            color: var(--text-secondary);
+        }
+
+        .processing-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--bg-secondary);
+            border-top: 4px solid #0ea5e9;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--spacing-md);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .completion-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            background: #10b981;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto var(--spacing-lg);
+        }
+
+        .reference-number {
+            font-family: monospace;
+            background: var(--bg-secondary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            margin: var(--spacing-sm) 0;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: var(--breakpoint-md)) {
+            .hero-title {
+                font-size: var(--responsive-font-2xl);
+            }
+
+            .hero-subtitle {
+                font-size: var(--responsive-font-lg);
+            }
+
+            .process-step {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .process-step:not(:last-child)::after {
+                display: none;
+            }
+
+            .step-number {
+                margin-right: 0;
+                margin-bottom: var(--spacing-md);
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-cta {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">AI出海服务</h1>
+                <p class="hero-subtitle">AI智能市场分析、全球法律合规、多语言营销、跨境运营管理，让企业出海更简单、更高效、更成功</p>
+                <div class="hero-cta">
+                    <button class="btn-cta btn-cta-primary" onclick="startService()">开始体验</button>
+                    <button class="btn-cta btn-cta-secondary" onclick="showDemo()">查看演示</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Features Section -->
+    <section class="service-features">
+        <div class="container">
+            <h2 class="capabilities-title">核心功能特色</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">AI智能市场分析</h3>
+                    <p class="feature-description">商机智能识别，竞争对手深度分析，市场趋势预测，准确率高达92%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3 class="feature-title">AI法律合规助手</h3>
+                    <p class="feature-description">全球法规智能解读，合规风险评估，政策变化实时监控</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📢</div>
+                    <h3 class="feature-title">AI全球化营销</h3>
+                    <p class="feature-description">多语言内容生成，文化适配优化，全球营销渠道智能管理</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3 class="feature-title">AI智能运营管理</h3>
+                    <p class="feature-description">供应链优化，跨时区协调，本地团队管理，运营效率提升85%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="feature-title">AI财务税务管理</h3>
+                    <p class="feature-description">跨境税务筹划，汇率风险对冲，多币种财务统一管理</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">AI本地化解决方案</h3>
+                    <p class="feature-description">文化差异识别，品牌本地化优化，本地合作伙伴推荐</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <h2 class="capabilities-title">服务流程</h2>
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">需求评估</h3>
+                        <p class="step-description">AI深度分析企业出海需求，评估目标市场潜力，制定个性化出海策略</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">市场调研</h3>
+                        <p class="step-description">全面调研目标市场，分析竞争格局，了解当地法规与文化环境</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">方案制定</h3>
+                        <p class="step-description">AI生成完整出海方案，包括市场进入策略、运营模式、合规要求</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">执行落地</h3>
+                        <p class="step-description">专业团队协助实施，全程监控执行效果，确保出海计划成功落地</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="capabilities-title">服务优势</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">🌏</div>
+                    <h3 class="benefit-title">全球覆盖</h3>
+                    <p class="benefit-description">覆盖50+国家，服务网络遍布全球主要经济体</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🗣️</div>
+                    <h3 class="benefit-title">多语言支持</h3>
+                    <p class="benefit-description">支持100+语言，无障碍沟通全球市场</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🧠</div>
+                    <h3 class="benefit-title">AI驱动决策</h3>
+                    <p class="benefit-description">基于大数据分析，提供科学的出海决策支持</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎯</div>
+                    <h3 class="benefit-title">一站式解决方案</h3>
+                    <p class="benefit-description">从评估到落地，全流程出海服务支持</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">准备好开启全球业务了吗？</h2>
+            <p class="cta-subtitle">立即体验我们的AI出海服务，让智能科技助力您的全球化发展</p>
+            <div class="cta-buttons">
+                <button class="btn-cta btn-cta-primary" onclick="contactUs()">立即咨询</button>
+                <button class="btn-cta btn-cta-secondary" onclick="learnMore()">了解更多</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // AI出海服务配置
+        window.SERVICE_CONFIG = {
+            name: 'AI出海服务',
+            type: 'global',
+            tagline: 'AI智能市场分析、全球法律合规、多语言营销、跨境运营管理',
+            description: '提供AI智能市场分析、法律合规助手、全球化营销、智能运营管理等全方位出海解决方案',
+            keywords: 'AI出海,全球化服务,市场分析,法律合规,全球营销',
+            features: [
+                'AI智能市场分析（商机识别、竞争对手分析）',
+                'AI法律合规助手（全球法规解读、风险评估）',
+                'AI全球化营销（多语言内容、文化适配）',
+                'AI智能运营管理（供应链优化、跨时区协调）',
+                'AI财务税务管理（税务筹划、汇率风险管理）',
+                'AI本地化解决方案（文化差异识别、品牌优化）'
+            ],
+            processSteps: [
+                {
+                    title: '需求评估',
+                    description: 'AI深度分析企业出海需求，评估目标市场潜力，制定个性化出海策略',
+                    inputs: [
+                        {
+                            id: 'industry-sector',
+                            name: 'industry_sector',
+                            type: 'select',
+                            label: '所属行业',
+                            required: true
+                        },
+                        {
+                            id: 'company-stage',
+                            name: 'company_stage',
+                            type: 'select',
+                            label: '企业阶段',
+                            required: true
+                        },
+                        {
+                            id: 'target-markets',
+                            name: 'target_markets',
+                            type: 'checkbox',
+                            label: '目标市场地区',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '市场调研',
+                    description: '全面调研目标市场，分析竞争格局，了解当地法规与文化环境',
+                    inputs: [
+                        {
+                            id: 'business-model',
+                            name: 'business_model',
+                            type: 'select',
+                            label: '商业模式',
+                            required: true
+                        },
+                        {
+                            id: 'export-experience',
+                            name: 'export_experience',
+                            type: 'select',
+                            label: '出海经验',
+                            required: true
+                        },
+                        {
+                            id: 'main-challenges',
+                            name: 'main_challenges',
+                            type: 'textarea',
+                            label: '主要挑战',
+                            placeholder: '请描述您在出海过程中遇到的主要挑战...',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '方案制定',
+                    description: 'AI生成完整出海方案，包括市场进入策略、运营模式、合规要求',
+                    inputs: [
+                        {
+                            id: 'timeline-requirements',
+                            name: 'timeline_requirements',
+                            type: 'select',
+                            label: '期望时间线',
+                            required: true
+                        },
+                        {
+                            id: 'budget-range',
+                            name: 'budget_range',
+                            type: 'select',
+                            label: '预算范围',
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    title: '执行落地',
+                    description: '专业团队协助实施，全程监控执行效果，确保出海计划成功落地',
+                    inputs: [
+                        {
+                            id: 'support-needs',
+                            name: 'support_needs',
+                            type: 'checkbox',
+                            label: '需要的支持类型',
+                            required: true
+                        }
+                    ]
+                }
+            ],
+            benefits: [
+                '全球覆盖（50+国家）',
+                '多语言支持（100+语言）',
+                'AI驱动决策（数据洞察）',
+                '一站式解决方案',
+                '本地化深度服务'
+            ],
+            contactMethod: 'chat'
+        };
+    </script>
+    <script src="template-service-script.js"></script>
+</body>
+</html>

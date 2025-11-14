@@ -1,0 +1,179 @@
+/* 本地字体系统 - 替代 Google Fonts */
+
+/* 定义系统字体栈 */
+:root {
+    /* 日文系统字体栈 */
+    --font-family-japanese:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Hiragino Sans",
+        Meiryo,
+        sans-serif;
+
+    /* 英文系统字体栈 */
+    --font-family-latin:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Roboto",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
+    /* 中文字体栈 */
+    --font-family-chinese:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "PingFang SC",
+        "Hiragino Sans GB",
+        "Microsoft YaHei",
+        "微软雅黑",
+        sans-serif;
+
+    /* 通用字体栈 */
+    --font-family-base:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Roboto",
+        "Helvetica Neue",
+        Arial,
+        "Noto Sans SC",
+        "Noto Sans JP",
+        "PingFang SC",
+        "Hiragino Sans GB",
+        "Microsoft YaHei",
+        "微软雅黑",
+        sans-serif;
+}
+
+/* 基础字体设置 */
+html {
+    font-family: var(--font-family-base);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* 标题字体 */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-base);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* 正文字体 */
+body, p, span, div {
+    font-family: var(--font-family-base);
+}
+
+/* 代码字体 */
+code, pre, kbd, samp {
+    font-family:
+        "SF Mono",
+        "Monaco",
+        "Inconsolata",
+        "Roboto Mono",
+        "Source Code Pro",
+        monospace;
+}
+
+/* 特殊元素字体 */
+blockquote {
+    font-family: var(--font-family-base);
+    font-style: italic;
+}
+
+/* 输入框字体 */
+input, textarea, select, button {
+    font-family: var(--font-family-base);
+}
+
+/* 字体权重定义 */
+:root {
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+}
+
+/* 字体大小系统 */
+:root {
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-base: 1rem;     /* 16px */
+    --font-size-lg: 1.125rem;   /* 18px */
+    --font-size-xl: 1.25rem;    /* 20px */
+    --font-size-2xl: 1.5rem;    /* 24px */
+    --font-size-3xl: 1.875rem;  /* 30px */
+    --font-size-4xl: 2.25rem;   /* 36px */
+    --font-size-5xl: 3rem;      /* 48px */
+}
+
+/* 字体工具类 */
+.font-light { font-weight: var(--font-weight-light); }
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-base { font-size: var(--font-size-base); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+.text-2xl { font-size: var(--font-size-2xl); }
+.text-3xl { font-size: var(--font-size-3xl); }
+.text-4xl { font-size: var(--font-size-4xl); }
+.text-5xl { font-size: var(--font-size-5xl); }
+
+/* 多语言字体优化 */
+[lang="ja"] {
+    font-family: var(--font-family-japanese);
+}
+
+[lang="zh"], [lang="zh-CN"], [lang="zh-TW"] {
+    font-family: var(--font-family-chinese);
+}
+
+[lang="en"] {
+    font-family: var(--font-family-latin);
+}
+
+/* 高分辨率屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    html {
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
+    }
+}
+
+/* 打印字体优化 */
+@media print {
+    html {
+        font-family: "Times New Roman", Times, serif;
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+}
+
+/* 可访问性字体设置 */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        font-rendering: optimizeSpeed;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    html {
+        font-family: var(--font-family-base);
+        font-weight: 500;
+    }
+}

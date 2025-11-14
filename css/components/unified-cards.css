@@ -1,0 +1,810 @@
+/* 统一卡片组件样式 - 解决命名冲突和重复样式问题 */
+/* Created: 2025-11-14 */
+/* Purpose: 统一feature-card, crm-card, crm-feature-card等组件样式 */
+
+/* ==================== 核心变量导入 ==================== */
+@import url('../core/variables.css');
+
+/* ==================== 统一卡片组件基础类 ==================== */
+
+/* 基础卡片类 - 所有卡片的共同样式 */
+.unified-card {
+    background: #334155;
+    border-radius: var(--radius-xl, 20px);
+    padding: var(--spacing-xl, 40px);
+    text-align: center;
+    transition: all var(--transition-base, 0.3s ease);
+    border: 2px solid rgba(99, 102, 241, 0.1);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.08);
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* 卡片悬停效果 */
+.unified-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.2);
+}
+
+/* 卡片顶部装饰条 */
+.unified-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--primary-color, #6366f1) 0%, var(--accent-color, #ec4899) 100%);
+    opacity: 0;
+    transition: opacity var(--transition-fast, 0.2s ease);
+}
+
+.unified-card:hover::before {
+    opacity: 1;
+}
+
+/* ==================== 功能卡片变体 ==================== */
+
+/* 主要功能卡片 - 用于展示主要功能特性 */
+.unified-card--feature {
+    background: linear-gradient(135deg, var(--bg-primary, #ffffff) 0%, var(--bg-secondary, #f8fafc) 100%);
+    border-left: 5px solid var(--primary-color, #6366f1);
+    padding: var(--spacing-xl, 40px) var(--spacing-lg, 30px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.08);
+}
+
+.unified-card--feature:hover {
+    border-left-color: var(--accent-color, #ec4899);
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.15);
+    transform: translateY(-8px);
+}
+
+/* CRM功能卡片 - 用于CRM相关功能 */
+.unified-card--crm {
+    background: linear-gradient(135deg, var(--bg-secondary, #f8fafc) 0%, var(--bg-tertiary, #f1f5f9) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.05);
+}
+
+.unified-card--crm:hover {
+    border-color: var(--primary-color, #6366f1);
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
+    transform: translateY(-8px);
+}
+
+/* AI功能卡片 - 用于AI相关功能 */
+.unified-card--ai {
+    background: linear-gradient(135deg,
+        rgba(99, 102, 241, 0.03) 0%,
+        rgba(236, 72, 153, 0.03) 50%,
+        rgba(139, 92, 246, 0.03) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.08);
+}
+
+.unified-card--ai:hover {
+    border-color: var(--accent-color, #ec4899);
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
+    transform: translateY(-8px);
+}
+
+/* 服务卡片 - 用于服务展示 */
+.unified-card--service {
+    background: linear-gradient(135deg, var(--bg-primary, #ffffff) 0%, var(--bg-secondary, #f8fafc) 100%);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid var(--primary-color, #6366f1);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.unified-card--service:hover {
+    border-left-color: var(--accent-color, #ec4899);
+    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.15);
+    transform: translateY(-8px);
+}
+
+/* ==================== 卡片尺寸变体 ==================== */
+
+/* 小型卡片 */
+.unified-card--small {
+    padding: var(--spacing-lg, 25px) var(--spacing-md, 20px);
+}
+
+/* 中型卡片 */
+.unified-card--medium {
+    padding: var(--spacing-xl, 35px) var(--spacing-lg, 30px);
+}
+
+/* 大型卡片 */
+.unified-card--large {
+    padding: var(--spacing-2xl, 50px) var(--spacing-xl, 40px);
+}
+
+/* ==================== 卡片内容元素 ==================== */
+
+/* 统一图标样式 */
+.unified-card__icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-lg, 20px);
+    display: block;
+    background: linear-gradient(135deg, var(--primary-color, #6366f1) 0%, var(--accent-color, #ec4899) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: transform var(--transition-base, 0.3s ease);
+}
+
+.unified-card:hover .unified-card__icon {
+    transform: scale(1.1);
+}
+
+/* 特殊图标变体 */
+.unified-card__icon--small {
+    font-size: 2rem;
+}
+
+.unified-card__icon--large {
+    font-size: 4rem;
+}
+
+/* 统一标题样式 */
+.unified-card__title {
+    font-size: var(--font-xl, 1.25rem);
+    font-weight: 600;
+    color: white; /* 标题颜色改为白色 */
+    margin-bottom: var(--spacing-md, 15px);
+    line-height: 1.3;
+}
+
+/* 标题变体 */
+.unified-card__title--small {
+    font-size: var(--font-lg, 1.125rem);
+}
+
+.unified-card__title--large {
+    font-size: var(--font-2xl, 1.5rem);
+}
+
+/* 统一描述样式 */
+.unified-card__description {
+    font-size: var(--font-base, 1rem);
+    color: var(--text-secondary, #334155);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg, 20px);
+}
+
+/* 描述变体 */
+.unified-card__description--small {
+    font-size: var(--font-sm, 0.875rem);
+}
+
+/* 统一列表样式 */
+.unified-card__points {
+    list-style: none;
+    text-align: left;
+    margin: var(--spacing-md, 15px) 0;
+    padding: 0;
+}
+
+.unified-card__points li {
+    margin-bottom: var(--spacing-sm, 8px);
+    padding-left: var(--spacing-lg, 20px);
+    position: relative;
+    font-size: var(--font-sm, 0.875rem);
+    color: var(--text-secondary, #4a5568);
+    line-height: 1.5;
+}
+
+.unified-card__points li::before {
+    content: attr(data-icon);
+    position: absolute;
+    left: 0;
+    color: var(--primary-color, #6366f1);
+    font-weight: bold;
+}
+
+/* 统一链接样式 */
+.unified-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm, 8px);
+    color: var(--primary-color, #6366f1);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: var(--font-sm, 0.875rem);
+    transition: all var(--transition-base, 0.3s ease);
+    margin-top: var(--spacing-md, 15px);
+}
+
+.unified-card__link:hover {
+    color: var(--accent-color, #ec4899);
+    transform: translateX(5px);
+}
+
+/* 统一状态标签 */
+.unified-card__status {
+    background: var(--success, #22c55e);
+    color: white;
+    padding: var(--spacing-xs, 4px) var(--spacing-md, 12px);
+    border-radius: var(--radius-full, 50px);
+    font-size: var(--font-xs, 0.75rem);
+    font-weight: 600;
+    position: absolute;
+    top: var(--spacing-md, 15px);
+    right: var(--spacing-md, 15px);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 状态变体 */
+.unified-card__status--warning {
+    background: var(--warning, #f59e0b);
+}
+
+.unified-card__status--info {
+    background: var(--info, #3b82f6);
+}
+
+/* ==================== 网格布局系统 ==================== */
+
+/* 统一网格容器 */
+.unified-grid {
+    display: grid;
+    gap: var(--spacing-lg, 30px);
+    margin: var(--spacing-xl, 40px) 0;
+}
+
+/* 响应式网格 - 默认4列 */
+.unified-grid {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* 大屏幕：1200px+ - 4列 */
+@media (min-width: 1200px) {
+    .unified-grid--4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .unified-grid--3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .unified-grid--2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 中等屏幕：768px-1199px - 3列 */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .unified-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .unified-grid--4,
+    .unified-grid--3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .unified-grid--2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 小平板：576px-767px - 2列 */
+@media (min-width: 576px) and (max-width: 767px) {
+    .unified-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .unified-grid--4,
+    .unified-grid--3,
+    .unified-grid--2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 手机：575px以下 - 1列 */
+@media (max-width: 575px) {
+    .unified-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .unified-grid--4,
+    .unified-grid--3,
+    .unified-grid--2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== 进场动画 ==================== */
+
+/* 基础进场动画 */
+.unified-card {
+    animation: slideInUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+/* 延迟动画 - 依次出现 */
+.unified-card:nth-child(1) { animation-delay: 0.1s; }
+.unified-card:nth-child(2) { animation-delay: 0.2s; }
+.unified-card:nth-child(3) { animation-delay: 0.3s; }
+.unified-card:nth-child(4) { animation-delay: 0.4s; }
+.unified-card:nth-child(5) { animation-delay: 0.5s; }
+.unified-card:nth-child(6) { animation-delay: 0.6s; }
+.unified-card:nth-child(7) { animation-delay: 0.7s; }
+.unified-card:nth-child(8) { animation-delay: 0.8s; }
+.unified-card:nth-child(9) { animation-delay: 0.9s; }
+.unified-card:nth-child(10) { animation-delay: 1.0s; }
+.unified-card:nth-child(11) { animation-delay: 1.1s; }
+.unified-card:nth-child(12) { animation-delay: 1.2s; }
+
+/* 动画关键帧 */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== 兼容性类 ==================== */
+
+/* 向后兼容 - 逐步迁移现有类 */
+.feature-card,
+.crm-card,
+.crm-feature-card {
+    /* 继承统一卡片的基础样式 */
+    background: var(--bg-primary, #ffffff);
+    border-radius: var(--radius-xl, 20px);
+    padding: var(--spacing-xl, 40px);
+    text-align: center;
+    transition: all var(--transition-base, 0.3s ease);
+    border: 2px solid transparent;
+    box-shadow: var(--shadow-md, 0 4px 20px rgba(0, 0, 0, 0.08));
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.feature-card:hover,
+.crm-card:hover,
+.crm-feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl, 0 12px 40px rgba(0, 0, 0, 0.15));
+}
+
+/* 特殊处理保持原有样式特点 */
+.crm-card {
+    background: var(--light, #f8fafc);
+}
+
+.crm-card:hover {
+    border-color: var(--gold, #d69e2e);
+    box-shadow: 0 15px 40px rgba(214, 158, 46, 0.2);
+}
+
+.crm-feature-card {
+    background: linear-gradient(135deg, var(--light) 0%, #f8fafc 100%);
+    padding: 25px;
+    border-left: 5px solid var(--gold, #d69e2e);
+}
+
+.crm-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* ==================== 辅助类 ==================== */
+
+/* 网格布局辅助类 */
+.features-grid {
+    /* 继承统一网格样式 */
+    display: grid;
+    gap: var(--spacing-lg, 30px);
+    margin: var(--spacing-xl, 40px) 0;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* 响应式辅助类 */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 575px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== 主题适配 ==================== */
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+    .unified-card {
+        background: var(--bg-dark, #1a202c);
+        color: var(--text-primary, #f7fafc);
+    }
+
+    .unified-card__title {
+        color: var(--text-primary, #f7fafc);
+    }
+
+    .unified-card__description {
+        color: var(--text-secondary, #cbd5e1);
+    }
+
+    .unified-card__points li {
+        color: var(--text-secondary, #cbd5e1);
+    }
+}
+
+/* 无障碍支持 */
+@media (prefers-reduced-motion: reduce) {
+    .unified-card {
+        animation: none;
+        transition: none;
+    }
+
+    .unified-card:hover {
+        transform: none;
+    }
+
+    .unified-card__icon {
+        transition: none;
+    }
+}
+
+/* ==================== 从内联样式迁移的CRM相关样式 ==================== */
+
+/* CRM特性区域样式 */
+.crm-features {
+    padding: 100px 0;
+    background: white;
+}
+
+.crm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+}
+
+/* CRM卡片样式 */
+.crm-card {
+    text-align: center;
+    padding: 50px 30px;
+    background: var(--light);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.crm-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(214, 158, 46, 0.2);
+}
+
+/* CRM图标样式 */
+.crm-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--warning) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    font-size: 2rem;
+    color: white;
+}
+
+.crm-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+/* CRM功能卡片样式 */
+.crm-feature-card {
+    background: linear-gradient(135deg, var(--light) 0%, #f8fafc 100%);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--gold);
+    position: relative;
+}
+
+.crm-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.crm-feature-card .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.crm-feature-card h4 {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.crm-feature-card p {
+    color: var(--gray);
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* 功能状态标签 */
+.feature-status {
+    background: var(--success);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* CRM仪表板样式 */
+.crm-dashboard {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.dash-stat {
+    background: linear-gradient(135deg, var(--light) 0%, #e8f0fe 100%);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-top: 4px solid var(--gold);
+}
+
+.dash-stat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.dash-number {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.dash-label {
+    font-size: 1rem;
+    color: var(--gray);
+    margin-bottom: 5px;
+}
+
+.dash-change {
+    font-size: 0.9rem;
+    color: var(--success);
+    font-weight: 500;
+}
+
+/* CRM表格容器样式 */
+.crm-table-container {
+    margin-bottom: 40px;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--light);
+}
+
+.table-header h3 {
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.table-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.table-actions .search-input {
+    padding: 10px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+}
+
+.table-actions .search-input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+/* CRM表格样式 */
+.crm-table {
+    background: var(--light);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.crm-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.crm-table th {
+    background: var(--primary);
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.crm-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.crm-table tr:hover {
+    background: #f8fafc;
+}
+
+/* 操作按钮样式 */
+.action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-right: 8px;
+    transition: all 0.3s ease;
+}
+
+.view-btn {
+    background: var(--primary);
+    color: white;
+}
+
+.view-btn:hover {
+    background: var(--secondary);
+}
+
+.edit-btn {
+    background: var(--warning);
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #c05621;
+}
+
+/* 添加按钮样式 */
+.add-btn {
+    background: var(--success);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+    background: #2f855a;
+    transform: translateY(-2px);
+}
+
+/* 快速操作区域样式 */
+.quick-actions-section h3 {
+    color: var(--primary);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.quick-action-btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.quick-action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(30, 58, 95, 0.3);
+}
+
+/* CRM标签页样式 */
+.crm-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.crm-tab {
+    background: white;
+    border: 3px solid transparent;
+    padding: 15px 25px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 140px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.crm-tab:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.crm-tab.active {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    border-color: var(--primary);
+}
+
+.tab-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.tab-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.tab-count {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}

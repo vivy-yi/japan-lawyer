@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI法律服务 - 日本商务通</title>
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="index, follow">
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary: #1e3a5f;
+            --secondary: #2c5282;
+            --accent: #3182ce;
+            --gold: #d69e2e;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #dd6b20;
+            --light: #f7fafc;
+            --gray: #4a5568;
+            --dark: #1a202c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles - Use nav.js injected navigation, no custom header styles needed */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--gold);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switcher button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .language-switcher button.active {
+            background: var(--gold);
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 100px;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* 页面标题区域 */
+        .page-header {
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, var(--light) 0%, white 100%);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* AI法律服务内容区域 */
+        .knowledge-content {
+            padding: 80px 0;
+        }
+
+        .search-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            border: 3px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(30, 58, 95, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* 知识分类标签 */
+        .knowledge-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        .tag {
+            background: white;
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .tag:hover,
+        .tag.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 知识卡片网格 */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .knowledge-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .knowledge-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .knowledge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+        }
+
+        .knowledge-icon {
+            font-size: 60px;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .knowledge-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .knowledge-card p {
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .knowledge-points {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .knowledge-points li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .knowledge-points li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .knowledge-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .knowledge-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--primary);
+                flex-direction: column;
+                gap: 0;
+                padding: 80px 20px 20px;
+                z-index: 1000;
+                transition: right 0.3s ease;
+            }
+
+            .nav-menu.active {
+                right: 0;
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                gap: 4px;
+                z-index: 1001;
+            }
+
+            .mobile-menu-toggle span {
+                width: 25px;
+                height: 3px;
+                background: white;
+                transition: all 0.3s ease;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+
+        /* 注意：模态窗口样式使用通用的 component-library.js 中的 ModalComponent */
+    </style>
+    <!-- Using local system fonts instead of Google Fonts for better performance and reliability -->
+
+    <!-- Modern AI Design -->
+
+    <link rel="stylesheet" href="css/components/buttons.css">
+
+    <link rel="stylesheet" href="css/modern-ai-pages.css?v=202511140850">
+    <link rel="stylesheet" href="css/base/header.css">
+    <link rel="stylesheet" href="css/base/footer.css">
+
+</head>
+
+<body>
+    <!-- 导航栏 - 使用新的logo系统 -->
+    <header role="banner" id="main-header">
+        <nav id="main-navbar" class="navbar" role="navigation" aria-label="主导航">
+            <!-- Logo区域 - 自动检测法律场景 -->
+            <a href="../index.html#home" class="logo logo--legal logo--sm" data-page="ailegal"
+                data-logo-scenario="legal">
+                <div class="logo__icon">⚖️</div>
+                <div class="logo__text">
+                    <span class="logo__title">AI法律服务</span>
+                    <span class="logo__tagline">专业法律解决方案</span>
+                </div>
+            </a>
+
+            <!-- 主导航菜单 -->
+            <ul class="nav-menu" id="main-nav-menu">
+                <li><a href="../index.html#home" class="nav-link">🏢 返回主页</a></li>
+                <li><a href="#legal-consultation" class="nav-link active">⚖️ 法律咨询</a></li>
+                <li><a href="#document-review" class="nav-link">📄 合同审查</a></li>
+                <li><a href="#risk-assessment" class="nav-link">🔍 风险评估</a></li>
+                <li><a href="#litigation-support" class="nav-link">⚔️ 诉讼支持</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- 页面标题区域 -->
+        <section class="page-header page-header--legal">
+            <div class="container">
+                <h1 class="page-header__title">⚖️ AI一站式法律服务平台</h1>
+                <p class="page-header__subtitle">智能化全方位法律解决方案，提供从咨询到执行的完整法律服务链条</p>
+            </div>
+        </section>
+
+        <!-- 一站式服务特色展示 -->
+        <section class="ai-container">
+            <div class="one-stop-features">
+                <div class="one-stop-feature">
+                    <div class="feature-icon">⚖️</div>
+                    <h3 class="feature-title">全方位法律支持</h3>
+                    <p class="feature-description">从合同审查到诉讼代理，提供完整法律生命周期服务</p>
+                    <div class="feature-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">在线支持</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-label">法律专家</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">99.9%</span>
+                            <span class="stat-label">成功率</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="one-stop-feature">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI智能分析</h3>
+                    <p class="feature-description">运用深度学习技术，精准识别法律风险点，提供智能化解决方案</p>
+                    <div class="feature-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">3分钟</span>
+                            <span class="stat-label">分析速度</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">95%</span>
+                            <span class="stat-label">准确率</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">∞</span>
+                            <span class="stat-label">学习能力</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="one-stop-feature">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">数据安全保障</h3>
+                    <p class="feature-description">银行级加密保护，严格的数据隔离，确保您的信息绝对安全</p>
+                    <div class="feature-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">256位</span>
+                            <span class="stat-label">加密</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">ISO</span>
+                            <span class="stat-label">认证</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">隐私保护</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="one-stop-feature">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">跨境法律服务</h3>
+                    <p class="feature-description">熟悉国际商法和各国家法律体系，提供全球化法律服务支持</p>
+                    <div class="feature-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">国家覆盖</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">15种</span>
+                            <span class="stat-label">语言支持</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">24h</span>
+                            <span class="stat-label">快速响应</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 一站式服务流程 -->
+        <section class="one-stop-process">
+            <div class="ai-container">
+                <h2 class="process-title">一站式服务流程</h2>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h4 class="step-title">需求分析</h4>
+                        <p class="step-description">AI智能识别法律需求，提供精准服务匹配</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h4 class="step-title">方案制定</h4>
+                        <p class="step-description">专业团队制定个性化解决方案</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h4 class="step-title">执行服务</h4>
+                        <p class="step-description">高效执行，实时跟踪服务进度</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h4 class="step-title">质量保证</h4>
+                        <p class="step-description">持续跟进，确保服务质量</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 搜索功能 -->
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-input" data-lang-placeholder="search-placeholder"
+                    placeholder="搜索知识文章...">
+                <button class="search-btn" onclick="searchKnowledge()">🔍</button>
+            </div>
+        </div>
+
+        <!-- AI法律分类标签 -->
+        <div class="knowledge-tags">
+            <div class="tag active" onclick="filterKnowledge('all')">全部服务</div>
+            <div class="tag" onclick="filterKnowledge('contract')">合同审查</div>
+            <div class="tag" onclick="filterKnowledge('consultation')">法律咨询</div>
+            <div class="tag" onclick="filterKnowledge('compliance')">合规审查</div>
+            <div class="tag" onclick="filterKnowledge('dispute')">纠纷解决</div>
+            <div class="tag" onclick="filterKnowledge('intellectual')">知识产权</div>
+        </div>
+
+        <!-- AI法律服务卡片网格 -->
+        <div class="knowledge-grid">
+            <!-- AI法律咨询卡片 -->
+            <div class="knowledge-card" data-category="consultation">
+                <div class="knowledge-icon">🤖</div>
+                <h3>AI智能法律咨询</h3>
+                <p>24小时在线AI法律顾问，为您提供即时法律建议和解决方案</p>
+                <ul class="knowledge-points">
+                    <li>智能法律问题诊断</li>
+                    <li>个性化法律建议</li>
+                    <li>多语言咨询服务</li>
+                    <li>案例匹配分析</li>
+                    <li>实时在线解答</li>
+                </ul>
+                <button class="btn-primary" data-legal-action="consultation">开始咨询</button>
+            </div>
+
+            <!-- 合同智能审查卡片 -->
+            <div class="knowledge-card" data-category="document-review">
+                <div class="knowledge-icon">📋</div>
+                <h3>AI合同智能审查</h3>
+                <p>基于深度学习的合同分析系统，快速识别风险条款并提供修改建议</p>
+                <ul class="knowledge-points">
+                    <li>合同风险智能识别</li>
+                    <li>条款合规性检查</li>
+                    <li>法律漏洞提示</li>
+                    <li>标准化合同模板</li>
+                    <li>批量合同处理</li>
+                </ul>
+                <button class="btn-primary" data-legal-action="document-review">上传审查</button>
+            </div>
+
+            <!-- 法律风险评估卡片 -->
+            <div class="knowledge-card" data-category="risk-analysis">
+                <div class="knowledge-icon">⚠️</div>
+                <h3>AI法律风险评估</h3>
+                <p>企业经营活动法律风险智能评估系统，提前预防法律纠纷</p>
+                <ul class="knowledge-points">
+                    <li>企业经营风险分析</li>
+                    <li>行业法规合规检查</li>
+                    <li>诉讼风险评估</li>
+                    <li>风险预警机制</li>
+                    <li>风险防控建议</li>
+                </ul>
+                <button class="btn-primary" data-legal-action="risk-analysis">风险评估</button>
+            </div>
+
+            <!-- 知识产权保护卡片 -->
+            <div class="knowledge-card" data-category="intellectual">
+                <div class="knowledge-icon">🔒</div>
+                <h3>知识产权AI助手</h3>
+                <p>全方位知识产权保护和管理，运用AI技术维护您的创新成果</p>
+                <ul class="knowledge-points">
+                    <li>专利智能检索分析</li>
+                    <li>商标注册辅助</li>
+                    <li>侵权监测预警</li>
+                    <li>版权保护策略</li>
+                    <li>IP资产管理</li>
+                </ul>
+                <button class="btn-primary">了解更多</button>
+            </div>
+
+            <!-- 争议解决助手卡片 -->
+            <div class="knowledge-card" data-category="dispute">
+                <div class="knowledge-icon">⚖️</div>
+                <h3>AI争议解决助手</h3>
+                <p>智能化争议解决方案，协助您高效处理各类法律纠纷</p>
+                <ul class="knowledge-points">
+                    <li>纠纷类型智能分类</li>
+                    <li>解决方案智能推荐</li>
+                    <li>诉讼成本评估</li>
+                    <li>调解策略建议</li>
+                    <li>案例参考分析</li>
+                </ul>
+                <button class="btn-primary">开始使用</button>
+            </div>
+
+            <!-- 法规合规检查卡片 -->
+            <div class="knowledge-card" data-category="compliance">
+                <div class="knowledge-icon">✅</div>
+                <h3>企业合规AI检查</h3>
+                <p>全方位企业合规检查系统，确保业务运营符合法律法规要求</p>
+                <ul class="knowledge-points">
+                    <li>合规状况全面评估</li>
+                    <li>法规更新实时提醒</li>
+                    <li>合规培训智能推荐</li>
+                    <li>内部审计辅助</li>
+                    <li>合规报告生成</li>
+                </ul>
+                <button class="btn-primary">立即检查</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 核心脚本 -->
+    <script src="../js/core/logo-manager.js"></script>
+
+    <!-- Logo系统初始化 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 初始化Logo系统
+            if (window.LogoManager) {
+                const logoManager = new LogoManager();
+                logoManager.initialize();
+                console.log('⚖️ Legal page Logo Manager initialized');
+            }
+        });
+    </script>
+
+    <!-- AI页面脚本 -->
+    <script src="js/components/legal-modal-manager.js"></script>
+    <script src="js/pages/ailaw.js"></script>
+</body>
+
+</html>

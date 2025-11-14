@@ -1,0 +1,105 @@
+/* 关键布局样式 - 必须在其他CSS之前加载 */
+/* Created: 2025-11-14 */
+/* Purpose: Critical layout fixes that must be loaded early */
+
+/* ==================== CSS变量定义 ==================== */
+
+/* 整合响应式系统的关键变量 */
+:root {
+    /* 头部布局变量 */
+    --header-height: var(--responsive-header-height, clamp(3.5rem, 8vh, 5rem));
+    --navbar-z-index: 1000;
+    --content-top-margin: calc(var(--header-height) + 0px);
+}
+
+/* ==================== 导航栏容器关键样式 ==================== */
+
+/* 确保导航栏不被覆盖 */
+header .container {
+    position: relative;
+    z-index: var(--navbar-z-index);
+}
+
+/* ==================== 主要内容区域统一样式 ==================== */
+
+#page-content,
+.page-content {
+    margin-top: var(--content-top-margin);
+    min-height: calc(100vh - var(--header-height));
+    position: relative;
+    background: transparent;
+    z-index: 1;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ==================== 基础重置样式 ==================== */
+
+/* 确保body和html基础样式 */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #f8fafc;
+    overflow-x: hidden;
+}
+
+body {
+    position: relative;
+}
+
+/* ==================== 英雄区域关键样式 ==================== */
+
+/* 英雄区域确保不被导航栏覆盖 */
+.hero-section {
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+/* ==================== 轮播内容对齐修复 ==================== */
+
+/* 确保轮播标题和副标题居中 */
+.slide-title {
+    text-align: center;
+}
+
+.slide-subtitle {
+    text-align: center;
+}
+
+/* ==================== 导航栏层级保护 ==================== */
+
+/* 确保导航栏始终在最上层 */
+.navbar * {
+    z-index: inherit;
+}
+
+/* ==================== 防止FOUC (Flash of Unstyled Content) ==================== */
+
+/* 在其他样式加载前提供基础容器样式 */
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: var(--responsive-container-max);
+    margin: 0 auto;
+    padding: 0 var(--responsive-container-padding);
+    box-sizing: border-box;
+}
+
+/* ==================== 移动端适配基础 ==================== */
+
+/* 移动端适配 - 响应式变量已经处理，无需硬编码覆盖 */
+@media (max-width: 768px) {
+    /* 容器内边距由 --responsive-container-padding 自动处理 */
+    /* 头部高度由 --responsive-header-height 自动处理 */
+}
+
+/* 小屏幕设备 - 响应式变量已经处理，无需硬编码覆盖 */
+@media (max-width: 480px) {
+    /* 容器内边距由 --responsive-container-padding 自动处理 */
+}

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI CRM - 日本商务通</title>
+
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="index, follow">
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary: #1e3a5f;
+            --secondary: #2c5282;
+            --accent: #3182ce;
+            --gold: #d69e2e;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #dd6b20;
+            --light: #f7fafc;
+            --gray: #4a5568;
+            --dark: #1a202c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles - Use nav.js injected navigation, no custom header styles needed */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--gold);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switcher button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .language-switcher button.active {
+            background: var(--gold);
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 100px;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* 页面标题区域 */
+        .page-header {
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, var(--light) 0%, white 100%);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* AI CRM内容区域 */
+        .knowledge-content {
+            padding: 80px 0;
+        }
+
+        .search-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            border: 3px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(30, 58, 95, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* 知识分类标签 */
+        .knowledge-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        .tag {
+            background: white;
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .tag:hover,
+        .tag.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 知识卡片网格 */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .knowledge-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .knowledge-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .knowledge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+        }
+
+        .knowledge-icon {
+            font-size: 60px;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .knowledge-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .knowledge-card p {
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .knowledge-points {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .knowledge-points li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .knowledge-points li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .knowledge-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .knowledge-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--primary);
+                flex-direction: column;
+                gap: 0;
+                padding: 80px 20px 20px;
+                z-index: 1000;
+                transition: right 0.3s ease;
+            }
+
+            .nav-menu.active {
+                right: 0;
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                gap: 4px;
+                z-index: 1001;
+            }
+
+            .mobile-menu-toggle span {
+                width: 25px;
+                height: 3px;
+                background: white;
+                transition: all 0.3s ease;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+    </style>
+    <!-- Using local system fonts instead of Google Fonts for better performance and reliability -->
+
+        <!-- Modern AI Design -->
+    <link rel="stylesheet" href="css/modern-homepage.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/components/buttons.css">
+    <link rel="stylesheet" href="css/components/carousel.css">
+    <link rel="stylesheet" href="css/modern-ai-pages.css">
+    <link rel="stylesheet" href="css/one-stop-services.css">
+    <link rel="stylesheet" href="css/one-stop-services.css">
+    <link rel="stylesheet" href="css/ai-footer.css">
+    <style>
+        /* AI页面特定样式 */
+        body {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .ai-page-header {
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #8b5cf6 100%);
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            animation: headerShine 8s ease-in-out infinite;
+        }
+
+        @keyframes headerShine {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .ai-page-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ai-service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .ai-service-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.05), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .ai-service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .ai-service-card:hover::before {
+            left: 100%;
+        }
+
+        .ai-service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .ai-service-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .ai-service-description {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .ai-service-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .ai-service-features li {
+            padding: 8px 0;
+            color: #475569;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .ai-service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .ai-service-btn {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .ai-service-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .ai-service-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .ai-service-btn:hover::before {
+            left: 100%;
+        }
+
+        /* 保留现有按钮设计 */
+        .tag, .filter-tag, .btn-primary, .btn-secondary {
+            /* 保持现有按钮样式，但添加AI效果 */
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tag:hover, .filter-tag:hover, .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .ai-page-header {
+                padding: 60px 0;
+            }
+
+            .ai-service-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .ai-service-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+    <body>
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- 页面标题区域 -->
+        <section class="page-header page-header--crm">
+            <div class="container">
+                <h1 class="page-header__title">🤖 AI一站式CRM管理系统</h1>
+                <p class="page-header__subtitle">智能化客户关系管理平台，提供从获客到留存的全链路CRM解决方案</p>
+                <span class="ai-badge">全链路管理</span>
+                <span class="ai-badge">全链路管理</span>
+            </div>
+        </section>
+
+        <!-- AI CRM内容区域 -->
+        <section class="knowledge-content">
+            <div class="container">
+                <!-- 搜索功能 -->
+                <div class="search-section">
+                    <div class="search-container">
+                        <input type="text" class="search-input" data-lang-placeholder="search-placeholder"
+                            placeholder="搜索知识文章...">
+                        <button class="search-btn" onclick="searchKnowledge()">🔍</button>
+                    </div>
+                </div>
+
+                <!-- 知识分类标签 -->
+                <div class="knowledge-tags">
+                    <div class="tag active" onclick="filterKnowledge('all')">全部功能</div>
+                    <div class="tag" onclick="filterKnowledge('customer')">客户管理</div>
+                    <div class="tag" onclick="filterKnowledge('sales')">销售自动化</div>
+                    <div class="tag" onclick="filterKnowledge('analytics')">数据分析</div>
+                    <div class="tag" onclick="filterKnowledge('marketing')">营销管理</div>
+                    <div class="tag" onclick="filterKnowledge('ai')">AI助手</div>
+                </div>
+
+                <!-- AI CRM功能卡片网格 -->
+                <div class="knowledge-grid">
+                    <!-- 智能客户管理卡片 -->
+                    <div class="knowledge-card" data-category="customer">
+                        <div class="knowledge-icon">👥</div>
+                        <h3>AI智能客户管理</h3>
+                        <p>360度客户视图管理，智能客户画像分析，提升客户满意度</p>
+                        <ul class="knowledge-points">
+                            <li>客户数据智能整合</li>
+                            <li>客户行为预测分析</li>
+                            <li>个性化服务推荐</li>
+                            <li>客户生命周期管理</li>
+                            <li>客户流失预警系统</li>
+                        </ul>
+                        <button class="btn-primary" data-crm-action="customer-management">开始使用</button>
+                    </div>
+
+                    <!-- 销售自动化卡片 -->
+                    <div class="knowledge-card" data-category="sales">
+                        <div class="knowledge-icon">🚀</div>
+                        <h3>AI销售自动化</h3>
+                        <p>智能销售流程自动化，AI辅助销售决策，显著提升销售效率</p>
+                        <ul class="knowledge-points">
+                            <li>销售线索智能评分</li>
+                            <li>自动化跟进提醒</li>
+                            <li>销售预测分析</li>
+                            <li>邮件智能模板</li>
+                            <li>销售话术优化建议</li>
+                        </ul>
+                        <button class="btn-primary" data-crm-action="sales-automation">立即体验</button>
+                    </div>
+
+                    <!-- 数据分析卡片 -->
+                    <div class="knowledge-card" data-category="analytics">
+                        <div class="knowledge-icon">📊</div>
+                        <h3>智能数据分析</h3>
+                        <p>深度业务数据分析，AI驱动的洞察报表，辅助经营决策</p>
+                        <ul class="knowledge-points">
+                            <li>实时数据可视化</li>
+                            <li>趋势预测分析</li>
+                            <li>异常数据检测</li>
+                            <li>自定义报表生成</li>
+                            <li>KPI智能监控</li>
+                        </ul>
+                        <button class="btn-primary" data-crm-action="data-analytics">查看分析</button>
+                    </div>
+
+                    <!-- 营销管理卡片 -->
+                    <div class="knowledge-card" data-category="marketing">
+                        <div class="knowledge-icon">📱</div>
+                        <h3>AI营销管理</h3>
+                        <p>智能化营销策略制定，精准客户定位，提升营销ROI</p>
+                        <ul class="knowledge-points">
+                            <li>目标客户智能画像</li>
+                            <li>营销效果预测</li>
+                            <li>多渠道营销协调</li>
+                            <li>营销内容智能推荐</li>
+                            <li>社交媒体分析监控</li>
+                        </ul>
+                        <button class="btn-primary">开始营销</button>
+                    </div>
+
+                    <!-- AI客服助手卡片 -->
+                    <div class="knowledge-card" data-category="ai">
+                        <div class="knowledge-icon">🤖</div>
+                        <h3>AI智能客服</h3>
+                        <p>24/7 AI客服助手，智能问答系统，提升客户服务体验</p>
+                        <ul class="knowledge-points">
+                            <li>自然语言理解</li>
+                            <li>多语言客服支持</li>
+                            <li>情感识别与分析</li>
+                            <li>知识库自动学习</li>
+                            <li>人工客服无缝转接</li>
+                        </ul>
+                        <button class="btn-primary" data-crm-action="ai-assistant">启动助手</button>
+                    </div>
+
+                    <!-- 工作流程自动化卡片 -->
+                    <div class="knowledge-card" data-category="workflow">
+                        <div class="knowledge-icon">⚙️</div>
+                        <h3>业务流程自动化</h3>
+                        <p>智能工作流程管理，自动化业务流程，提升组织效率</p>
+                        <ul class="knowledge-points">
+                            <li>工作流智能设计</li>
+                            <li>任务自动分配</li>
+                            <li>流程瓶颈识别</li>
+                            <li>效率优化建议</li>
+                            <li>跨部门协同管理</li>
+                        </ul>
+                        <button class="btn-primary">开始配置</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI CRM页面脚本 -->
+    <script src="js/pages/aicrm.js"></script>
+</body>
+</html>

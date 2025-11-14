@@ -1,0 +1,447 @@
+/* 主题变体文件 - 科技、法律、商务主题 */
+/* Created: 2025-11-14 */
+/* Purpose: 为不同业务场景提供专业化主题变体 */
+
+/* ==================== 主题切换机制 ==================== */
+/* 使用 data-theme 属性进行主题切换 */
+
+/* ==================== 默认主题 (Existing) ==================== */
+/* 保持现有的蓝紫色科技主题作为默认主题 */
+:root[data-theme="default"],
+:root:not([data-theme]) {
+    /* 继承 variables.css 中的默认主题变量 */
+    /* 无需重复定义，使用默认值 */
+}
+
+/* ==================== 科技蓝主题 (Tech Blue) ==================== */
+/* 适用于 AI 服务、技术平台、创新产品 */
+:root[data-theme="tech-blue"] {
+    /* 主题色调整 - 更深的科技蓝 */
+    --theme-primary: #2563eb;
+    --theme-primary-dark: #1d4ed8;
+    --theme-primary-light: #3b82f6;
+    --theme-primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+
+    /* 辅助色 - 科技青色 */
+    --theme-secondary: #0891b2;
+    --theme-accent: #06b6d4;
+    --theme-accent-light: #22d3ee;
+
+    /* 功能色保持一致 */
+    --theme-success: #10b981;
+    --theme-warning: #f59e0b;
+    --theme-error: #ef4444;
+    --theme-info: #3b82f6;
+
+    /* 背景色 - 冷色调科技感 */
+    --theme-bg-primary: #ffffff;
+    --theme-bg-secondary: #f8fafc;
+    --theme-bg-tertiary: #f1f5f9;
+    --theme-bg-dark: #0f172a;
+
+    /* 文字色 - 高对比度 */
+    --theme-text-primary: #0f172a;
+    --theme-text-secondary: #334155;
+    --theme-text-muted: #64748b;
+    --theme-text-inverse: #ffffff;
+
+    /* 边框色 - 蓝色调 */
+    --theme-border: #e2e8f0;
+    --theme-border-light: #f1f5f9;
+    --theme-border-focus: #2563eb;
+
+    /* 主题渐变 - 科技感 */
+    --theme-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    --theme-gradient-light: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+    --theme-gradient-reverse: linear-gradient(135deg, #06b6d4 0%, #2563eb 100%);
+
+    /* 阴影 - 蓝色调 */
+    --theme-shadow-sm: 0 1px 3px rgba(37, 99, 235, 0.1);
+    --theme-shadow-md: 0 4px 20px rgba(37, 99, 235, 0.15);
+    --theme-shadow-lg: 0 10px 40px rgba(37, 99, 235, 0.2);
+    --theme-shadow-xl: 0 20px 60px rgba(37, 99, 235, 0.25);
+
+    /* 发光效果 - 蓝色科技光 */
+    --theme-glow-primary: rgba(37, 99, 235, 0.4);
+    --theme-glow-accent: rgba(6, 182, 212, 0.5);
+    --theme-glow-success: rgba(16, 185, 129, 0.4);
+}
+
+/* ==================== 法律金主题 (Legal Gold) ==================== */
+/* 适用于 法律服务、商务咨询、专业服务 */
+:root[data-theme="legal-gold"] {
+    /* 主题色调整 - 权威金色 */
+    --theme-primary: #d97706;
+    --theme-primary-dark: #b45309;
+    --theme-primary-light: #f59e0b;
+    --theme-primary-gradient: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+
+    /* 辅助色 - 深蓝权威色 */
+    --theme-secondary: #1e3a8a;
+    --theme-accent: #1e40af;
+    --theme-accent-light: #3730a3;
+
+    /* 功能色保持一致 */
+    --theme-success: #10b981;
+    --theme-warning: #f59e0b;
+    --theme-error: #ef4444;
+    --theme-info: #3b82f6;
+
+    /* 背景色 - 暖色调专业感 */
+    --theme-bg-primary: #ffffff;
+    --theme-bg-secondary: #fffbeb;
+    --theme-bg-tertiary: #fef3c7;
+    --theme-bg-dark: #451a03;
+
+    /* 文字色 - 暖色调 */
+    --theme-text-primary: #451a03;
+    --theme-text-secondary: #78350f;
+    --theme-text-muted: #92400e;
+    --theme-text-inverse: #ffffff;
+
+    /* 边框色 - 金色调 */
+    --theme-border: #fef3c7;
+    --theme-border-light: #fffbeb;
+    --theme-border-focus: #d97706;
+
+    /* 主题渐变 - 权威感 */
+    --theme-gradient: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    --theme-gradient-light: linear-gradient(135deg, rgba(217, 119, 6, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+    --theme-gradient-reverse: linear-gradient(135deg, #1e3a8a 0%, #d97706 100%);
+
+    /* 阴影 - 金色调 */
+    --theme-shadow-sm: 0 1px 3px rgba(217, 119, 6, 0.1);
+    --theme-shadow-md: 0 4px 20px rgba(217, 119, 6, 0.15);
+    --theme-shadow-lg: 0 10px 40px rgba(217, 119, 6, 0.2);
+    --theme-shadow-xl: 0 20px 60px rgba(217, 119, 6, 0.25);
+
+    /* 发光效果 - 金色权威光 */
+    --theme-glow-primary: rgba(217, 119, 6, 0.4);
+    --theme-glow-accent: rgba(30, 58, 138, 0.3);
+    --theme-glow-success: rgba(16, 185, 129, 0.4);
+}
+
+/* ==================== 商务紫主题 (Business Purple) ==================== */
+/* 适用于 商务平台、企业管理、高端服务 */
+:root[data-theme="business-purple"] {
+    /* 主题色调整 - 高端紫色 */
+    --theme-primary: #7c3aed;
+    --theme-primary-dark: #6d28d9;
+    --theme-primary-light: #8b5cf6;
+    --theme-primary-gradient: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+
+    /* 辅助色 - 深紫辅助色 */
+    --theme-secondary: #4c1d95;
+    --theme-accent: #a855f7;
+    --theme-accent-light: #c084fc;
+
+    /* 功能色保持一致 */
+    --theme-success: #10b981;
+    --theme-warning: #f59e0b;
+    --theme-error: #ef4444;
+    --theme-info: #3b82f6;
+
+    /* 背景色 - 中性紫色调 */
+    --theme-bg-primary: #ffffff;
+    --theme-bg-secondary: #faf5ff;
+    --theme-bg-tertiary: #f3e8ff;
+    --theme-bg-dark: #2e1065;
+
+    /* 文字色 - 紫色调 */
+    --theme-text-primary: #2e1065;
+    --theme-text-secondary: #4c1d95;
+    --theme-text-muted: #6b21a8;
+    --theme-text-inverse: #ffffff;
+
+    /* 边框色 - 紫色调 */
+    --theme-border: #f3e8ff;
+    --theme-border-light: #faf5ff;
+    --theme-border-focus: #7c3aed;
+
+    /* 主题渐变 - 高端感 */
+    --theme-gradient: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    --theme-gradient-light: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+    --theme-gradient-reverse: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+
+    /* 阴影 - 紫色调 */
+    --theme-shadow-sm: 0 1px 3px rgba(124, 58, 237, 0.1);
+    --theme-shadow-md: 0 4px 20px rgba(124, 58, 237, 0.15);
+    --theme-shadow-lg: 0 10px 40px rgba(124, 58, 237, 0.2);
+    --theme-shadow-xl: 0 20px 60px rgba(124, 58, 237, 0.25);
+
+    /* 发光效果 - 紫色高端光 */
+    --theme-glow-primary: rgba(124, 58, 237, 0.4);
+    --theme-glow-accent: rgba(168, 85, 247, 0.5);
+    --theme-glow-success: rgba(16, 185, 129, 0.4);
+}
+
+/* ==================== 特殊组件主题适配 ==================== */
+
+/* ==================== 页面级别主题适配 ==================== */
+/* 主题变化主要影响页面背景和section区域色彩 */
+
+/* 页面整体背景适配 */
+[data-theme="tech-blue"] {
+    /* 页面主背景 - 科技蓝冷色调 */
+    --page-bg-primary: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f0f9ff 100%);
+    --page-bg-secondary: #f8fafc;
+    --page-section-bg: rgba(37, 99, 235, 0.03);
+}
+
+[data-theme="legal-gold"] {
+    /* 页面主背景 - 法律金暖色调 */
+    --page-bg-primary: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+    --page-bg-secondary: #fffbeb;
+    --page-section-bg: rgba(217, 119, 6, 0.03);
+}
+
+[data-theme="business-purple"] {
+    /* 页面主背景 - 商务紫中性色调 */
+    --page-bg-primary: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #ede9fe 100%);
+    --page-bg-secondary: #faf5ff;
+    --page-section-bg: rgba(124, 58, 237, 0.03);
+}
+
+/* AI 能力展示区域适配 */
+[data-theme="tech-blue"] .ai-capabilities {
+    background: var(--page-bg-primary);
+}
+
+[data-theme="tech-blue"] .ai-capabilities::before {
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+}
+
+[data-theme="legal-gold"] .ai-capabilities {
+    background: var(--page-bg-primary);
+}
+
+[data-theme="legal-gold"] .ai-capabilities::before {
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(217, 119, 6, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(30, 58, 138, 0.15) 0%, transparent 50%);
+}
+
+[data-theme="business-purple"] .ai-capabilities {
+    background: var(--page-bg-primary);
+}
+
+[data-theme="business-purple"] .ai-capabilities::before {
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
+}
+
+/* AI页面整体背景适配 */
+[data-theme="tech-blue"] .ai-background {
+    background: var(--page-bg-primary);
+}
+
+[data-theme="legal-gold"] .ai-background {
+    background: var(--page-bg-primary);
+}
+
+[data-theme="business-purple"] .ai-background {
+    background: var(--page-bg-primary);
+}
+
+/* 页面头部区域适配 */
+[data-theme="tech-blue"] .ai-page-header {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 50%, #2563eb 100%);
+}
+
+[data-theme="legal-gold"] .ai-page-header {
+    background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%);
+}
+
+[data-theme="business-purple"] .ai-page-header {
+    background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 50%, #8b5cf6 100%);
+}
+
+/* Hero Section 区域适配 */
+[data-theme="tech-blue"] .hero-section {
+    background: var(--page-bg-primary);
+}
+
+[data-theme="legal-gold"] .hero-section {
+    background: var(--page-bg-primary);
+}
+
+[data-theme="business-purple"] .hero-section {
+    background: var(--page-bg-primary);
+}
+
+/* 其他主要Section区域适配 */
+[data-theme="tech-blue"] .features-section,
+[data-theme="tech-blue"] .services-section,
+[data-theme="tech-blue"] .about-section {
+    background: var(--page-bg-secondary);
+}
+
+[data-theme="legal-gold"] .features-section,
+[data-theme="legal-gold"] .services-section,
+[data-theme="legal-gold"] .about-section {
+    background: var(--page-bg-secondary);
+}
+
+[data-theme="business-purple"] .features-section,
+[data-theme="business-purple"] .services-section,
+[data-theme="business-purple"] .about-section {
+    background: var(--page-bg-secondary);
+}
+
+/* ==================== 主题过渡动画 ==================== */
+/* 平滑的主题切换过渡效果 */
+
+:root {
+    --theme-transition-duration: 0.3s;
+    --theme-transition-timing: ease-in-out;
+}
+
+/* 主题切换时的过渡效果 */
+*,
+*::before,
+*::after {
+    transition:
+        background-color var(--theme-transition-duration) var(--theme-transition-timing),
+        border-color var(--theme-transition-duration) var(--theme-transition-timing),
+        color var(--theme-transition-duration) var(--theme-transition-timing),
+        box-shadow var(--theme-transition-duration) var(--theme-transition-timing),
+        fill var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* 禁用动画偏好的用户 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+}
+
+/* ==================== 主题切换指示器 ==================== */
+/* 为当前主题提供视觉反馈 */
+
+[data-theme]::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    z-index: var(--z-tooltip, 1070);
+    pointer-events: none;
+}
+
+[data-theme="tech-blue"]::before {
+    background: linear-gradient(90deg, #2563eb, #06b6d4);
+}
+
+[data-theme="legal-gold"]::before {
+    background: linear-gradient(90deg, #d97706, #1e3a8a);
+}
+
+[data-theme="business-purple"]::before {
+    background: linear-gradient(90deg, #7c3aed, #a855f7);
+}
+
+/* ==================== 响应式主题优化 ==================== */
+/* 针对不同设备的主题微调 */
+
+/* 移动设备主题优化 */
+@media (max-width: 768px) {
+    [data-theme="tech-blue"] {
+        --theme-shadow-md: 0 2px 10px rgba(37, 99, 235, 0.1);
+        --theme-shadow-lg: 0 4px 20px rgba(37, 99, 235, 0.15);
+    }
+
+    [data-theme="legal-gold"] {
+        --theme-shadow-md: 0 2px 10px rgba(217, 119, 6, 0.1);
+        --theme-shadow-lg: 0 4px 20px rgba(217, 119, 6, 0.15);
+    }
+
+    [data-theme="business-purple"] {
+        --theme-shadow-md: 0 2px 10px rgba(124, 58, 237, 0.1);
+        --theme-shadow-lg: 0 4px 20px rgba(124, 58, 237, 0.15);
+    }
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+    [data-theme="tech-blue"] {
+        --theme-primary: #1d4ed8;
+        --theme-text-primary: #0f172a;
+        --theme-border: #cbd5e1;
+    }
+
+    [data-theme="legal-gold"] {
+        --theme-primary: #b45309;
+        --theme-text-primary: #451a03;
+        --theme-border: #fed7aa;
+    }
+
+    [data-theme="business-purple"] {
+        --theme-primary: #6d28d9;
+        --theme-text-primary: #2e1065;
+        --theme-border: #e9d5ff;
+    }
+}
+
+/* ==================== 深色模式主题变体 ==================== */
+/* 为每个主题提供深色模式版本 */
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="tech-blue"] {
+        --theme-bg-primary: #0f172a;
+        --theme-bg-secondary: #1e293b;
+        --theme-bg-tertiary: #334155;
+        --theme-text-primary: #f8fafc;
+        --theme-text-secondary: #e2e8f0;
+        --theme-text-muted: #94a3b8;
+        --theme-border: #334155;
+        --theme-border-light: #1e293b;
+    }
+
+    [data-theme="legal-gold"] {
+        --theme-bg-primary: #451a03;
+        --theme-bg-secondary: #78350f;
+        --theme-bg-tertiary: #92400e;
+        --theme-text-primary: #fef3c7;
+        --theme-text-secondary: #fde68a;
+        --theme-text-muted: #fcd34d;
+        --theme-border: #92400e;
+        --theme-border-light: #78350f;
+    }
+
+    [data-theme="business-purple"] {
+        --theme-bg-primary: #2e1065;
+        --theme-bg-secondary: #4c1d95;
+        --theme-bg-tertiary: #6b21a8;
+        --theme-text-primary: #faf5ff;
+        --theme-text-secondary: #f3e8ff;
+        --theme-text-muted: #e9d5ff;
+        --theme-border: #6b21a8;
+        --theme-border-light: #4c1d95;
+    }
+}
+
+/* ==================== 打印样式 ==================== */
+/* 确保打印时主题不会影响可读性 */
+
+@media print {
+    [data-theme] {
+        --theme-bg-primary: white !important;
+        --theme-text-primary: black !important;
+        --theme-border: #ccc !important;
+        --theme-shadow-sm: none !important;
+        --theme-shadow-md: none !important;
+        --theme-shadow-lg: none !important;
+        --theme-shadow-xl: none !important;
+    }
+
+    /* 隐藏主题指示器 */
+    [data-theme]::before {
+        display: none !important;
+    }
+}
