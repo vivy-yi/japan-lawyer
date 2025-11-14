@@ -478,11 +478,11 @@
 
             <!-- 主导航菜单 -->
             <ul class="nav-menu" id="main-nav-menu">
-                <li><a href="index.html" data-page="home" class="nav-link">🏠 首页</a></li>
-                <li><a href="ai-architecture.html" class="nav-link active">🧠 AI架构</a></li>
-                <li><a href="index.html#ailegal" class="nav-link">⚖️ AI法律</a></li>
-                <li><a href="index.html#aicrm" class="nav-link">🤖 AI CRM</a></li>
-                <li><a href="index.html#knowledge" class="nav-link">📚 知识库</a></li>
+                <li><a href="index.html" data-page="home" class="nav-link nav-home">🏠 首页</a></li>
+                <li><a href="ai-architecture.html" class="nav-link nav-architecture active">🧠 AI架构</a></li>
+                <li><a href="index.html#ailegal" data-page="ailegal" class="nav-link nav-spa">⚖️ AI法律</a></li>
+                <li><a href="index.html#aicrm" data-page="aicrm" class="nav-link nav-spa">🤖 AI CRM</a></li>
+                <li><a href="index.html#knowledge" data-page="knowledge" class="nav-link nav-spa">📚 知识库</a></li>
             </ul>
         </nav>
     </header>
@@ -886,8 +886,43 @@
     <!-- JavaScript -->
     <script src="js/nav.js"></script>
     <script>
-        // 页面加载后的动画效果
+        // AI架构页面专用导航处理
+        function setupAINavigation() {
+            console.log('🔧 Setting up AI Architecture page navigation...');
+
+            // 为导航链接添加点击事件处理
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    const page = this.getAttribute('data-page');
+
+                    // 处理不同类型的链接
+                    if (this.classList.contains('nav-home')) {
+                        // 首页链接 - 直接跳转到主页
+                        console.log('🏠 Navigating to home page');
+                        return; // 让默认跳转发生
+                    } else if (this.classList.contains('nav-spa')) {
+                        // SPA页面链接 - 需要特殊处理
+                        e.preventDefault();
+                        console.log(`🔗 Navigating to SPA page: ${page}`);
+                        if (href && href.includes('index.html#')) {
+                            // 直接跳转到主页的特定部分
+                            window.location.href = href;
+                        }
+                    } else if (this.classList.contains('nav-architecture')) {
+                        // AI架构页面链接 - 当前页面，不处理
+                        e.preventDefault();
+                        console.log('🧠 Already on AI Architecture page');
+                    }
+                });
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            // 设置导航事件监听器
+            setupAINavigation();
+
             // 技术层级展开/收起功能
             const layerHeaders = document.querySelectorAll('.layer-header');
             layerHeaders.forEach(header => {
@@ -923,6 +958,8 @@
                     hero.style.transform = `translateY(${scrolled * 0.5}px)`;
                 }
             });
+
+            console.log('✅ AI Architecture page loaded and initialized');
         });
     </script>
 </body>
