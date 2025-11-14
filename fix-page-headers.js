@@ -45,7 +45,7 @@ const pages = [
  */
 function fixPageHeader(filePath) {
     try {
-        console.log(`正在处理: ${filePath}`);
+        window.logInfo(`正在处理: ${filePath}`);
 
         // 读取文件内容
         let content = fs.readFileSync(filePath, 'utf8');
@@ -104,16 +104,16 @@ function fixPageHeader(filePath) {
         // 写回文件
         fs.writeFileSync(filePath, content, 'utf8');
 
-        console.log(`✅ ${pageName}: 修复完成`);
-        console.log(`   - page-header: ${changes.pageHeaderReplaced} 处`);
-        console.log(`   - page-title: ${changes.titleClassReplaced} 处`);
-        console.log(`   - page-subtitle: ${changes.subtitleClassReplaced} 处`);
-        console.log(`   - page-description: ${changes.descriptionClassReplaced} 处`);
+        window.logInfo(`✅ ${pageName}: 修复完成`);
+        window.logInfo(`   - page-header: ${changes.pageHeaderReplaced} 处`);
+        window.logInfo(`   - page-title: ${changes.titleClassReplaced} 处`);
+        window.logInfo(`   - page-subtitle: ${changes.subtitleClassReplaced} 处`);
+        window.logInfo(`   - page-description: ${changes.descriptionClassReplaced} 处`);
 
         return changes;
 
     } catch (error) {
-        console.error(`❌ 处理 ${filePath} 时出错:`, error.message);
+        window.logError(`❌ 处理 ${filePath} 时出错:`, error.message);
         return null;
     }
 }
@@ -154,7 +154,7 @@ function cleanupDuplicateStyles(content, changes) {
  * 批量处理所有页面
  */
 function fixAllPages() {
-    console.log('🚀 开始批量修复页面头部组件...\n');
+    window.logInfo('🚀 开始批量修复页面头部组件...\n');
 
     let totalChanges = {
         total: 0,
@@ -174,28 +174,28 @@ function fixAllPages() {
                 });
             }
         } else {
-            console.log(`⚠️  跳过不存在的文件: ${page}`);
+            window.logInfo(`⚠️  跳过不存在的文件: ${page}`);
         }
     }
 
     // 输出统计报告
-    console.log('\n📊 修复统计报告:');
-    console.log(`总共处理页面: ${totalChanges.total} 个`);
+    window.logInfo('\n📊 修复统计报告:');
+    window.logInfo(`总共处理页面: ${totalChanges.total} 个`);
 
     totalChanges.pages.forEach(({ page, changes }) => {
         const totalChangesForPage = changes.pageHeaderReplaced +
                                           changes.titleClassReplaced +
                                           changes.subtitleClassReplaced +
                                           changes.descriptionClassReplaced;
-        console.log(`${page}: ${totalChangesForPage} 处变更`);
+        window.logInfo(`${page}: ${totalChangesForPage} 处变更`);
     });
 
-    console.log('\n✅ 批量修复完成！');
-    console.log('\n📋 接下来需要手动处理的任务:');
-    console.log('1. 测试每个页面的显示效果');
-    console.log('2. 检查CSS样式是否正确应用');
-    console.log('3. 验证JavaScript功能是否正常');
-    console.log('4. 测试响应式布局');
+    window.logInfo('\n✅ 批量修复完成！');
+    window.logInfo('\n📋 接下来需要手动处理的任务:');
+    window.logInfo('1. 测试每个页面的显示效果');
+    window.logInfo('2. 检查CSS样式是否正确应用');
+    window.logInfo('3. 验证JavaScript功能是否正常');
+    window.logInfo('4. 测试响应式布局');
 }
 
 // 执行批量修复

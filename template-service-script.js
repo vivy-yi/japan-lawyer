@@ -29,7 +29,7 @@ class AIServiceManager {
         this.createModal();
         this.bindEvents();
         this.setupProgressTracking();
-        console.log(`✅ ${this.serviceConfig.name} 服务管理器已初始化`);
+        window.logInfo(`✅ ${this.serviceConfig.name} 服务管理器已初始化`);
     }
 
     /**
@@ -574,7 +574,7 @@ class AIServiceManager {
      */
     trackServiceCompletion(data) {
         // 这里可以集成分析服务
-        console.log('📊 服务申请完成:', {
+        window.logInfo('📊 服务申请完成:', {
             serviceType: data.serviceType,
             timestamp: new Date().toISOString(),
             referenceNumber: this.generateReferenceNumber()
@@ -698,5 +698,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始化AI服务管理器
     window.aiServiceManager = new AIServiceManager(serviceConfig);
 
-    console.log('🎯 AI服务页面已加载完成');
+    window.logInfo('🎯 AI服务页面已加载完成');
 });

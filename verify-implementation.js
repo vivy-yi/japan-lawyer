@@ -3,7 +3,7 @@
  * Verification Script for Implemented Features
  */
 
-console.log('🧪 开始验证语言持久化和跨窗口同步功能...\n');
+window.logInfo('🧪 开始验证语言持久化和跨窗口同步功能...\n');
 
 // 模拟功能测试
 function verifyImplementation() {
@@ -13,7 +13,7 @@ function verifyImplementation() {
     tests.push({
         name: '语言持久化逻辑验证',
         test: () => {
-            console.log('📝 测试语言持久化逻辑...');
+            window.logInfo('📝 测试语言持久化逻辑...');
 
             // 模拟 localStorage 保存
             const mockStorage = {};
@@ -21,7 +21,7 @@ function verifyImplementation() {
             // 模拟切换语言
             function switchToLang(lang) {
                 mockStorage.preferredLanguage = lang;
-                console.log(`✅ 语言切换到 ${lang}，已保存到 localStorage`);
+                window.logInfo(`✅ 语言切换到 ${lang}，已保存到 localStorage`);
                 return true;
             }
 
@@ -29,10 +29,10 @@ function verifyImplementation() {
             function detectLangOnRefresh() {
                 const saved = mockStorage.preferredLanguage;
                 if (saved && ['zh', 'ja', 'en'].includes(saved)) {
-                    console.log(`📝 页面刷新检测到保存的语言: ${saved}`);
+                    window.logInfo(`📝 页面刷新检测到保存的语言: ${saved}`);
                     return saved;
                 }
-                console.log('🇨🇳 没有保存的语言，使用默认中文');
+                window.logInfo('🇨🇳 没有保存的语言，使用默认中文');
                 return 'zh';
             }
 
@@ -47,7 +47,7 @@ function verifyImplementation() {
             const detected3 = detectLangOnRefresh();
 
             const passed = detected1 === 'ja' && detected2 === 'en' && detected3 === 'zh';
-            console.log(passed ? '✅' : '❌', `语言持久化测试 ${passed ? '通过' : '失败'}`);
+            window.logInfo(passed ? '✅' : '❌', `语言持久化测试 ${passed ? '通过' : '失败'}`);
             return passed;
         }
     });
@@ -56,7 +56,7 @@ function verifyImplementation() {
     tests.push({
         name: '消息发送机制验证',
         test: () => {
-            console.log('📡 测试消息发送机制...');
+            window.logInfo('📡 测试消息发送机制...');
 
             let messagesSent = [];
 
@@ -69,7 +69,7 @@ function verifyImplementation() {
                     timestamp: Date.now()
                 };
                 messagesSent.push(message);
-                console.log(`📡 发送语言切换消息: ${language} (来源: ${source})`);
+                window.logInfo(`📡 发送语言切换消息: ${language} (来源: ${source})`);
                 return message;
             }
 
@@ -88,7 +88,7 @@ function verifyImplementation() {
             );
 
             const passed = messagesValid && messagesSent.length === 2;
-            console.log(passed ? '✅' : '❌', `消息发送机制测试 ${passed ? '通过' : '失败'}`);
+            window.logInfo(passed ? '✅' : '❌', `消息发送机制测试 ${passed ? '通过' : '失败'}`);
             return passed;
         }
     });
@@ -97,7 +97,7 @@ function verifyImplementation() {
     tests.push({
         name: '防循环机制验证',
         test: () => {
-            console.log('🔄 测试防循环机制...');
+            window.logInfo('🔄 测试防循环机制...');
 
             let processedMessages = 0;
 
@@ -107,12 +107,12 @@ function verifyImplementation() {
 
                 // 忽略自己发送的消息
                 if (source === 'simple-i18n-init') {
-                    console.log(`🔇 忽略自己的消息: ${language}`);
+                    window.logInfo(`🔇 忽略自己的消息: ${language}`);
                     return false;
                 }
 
                 processedMessages++;
-                console.log(`🔄 处理来自 ${source} 的消息: ${language}`);
+                window.logInfo(`🔄 处理来自 ${source} 的消息: ${language}`);
                 return true;
             }
 
@@ -126,38 +126,38 @@ function verifyImplementation() {
             messages.forEach(msg => handleLanguageMessage(msg));
 
             const passed = processedMessages === 1; // 只处理非 init 消息
-            console.log(passed ? '✅' : '❌', `防循环机制测试 ${passed ? '通过' : '失败'}`);
+            window.logInfo(passed ? '✅' : '❌', `防循环机制测试 ${passed ? '通过' : '失败'}`);
             return passed;
         }
     });
 
     // 运行所有测试
-    console.log('🚀 开始运行验证测试...\n');
+    window.logInfo('🚀 开始运行验证测试...\n');
     let passedTests = 0;
 
     tests.forEach((test, index) => {
-        console.log(`\n--- 测试 ${index + 1}: ${test.name} ---`);
+        window.logInfo(`\n--- 测试 ${index + 1}: ${test.name} ---`);
         const result = test.test();
         if (result) passedTests++;
     });
 
     // 输出结果
-    console.log('\n📊 验证结果汇总:');
-    console.log(`✅ 通过测试: ${passedTests}/${tests.length}`);
-    console.log(`❌ 失败测试: ${tests.length - passedTests}/${tests.length}`);
+    window.logInfo('\n📊 验证结果汇总:');
+    window.logInfo(`✅ 通过测试: ${passedTests}/${tests.length}`);
+    window.logInfo(`❌ 失败测试: ${tests.length - passedTests}/${tests.length}`);
 
     if (passedTests === tests.length) {
-        console.log('\n🎉 所有功能验证通过！');
-        console.log('\n📋 实现的功能:');
-        console.log('1. ✅ 语言点击后立即保存到 localStorage');
-        console.log('2. ✅ 页面刷新后优先读取保存的语言');
-        console.log('3. ✅ 无缓存时默认使用中文');
-        console.log('4. ✅ 页面初始化时发送语言同步消息');
-        console.log('5. ✅ 用户切换语言时发送同步消息');
-        console.log('6. ✅ 多重通信机制保障');
-        console.log('7. ✅ 智能防循环消息传播');
+        window.logInfo('\n🎉 所有功能验证通过！');
+        window.logInfo('\n📋 实现的功能:');
+        window.logInfo('1. ✅ 语言点击后立即保存到 localStorage');
+        window.logInfo('2. ✅ 页面刷新后优先读取保存的语言');
+        window.logInfo('3. ✅ 无缓存时默认使用中文');
+        window.logInfo('4. ✅ 页面初始化时发送语言同步消息');
+        window.logInfo('5. ✅ 用户切换语言时发送同步消息');
+        window.logInfo('6. ✅ 多重通信机制保障');
+        window.logInfo('7. ✅ 智能防循环消息传播');
     } else {
-        console.log('\n⚠️ 部分功能验证失败，请检查实现');
+        window.logInfo('\n⚠️ 部分功能验证失败，请检查实现');
     }
 
     return passedTests === tests.length;

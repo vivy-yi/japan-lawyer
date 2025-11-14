@@ -4,30 +4,30 @@
  */
 
 function debugCarousel() {
-    console.log('🔍 开始调试轮播图系统...');
+    window.logInfo('🔍 开始调试轮播图系统...');
 
     // 1. 检查基础结构
-    console.log('\n📋 1. 检查基础结构');
+    window.logInfo('\n📋 1. 检查基础结构');
     const slides = document.querySelectorAll('.carousel-slide');
     const dots = document.querySelectorAll('.carousel-dot');
     const carouselInstance = window.carouselInstance;
 
-    console.log(`   - 找到 ${slides.length} 个轮播slide`);
-    console.log(`   - 找到 ${dots.length} 个控制点`);
-    console.log(`   - 轮播实例: ${carouselInstance ? '✅ 存在' : '❌ 不存在'}`);
+    window.logInfo(`   - 找到 ${slides.length} 个轮播slide`);
+    window.logInfo(`   - 找到 ${dots.length} 个控制点`);
+    window.logInfo(`   - 轮播实例: ${carouselInstance ? '✅ 存在' : '❌ 不存在'}`);
 
     if (slides.length === 0) {
-        console.error('❌ 未找到任何轮播slide！');
+        window.logError('❌ 未找到任何轮播slide！');
         return false;
     }
 
     if (dots.length === 0) {
-        console.error('❌ 未找到任何控制点！');
+        window.logError('❌ 未找到任何控制点！');
         return false;
     }
 
     // 2. 检查slide状态
-    console.log('\n📋 2. 检查slide状态');
+    window.logInfo('\n📋 2. 检查slide状态');
     let activeSlideCount = 0;
     let activeDotCount = 0;
 
@@ -37,58 +37,58 @@ function debugCarousel() {
         const slideContent = slide.querySelector('.slide-content');
         const contentInlineStyles = slideContent ? slideContent.getAttribute('style') : null;
 
-        console.log(`   Slide ${index + 1}:`);
-        console.log(`     - active: ${isActive}`);
-        console.log(`     - 内联样式: ${hasInlineStyles || '无'}`);
-        console.log(`     - slide-content内联样式: ${contentInlineStyles || '无'}`);
+        window.logInfo(`   Slide ${index + 1}:`);
+        window.logInfo(`     - active: ${isActive}`);
+        window.logInfo(`     - 内联样式: ${hasInlineStyles || '无'}`);
+        window.logInfo(`     - slide-content内联样式: ${contentInlineStyles || '无'}`);
 
         if (isActive) {
             activeSlideCount++;
-            console.log(`     - content可见性: ${slideContent ?
+            window.logInfo(`     - content可见性: ${slideContent ?
                 (window.getComputedStyle(slideContent).visibility) : 'N/A'}`);
         }
     });
 
     dots.forEach((dot, index) => {
         const isActive = dot.classList.contains('active');
-        console.log(`   Dot ${index + 1}: active = ${isActive}`);
+        window.logInfo(`   Dot ${index + 1}: active = ${isActive}`);
         if (isActive) activeDotCount++;
     });
 
-    console.log(`   - 活动slide数量: ${activeSlideCount} (应该为1)`);
-    console.log(`   - 活动控制点数量: ${activeDotCount} (应该为1)`);
+    window.logInfo(`   - 活动slide数量: ${activeSlideCount} (应该为1)`);
+    window.logInfo(`   - 活动控制点数量: ${activeDotCount} (应该为1)`);
 
     // 3. 检查CSS计算样式
-    console.log('\n📋 3. 检查CSS计算样式');
+    window.logInfo('\n📋 3. 检查CSS计算样式');
     if (slides.length > 0) {
         const firstSlide = slides[0];
         const firstSlideStyle = window.getComputedStyle(firstSlide);
         const firstContent = firstSlide.querySelector('.slide-content');
         const firstContentStyle = firstContent ? window.getComputedStyle(firstContent) : null;
 
-        console.log(`   第一个slide的样式:`);
-        console.log(`     - opacity: ${firstSlideStyle.opacity}`);
-        console.log(`     - visibility: ${firstSlideStyle.visibility}`);
-        console.log(`     - z-index: ${firstSlideStyle.zIndex}`);
+        window.logInfo(`   第一个slide的样式:`);
+        window.logInfo(`     - opacity: ${firstSlideStyle.opacity}`);
+        window.logInfo(`     - visibility: ${firstSlideStyle.visibility}`);
+        window.logInfo(`     - z-index: ${firstSlideStyle.zIndex}`);
 
         if (firstContentStyle) {
-            console.log(`   第一个slide-content的样式:`);
-            console.log(`     - opacity: ${firstContentStyle.opacity}`);
-            console.log(`     - visibility: ${firstContentStyle.visibility}`);
+            window.logInfo(`   第一个slide-content的样式:`);
+            window.logInfo(`     - opacity: ${firstContentStyle.opacity}`);
+            window.logInfo(`     - visibility: ${firstContentStyle.visibility}`);
         }
     }
 
     // 4. 测试轮播功能
-    console.log('\n📋 4. 测试轮播功能');
+    window.logInfo('\n📋 4. 测试轮播功能');
     if (carouselInstance) {
-        console.log(`   - 当前slide索引: ${carouselInstance.currentSlide}`);
-        console.log(`   - 过渡状态: ${carouselInstance.isTransitioning}`);
-        console.log(`   - slide数组长度: ${carouselInstance.slides ? carouselInstance.slides.length : 'N/A'}`);
-        console.log(`   - dots数组长度: ${carouselInstance.dots ? carouselInstance.dots.length : 'N/A'}`);
+        window.logInfo(`   - 当前slide索引: ${carouselInstance.currentSlide}`);
+        window.logInfo(`   - 过渡状态: ${carouselInstance.isTransitioning}`);
+        window.logInfo(`   - slide数组长度: ${carouselInstance.slides ? carouselInstance.slides.length : 'N/A'}`);
+        window.logInfo(`   - dots数组长度: ${carouselInstance.dots ? carouselInstance.dots.length : 'N/A'}`);
 
         // 测试showSlide方法
         if (carouselInstance.slides && carouselInstance.slides.length > 1) {
-            console.log('\n🔄 测试切换到第2个slide...');
+            window.logInfo('\n🔄 测试切换到第2个slide...');
             try {
                 carouselInstance.showSlide(1);
                 setTimeout(() => {
@@ -97,43 +97,43 @@ function debugCarousel() {
                     const slideIndex = Array.from(carouselInstance.slides).indexOf(newActiveSlide);
                     const dotIndex = Array.from(carouselInstance.dots).indexOf(newActiveDot);
 
-                    console.log(`   - 切换后活动slide索引: ${slideIndex + 1}`);
-                    console.log(`   - 切换后活动控制点索引: ${dotIndex + 1}`);
-                    console.log(`   - 当前slide索引: ${carouselInstance.currentSlide}`);
+                    window.logInfo(`   - 切换后活动slide索引: ${slideIndex + 1}`);
+                    window.logInfo(`   - 切换后活动控制点索引: ${dotIndex + 1}`);
+                    window.logInfo(`   - 当前slide索引: ${carouselInstance.currentSlide}`);
 
                     if (slideIndex === 1 && dotIndex === 1 && carouselInstance.currentSlide === 1) {
-                        console.log('✅ 轮播切换功能正常！');
+                        window.logInfo('✅ 轮播切换功能正常！');
                     } else {
-                        console.error('❌ 轮播切换功能异常！');
+                        window.logError('❌ 轮播切换功能异常！');
                     }
 
                     // 切换回第一个slide
                     setTimeout(() => {
                         carouselInstance.showSlide(0);
-                        console.log('🔄 已切换回第1个slide');
+                        window.logInfo('🔄 已切换回第1个slide');
                     }, 1000);
                 }, 500);
             } catch (error) {
-                console.error('❌ 轮播切换测试失败:', error);
+                window.logError('❌ 轮播切换测试失败:', error);
             }
         }
     } else {
-        console.error('❌ 轮播实例不存在，无法测试功能');
+        window.logError('❌ 轮播实例不存在，无法测试功能');
     }
 
     // 5. 检查HTML结构完整性
-    console.log('\n📋 5. 检查HTML结构完整性');
+    window.logInfo('\n📋 5. 检查HTML结构完整性');
     slides.forEach((slide, index) => {
         const slideBackground = slide.querySelector('.slide-background');
         const slideContent = slide.querySelector('.slide-content');
         const slideTitle = slide.querySelector('.slide-title');
         const slideSubtitle = slide.querySelector('.slide-subtitle');
 
-        console.log(`   Slide ${index + 1} 结构:`);
-        console.log(`     - slide-background: ${slideBackground ? '✅' : '❌'}`);
-        console.log(`     - slide-content: ${slideContent ? '✅' : '❌'}`);
-        console.log(`     - slide-title: ${slideTitle ? '✅' : '❌'}`);
-        console.log(`     - slide-subtitle: ${slideSubtitle ? '✅' : '❌'}`);
+        window.logInfo(`   Slide ${index + 1} 结构:`);
+        window.logInfo(`     - slide-background: ${slideBackground ? '✅' : '❌'}`);
+        window.logInfo(`     - slide-content: ${slideContent ? '✅' : '❌'}`);
+        window.logInfo(`     - slide-title: ${slideTitle ? '✅' : '❌'}`);
+        window.logInfo(`     - slide-subtitle: ${slideSubtitle ? '✅' : '❌'}`);
     });
 
     // 总结
@@ -142,11 +142,11 @@ function debugCarousel() {
                      slides.length === dots.length &&
                      carouselInstance !== null;
 
-    console.log('\n📋 调试总结:');
-    console.log(`   - HTML结构: ${slides.length > 0 ? '✅' : '❌'}`);
-    console.log(`   - CSS样式: ${allGood ? '✅' : '❌'}`);
-    console.log(`   - JavaScript: ${carouselInstance ? '✅' : '❌'}`);
-    console.log(`   - 整体状态: ${allGood ? '✅ 修复成功！' : '❌ 仍有问题'}`);
+    window.logInfo('\n📋 调试总结:');
+    window.logInfo(`   - HTML结构: ${slides.length > 0 ? '✅' : '❌'}`);
+    window.logInfo(`   - CSS样式: ${allGood ? '✅' : '❌'}`);
+    window.logInfo(`   - JavaScript: ${carouselInstance ? '✅' : '❌'}`);
+    window.logInfo(`   - 整体状态: ${allGood ? '✅ 修复成功！' : '❌ 仍有问题'}`);
 
     return allGood;
 }
@@ -163,4 +163,4 @@ if (document.readyState === 'loading') {
 // 导出到全局，方便手动调用
 window.debugCarousel = debugCarousel;
 
-console.log('🔧 轮播调试脚本已加载，输入 debugCarousel() 开始调试');
+window.logInfo('🔧 轮播调试脚本已加载，输入 debugCarousel() 开始调试');

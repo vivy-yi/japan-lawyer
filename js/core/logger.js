@@ -605,11 +605,11 @@ if (ENVIRONMENT.isDevelopment && logger.config.enabled) {
 
     // 只在日志开启时显示开发工具信息
     if (logger.config.enabled) {
-        console.log('🛠️ Development tools available:');
-        console.log('- window.logger: 核心日志实例');
-        console.log('- window.debug(): 快速调试日志');
-        console.log('- window.devTools: 开发者工具集');
-        console.log('- localStorage: logger_config 进行配置');
+        window.logInfo('🛠️ Development tools available:');
+        window.logInfo('- window.logger: 核心日志实例');
+        window.logInfo('- window.debug(): 快速调试日志');
+        window.logInfo('- window.devTools: 开发者工具集');
+        window.logInfo('- localStorage: logger_config 进行配置');
     }
 }
 
