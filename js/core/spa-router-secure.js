@@ -1,6 +1,14 @@
 // Secure SPA Router - 完全安全的单页应用路由器
 // 不使用innerHTML，仅使用安全的DOM操作
 
+// Import logger system
+import('./logger.js').then(({ logger }) => {
+    window.spaLogger = logger;
+    logger.info('🚀 Initializing Secure SPA Router', null, 'SPA_ROUTER');
+}).catch(error => {
+    console.warn('Failed to load logger system for SPA router:', error);
+});
+
 class SecureSPARouter {
     constructor() {
         this.contentContainer = null;
@@ -8,6 +16,7 @@ class SecureSPARouter {
         this.pageCache = new Map();
         this.transitionEnabled = true;
         this.loadedStyles = new Set(); // 跟踪已加载的样式
+        this.logger = window.spaLogger || null;
         this.init();
     }
 
@@ -83,19 +92,34 @@ class SecureSPARouter {
     }
 
     async loadPage(pageName, updateHistory = true) {
+        // 性能监控开始
+        if (this.logger) {
+            this.logger.startPerformanceMark(`page-load-${pageName}`);
+        }
 
         // 特殊处理：如果是home页面，不做任何操作
         if (pageName === 'home' || !pageName) {
-            console.log('🏠 Homepage requested, keeping original content');
+            this.logger?.info('🏠 Homepage requested, keeping original content', {
+                pageName: pageName,
+                currentPage: this.currentPage
+            }, 'SPA_ROUTER') || console.log('🏠 Homepage requested, keeping original content');
             return;
         }
 
         if (this.currentPage === pageName) {
-            console.log(`Already on page: ${pageName}`);
+            this.logger?.debug(`Already on page: ${pageName}`, {
+                pageName: pageName,
+                currentPage: this.currentPage
+            }, 'SPA_ROUTER') || console.log(`Already on page: ${pageName}`);
             return;
         }
 
-        console.log(`🔄 Loading page: ${pageName}`);
+        this.logger?.info(`🔄 Loading page: ${pageName}`, {
+            pageName: pageName,
+            currentPage: this.currentPage,
+            updateHistory: updateHistory,
+            timestamp: Date.now()
+        }, 'SPA_ROUTER') || console.log(`🔄 Loading page: ${pageName}`);
 
         // 显示加载状态
         this.showLoading();

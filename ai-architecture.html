@@ -884,36 +884,65 @@
     </footer>
 
     <!-- JavaScript -->
+    <!-- 日志系统初始化 -->
+    <script src="js/logger-init.js"></script>
     <script src="js/nav.js"></script>
     <script>
         // AI架构页面专用导航处理
         function setupAINavigation() {
-            console.log('🔧 Setting up AI Architecture page navigation...');
+            // 使用日志系统或降级到console
+            const log = window.APP_DEBUG?.info || console.log;
+            const logWarn = window.APP_DEBUG?.warn || console.warn;
+
+            log('🔧 Setting up AI Architecture page navigation...');
 
             // 为导航链接添加点击事件处理
             const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
+            log(`🔗 Found ${navLinks.length} navigation links`, {
+                linkCount: navLinks.length
+            }, 'AI_ARCHITECTURE_NAV');
+
+            navLinks.forEach((link, index) => {
                 link.addEventListener('click', function(e) {
                     const href = this.getAttribute('href');
                     const page = this.getAttribute('data-page');
+                    const linkText = this.textContent.trim();
+
+                    // 记录点击事件
+                    log(`🎯 Navigation link clicked: ${linkText}`, {
+                        href: href,
+                        page: page,
+                        index: index,
+                        classes: this.className
+                    }, 'AI_ARCHITECTURE_NAV');
 
                     // 处理不同类型的链接
                     if (this.classList.contains('nav-home')) {
                         // 首页链接 - 直接跳转到主页
-                        console.log('🏠 Navigating to home page');
+                        log('🏠 Navigating to home page', {
+                            targetUrl: href,
+                            navigationType: 'home'
+                        }, 'AI_ARCHITECTURE_NAV');
                         return; // 让默认跳转发生
                     } else if (this.classList.contains('nav-spa')) {
                         // SPA页面链接 - 需要特殊处理
                         e.preventDefault();
-                        console.log(`🔗 Navigating to SPA page: ${page}`);
+                        log(`🔗 Navigating to SPA page: ${page}`, {
+                            targetUrl: href,
+                            navigationType: 'spa'
+                        }, 'AI_ARCHITECTURE_NAV');
                         if (href && href.includes('index.html#')) {
                             // 直接跳转到主页的特定部分
                             window.location.href = href;
+                        } else {
+                            logWarn('Invalid SPA navigation URL', { href: href }, 'AI_ARCHITECTURE_NAV');
                         }
                     } else if (this.classList.contains('nav-architecture')) {
                         // AI架构页面链接 - 当前页面，不处理
                         e.preventDefault();
-                        console.log('🧠 Already on AI Architecture page');
+                        log('🧠 Already on AI Architecture page', {
+                            action: 'stay_on_page'
+                        }, 'AI_ARCHITECTURE_NAV');
                     }
                 });
             });

@@ -2,7 +2,16 @@
 // Consolidated from nav-secure.js for single header architecture
 // Prevents XSS attacks and implements proper security measures
 
-console.log('🧭 Loading secure navigation system (single header mode)...');
+// Import logger system
+import('./core/logger.js').then(({ logger }) => {
+    logger.info('🧭 Loading secure navigation system (single header mode)...', null, 'NAVIGATION');
+
+    // 性能监控开始
+    logger.startPerformanceMark('navigation-system-load');
+}).catch(error => {
+    console.warn('Failed to load logger system:', error);
+    console.log('🧭 Loading secure navigation system (single header mode)...');
+});
 
 // Secure HTML escaping utility
 const escapeHtml = (text) => {
@@ -2153,31 +2162,50 @@ class SecureNavigationController {
                 eventManager.add(link, 'click', (e) => {
                     const target = e.target.closest('[data-page]');
                     if (!target) {
-                        console.warn('❌ Could not find target with data-page attribute');
+                        this.logger?.warn('❌ Could not find target with data-page attribute', {
+                            event: e.type,
+                            target: e.target.tagName
+                        }, 'NAVIGATION') || console.warn('❌ Could not find target with data-page attribute');
                         return;
                     }
 
                     const page = target.getAttribute('data-page');
                     const isExternalPage = target.hasAttribute('data-external-page');
-                    console.log(`🎯 Navigation clicked: ${page}, external: ${isExternalPage}`);
+
+                    // 记录导航事件
+                    this.logger?.info(`🎯 Navigation clicked: ${page}`, {
+                        page: page,
+                        isExternalPage: isExternalPage,
+                        href: target.href,
+                        text: target.textContent
+                    }, 'NAVIGATION') || console.log(`🎯 Navigation clicked: ${page}, external: ${isExternalPage}`);
 
                     if (page && /^[a-zA-Z0-9-]+$/.test(page)) {
                         // 特殊处理外部页面（如AI架构页面）
                         if (isExternalPage || page === 'ai-architecture') {
                             // 直接跳转到外部页面，不阻止默认行为
-                            console.log(`🔗 Navigating to external page: ${page}`);
+                            this.logger?.info(`🔗 Navigating to external page: ${page}`, {
+                                targetUrl: target.href,
+                                navigationType: 'external'
+                            }, 'NAVIGATION') || console.log(`🔗 Navigating to external page: ${page}`);
                             return; // 让浏览器处理默认跳转
                         }
 
                         // 内部SPA页面导航
                         e.preventDefault();
                         if (this.navigateTo) {
+                            this.logger?.debug(`🔄 Initiating SPA navigation to: ${page}`, {
+                                currentPage: this.currentPage || 'unknown'
+                            }, 'NAVIGATION');
                             this.navigateTo(page);
                         } else {
-                            console.warn('❌ navigateTo method not available');
+                            this.logger?.error('❌ navigateTo method not available', null, 'NAVIGATION_ERROR') || console.warn('❌ navigateTo method not available');
                         }
                     } else {
-                        console.warn(`❌ Invalid page name: ${page}`);
+                        this.logger?.warn(`❌ Invalid page name: ${page}`, {
+                            page: page,
+                            pattern: /^[a-zA-Z0-9-]+$/.test(page)
+                        }, 'NAVIGATION_ERROR') || console.warn(`❌ Invalid page name: ${page}`);
                     }
                 });
 
