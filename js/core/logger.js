@@ -524,23 +524,50 @@ class Logger {
 
 // 创建全局日志实例
 const logger = new Logger({
-    // 开发环境配置
-    console: true,
-    storage: true,
-    performance: true,
-    level: LOG_LEVELS.DEBUG,
+    // 默认关闭 - 需要手动开启
+    enabled: false,
 
-    // 可以通过 URL 参数覆盖配置
+    // 基础配置 - 即使开启也使用保守设置
+    console: true,
+    storage: false,
+    performance: false,
+    level: LOG_LEVELS.INFO,
+
+    // 可以通过 URL 参数或本地存储覆盖配置
     ...(() => {
         const params = new URLSearchParams(window.location.search);
         const config = {};
+        const localConfig = localStorage.getItem('logger_config');
 
-        if (params.get('debug') === 'true') {
+        // URL 参数优先级最高
+        if (params.get('debug') === 'true' || params.get('logger') === 'true') {
             config.enabled = true;
+            config.console = true;
+            config.storage = true;
+            config.performance = true;
             config.level = LOG_LEVELS.DEBUG;
+            console.log('🔧 Logger enabled via URL parameter');
         }
         if (params.get('silent') === 'true') {
             config.enabled = false;
+        }
+
+        // 本地存储配置
+        if (localConfig && !params.has('debug')) {
+            try {
+                const parsed = JSON.parse(localConfig);
+                Object.assign(config, parsed);
+                if (config.enabled) {
+                    console.log('🔧 Logger enabled via localStorage');
+                }
+            } catch (error) {
+                console.warn('Failed to parse logger config from localStorage:', error);
+            }
+        }
+
+        // 开发环境友好提示
+        if (!config.enabled && ENVIRONMENT.isDevelopment) {
+            console.log('📝 Logger is disabled. Use ?debug=true or localStorage.setItem("logger_config", \'{"enabled": true}\') to enable');
         }
 
         return config;

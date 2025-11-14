@@ -3,29 +3,29 @@
  * 管理不同环境下的日志配置和策略
  */
 
-// 环境配置映射
+// 环境配置映射 - 默认全部关闭
 const ENVIRONMENT_CONFIGS = {
     development: {
-        // 基础配置
-        enabled: true,
-        level: 0, // DEBUG
+        // 基础配置 - 默认关闭，需要手动开启
+        enabled: false,
+        level: 1, // INFO
         console: true,
-        storage: true,
+        storage: false,
         remote: false,
 
         // 存储配置
-        maxStorageSize: 1000,
+        maxStorageSize: 500,
         storageKey: 'dev_logs',
 
-        // 性能监控
-        performance: true,
-        trackNetworkRequests: true,
-        trackUserInteractions: true,
+        // 性能监控 - 默认关闭
+        performance: false,
+        trackNetworkRequests: false,
+        trackUserInteractions: false,
 
         // 调试功能
-        showLogCount: true,
-        showPerformanceMetrics: true,
-        enableHotReload: true,
+        showLogCount: false,
+        showPerformanceMetrics: false,
+        enableHotReload: false,
 
         // 错误处理
         errorReporting: false,
@@ -34,15 +34,15 @@ const ENVIRONMENT_CONFIGS = {
     },
 
     test: {
-        // 基础配置
-        enabled: true,
+        // 基础配置 - 默认关闭
+        enabled: false,
         level: 1, // INFO
         console: true,
         storage: false,
         remote: false,
 
-        // 性能监控
-        performance: true,
+        // 性能监控 - 默认关闭
+        performance: false,
         trackNetworkRequests: false,
         trackUserInteractions: false,
 
@@ -52,26 +52,26 @@ const ENVIRONMENT_CONFIGS = {
     },
 
     production: {
-        // 基础配置
-        enabled: true,
+        // 基础配置 - 始终关闭，除非通过特殊方式开启
+        enabled: false,
         level: 3, // ERROR
         console: false,
         storage: false,
-        remote: true,
+        remote: false,
 
-        // 远程日志配置
+        // 远程日志配置 - 默认关闭
         remoteEndpoint: '/api/logs',
         batchSize: 10,
         retryAttempts: 3,
         retryDelay: 1000,
 
-        // 性能监控
+        // 性能监控 - 默认关闭
         performance: false,
-        trackCoreMetrics: true,
+        trackCoreMetrics: false,
 
-        // 错误处理
-        errorReporting: true,
-        maxErrorsPerSession: 50,
+        // 错误处理 - 默认关闭
+        errorReporting: false,
+        maxErrorsPerSession: 0,
 
         // 安全配置
         sanitizeData: true,

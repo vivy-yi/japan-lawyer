@@ -149,12 +149,23 @@
 
         <div class="demo-section">
             <h3>🧪 日志功能测试</h3>
-            <button class="btn" onclick="testBasicLogging()">测试基础日志</button>
-            <button class="btn" onclick="testPerformance()">性能监控测试</button>
-            <button class="btn" onclick="testErrorHandling()">错误处理测试</button>
+            <button class="btn" onclick="enableLogger()">🟢 开启日志</button>
+            <button class="btn secondary" onclick="enableFullLogger()">🔧 完整模式</button>
+            <button class="btn secondary" onclick="disableLogger()">🔴 关闭日志</button>
+            <button class="btn secondary" onclick="testBasicLogging()">测试基础日志</button>
+            <button class="btn secondary" onclick="testPerformance()">性能监控测试</button>
+            <button class="btn secondary" onclick="testErrorHandling()">错误处理测试</button>
             <button class="btn secondary" onclick="testLogStats()">日志统计</button>
             <button class="btn secondary" onclick="exportLogs()">导出日志</button>
             <button class="btn secondary" onclick="clearLogs()">清除日志</button>
+        </div>
+
+        <div class="demo-section">
+            <h3>🔧 日志开关控制</h3>
+            <button class="btn" onclick="showControlPanel()">打开控制面板</button>
+            <button class="btn secondary" onclick="copyEnableUrl()">复制开启URL</button>
+            <button class="btn secondary" onclick="showUsage()">使用说明</button>
+            <button class="btn secondary" onclick="toggleLoggerStatus()">切换状态</button>
         </div>
 
         <div class="demo-section">
@@ -182,7 +193,15 @@
         window.addEventListener('logger:initialized', function(e) {
             showStatus('✅ 日志系统初始化成功', 'success');
             updateEnvironmentInfo(e.detail.environment);
-            appendOutput('🚀 日志系统已就绪，可以开始测试\n');
+
+            const config = window.APP_DEBUG?.logger?.config;
+            const status = config?.enabled ? '已开启' : '已关闭';
+            appendOutput(`🚀 日志系统已就绪 (${status})，可以开始测试\n`);
+
+            // 如果日志关闭，提示如何开启
+            if (!config?.enabled) {
+                appendOutput('📝 日志系统当前关闭，点击"🟢 开启日志"按钮或使用控制面板开启');
+            }
         });
 
         // 基础日志测试
@@ -390,6 +409,91 @@
             outputDiv.scrollTop = outputDiv.scrollHeight;
         }
 
+        // 日志开关功能
+        function enableLogger() {
+            if (window.enableLogger) {
+                window.enableLogger();
+                showStatus('✅ 基础日志已开启', 'success');
+                appendOutput('🟢 基础日志功能已开启\n');
+            } else {
+                showStatus('❌ 日志开关工具不可用', 'error');
+            }
+        }
+
+        function enableFullLogger() {
+            if (window.enableFullLogger) {
+                window.enableFullLogger();
+                showStatus('✅ 完整日志模式已开启', 'success');
+                appendOutput('🔧 完整日志模式已开启 (包含性能监控)\n');
+            } else {
+                showStatus('❌ 日志开关工具不可用', 'error');
+            }
+        }
+
+        function disableLogger() {
+            if (window.disableLogger) {
+                window.disableLogger();
+                showStatus('✅ 日志已关闭', 'info');
+                appendOutput('🔴 日志系统已关闭\n');
+            } else {
+                showStatus('❌ 日志开关工具不可用', 'error');
+            }
+        }
+
+        function toggleLoggerStatus() {
+            if (window.toggleLogger) {
+                const newState = window.toggleLogger();
+                showStatus(newState ? '✅ 日志已开启' : '🔴 日志已关闭', 'info');
+                appendOutput(`${newState ? '🟢' : '🔴'} 日志状态切换成功\n`);
+            } else {
+                showStatus('❌ 日志开关工具不可用', 'error');
+            }
+        }
+
+        function showControlPanel() {
+            if (window.showLoggerPanel) {
+                window.showLoggerPanel();
+                showStatus('✅ 控制面板已打开', 'success');
+            } else {
+                showStatus('❌ 日志开关工具不可用', 'error');
+            }
+        }
+
+        function copyEnableUrl() {
+            if (window.loggerToggle && window.loggerToggle.copyEnableUrl) {
+                window.loggerToggle.copyEnableUrl(false);
+                appendOutput('📋 基础开启URL已复制到剪贴板\n');
+            } else {
+                showStatus('❌ 日志开关工具不可用', 'error');
+            }
+        }
+
+        function showUsage() {
+            if (window.showLoggerUsage) {
+                window.showLoggerUsage();
+            } else {
+                // 降级：显示基本使用说明
+                appendOutput('📖 日志系统使用说明:');
+                appendOutput('');
+                appendOutput('1. URL参数方式 (刷新页面生效):');
+                appendOutput('   ?debug=true        开启基础日志');
+                appendOutput('   ?logger=true       开启完整日志');
+                appendOutput('   ?silent=true       强制关闭日志');
+                appendOutput('');
+                appendOutput('2. 本地配置方式 (即时生效):');
+                appendOutput('   localStorage.setItem("logger_config", JSON.stringify({');
+                appendOutput('     enabled: true, console: true, storage: true');
+                appendOutput('   }));');
+                appendOutput('');
+                appendOutput('3. 代码控制方式:');
+                appendOutput('   enableLogger() / enableFullLogger() / disableLogger()');
+                appendOutput('   toggleLogger() / showLoggerPanel()');
+                appendOutput('   APP_DEBUG.debug("调试信息")');
+                appendOutput('');
+                appendOutput('📝 默认情况下日志系统是关闭的，需要手动开启\n');
+            }
+        }
+
         // 页面加载完成后的检查
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
@@ -408,6 +512,12 @@
                         hostname: hostname,
                         protocol: window.location.protocol
                     });
+                } else {
+                    // 检查日志是否开启
+                    const config = window.APP_DEBUG.logger.config;
+                    if (!config.enabled) {
+                        appendOutput('💡 提示: 日志系统默认关闭，点击"🟢 开启日志"按钮开始使用');
+                    }
                 }
             }, 3000);
         });

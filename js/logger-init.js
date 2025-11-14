@@ -40,35 +40,64 @@
                     }
                 };
 
-                // 添加控制台信息
-                console.group('🚀 日志系统已初始化');
-                console.log('📊 环境:', ENVIRONMENT.current);
-                console.log('🔧 调试工具:', window.APP_DEBUG);
-                console.log('⚙️ 配置:', logger.config);
-                console.log('💡 使用方法:');
-                console.log('  - APP_DEBUG.debug("调试信息")');
-                console.log('  - APP_DEBUG.startTimer("任务名称")');
-                console.log('  - APP_DEBUG.endTimer("任务名称")');
-                console.log('  - APP_DEBUG.getStats()');
-                console.log('  - APP_DEBUG.exportLogs()');
-                console.groupEnd();
+                // 加载日志开关工具
+                import('./logger-toggle.js').then(({ loggerToggle }) => {
+                    window.loggerToggle = loggerToggle;
 
-                // 监听页面性能
-                window.addEventListener('load', () => {
-                    setTimeout(() => {
-                        const stats = logger.getStats();
-                        logger.info('📈 页面加载完成统计', stats, 'PAGE_METRICS');
+                    // 添加快捷方法
+                    window.enableLogger = () => loggerToggle.enableBasic();
+                    window.enableFullLogger = () => loggerToggle.enableFull();
+                    window.disableLogger = () => loggerToggle.disable();
+                    window.toggleLogger = () => loggerToggle.toggle();
+                    window.showLoggerPanel = () => loggerToggle.createControlPanel();
 
-                        // 开发环境下显示性能信息
-                        if (stats.total > 0) {
-                            console.group('📊 页面日志统计');
-                            console.log('总日志数:', stats.total);
-                            console.log('错误数:', stats.byLevel.ERROR || 0);
-                            console.log('警告数:', stats.byLevel.WARN || 0);
-                            console.log('信息数:', stats.byLevel.INFO || 0);
-                            console.groupEnd();
-                        }
-                    }, 1000);
+                    // 添加控制台信息
+                    console.group('🚀 日志系统已初始化');
+                    console.log('📊 环境:', ENVIRONMENT.current);
+                    console.log('🔧 调试工具:', window.APP_DEBUG);
+                    console.log('⚙️ 配置:', logger.config);
+                    console.log('💡 快捷方法:');
+                    console.log('  - enableLogger() / enableFullLogger() / disableLogger()');
+                    console.log('  - toggleLogger() / showLoggerPanel()');
+                    console.log('  - APP_DEBUG.debug("调试信息")');
+                    console.log('  - showLoggerUsage() 查看完整说明');
+                    console.groupEnd();
+
+                    // 如果日志被关闭，显示开启提示
+                    if (!logger.config.enabled) {
+                        console.log('📝 日志系统已关闭。使用以下方式开启:');
+                        console.log('  - enableLogger() 开启基础日志');
+                        console.log('  - enableFullLogger() 开启完整日志');
+                        console.log('  - 在URL添加 ?debug=true');
+                        console.log('  - showLoggerPanel() 打开控制面板');
+                        console.log('  - showLoggerUsage() 查看详细说明');
+                    }
+
+                    // 监听页面性能
+                    window.addEventListener('load', () => {
+                        setTimeout(() => {
+                            const stats = logger.getStats();
+                            if (stats.total > 0) {
+                                logger.info('📈 页面加载完成统计', stats, 'PAGE_METRICS');
+
+                                console.group('📊 页面日志统计');
+                                console.log('总日志数:', stats.total);
+                                console.log('错误数:', stats.byLevel.ERROR || 0);
+                                console.log('警告数:', stats.byLevel.WARN || 0);
+                                console.log('信息数:', stats.byLevel.INFO || 0);
+                                console.groupEnd();
+                            }
+                        }, 1000);
+                    });
+                }).catch(error => {
+                    console.warn('Failed to load logger toggle tools:', error);
+
+                    // 降级：基本控制台信息
+                    console.group('🚀 日志系统已初始化');
+                    console.log('📊 环境:', ENVIRONMENT.current);
+                    console.log('⚙️ 配置:', logger.config);
+                    console.log('📝 日志开关工具加载失败');
+                    console.groupEnd();
                 });
             }
 
