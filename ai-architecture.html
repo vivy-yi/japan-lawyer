@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI架构图 - 日本商务通</title>
+    <meta name="description" content="日本商务通AI架构全景图，展示大模型、Agent、RAG、AIGC、AI客服等底层技术矩阵">
+    <meta name="keywords" content="AI架构,大模型,AIGC,智能客服,RAG,Agent,日本商务通">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AI架构图 - 日本商务通">
+    <meta property="og:description" content="日本商务通AI架构全景图，展示完整的技术栈和服务矩阵">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vivy-yi.github.io/japan-lawyer/ai-architecture.html">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/modern-ai-pages.css">
+    <link rel="stylesheet" href="css/base/header.css">
+    <link rel="stylesheet" href="css/base/footer.css">
+
+    <style>
+        /* AI架构页面专用样式 */
+        .ai-architecture-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 20px 40px;
+            min-height: 100vh;
+        }
+
+        .architecture-hero {
+            text-align: center;
+            margin-bottom: 60px;
+            background: var(--ai-gradient-ai);
+            border-radius: var(--ai-radius-md);
+            padding: 60px 40px;
+            color: var(--ai-text-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .architecture-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .architecture-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .architecture-hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .architecture-section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--ai-text-primary);
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--ai-text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .layer-card {
+            background: var(--ai-bg-light);
+            border-radius: var(--ai-radius-md);
+            padding: 30px;
+            box-shadow: var(--ai-shadow-lg);
+            border: 1px solid var(--ai-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--ai-gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .layer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--ai-shadow-xl);
+        }
+
+        .layer-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .layer-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--ai-gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .layer-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--ai-text-primary);
+            margin-bottom: 15px;
+        }
+
+        .layer-description {
+            color: var(--ai-text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .tech-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: var(--ai-bg-secondary);
+            border-radius: var(--ai-radius);
+            transition: all 0.2s ease;
+        }
+
+        .tech-item:hover {
+            background: var(--ai-gray-100);
+            transform: translateX(5px);
+        }
+
+        .tech-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+
+        .tech-name {
+            font-weight: 500;
+            color: var(--ai-text-primary);
+            margin-right: auto;
+        }
+
+        .tech-status {
+            padding: 4px 8px;
+            border-radius: var(--ai-radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: var(--ai-success);
+            color: white;
+        }
+
+        .services-matrix {
+            background: var(--ai-bg-gradient);
+            border-radius: var(--ai-radius-md);
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-item {
+            background: white;
+            border-radius: var(--ai-radius);
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--ai-shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-item::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .service-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--ai-shadow-xl);
+        }
+
+        .service-item:hover::after {
+            opacity: 1;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .service-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--ai-text-primary);
+            margin-bottom: 10px;
+        }
+
+        .service-desc {
+            color: var(--ai-text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .tech-stack-diagram {
+            background: white;
+            border-radius: var(--ai-radius-md);
+            padding: 40px;
+            box-shadow: var(--ai-shadow-lg);
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .tech-stack-layers {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tech-layer {
+            margin-bottom: 25px;
+            position: relative;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .tech-layer:nth-child(1) { animation-delay: 0.1s; }
+        .tech-layer:nth-child(2) { animation-delay: 0.2s; }
+        .tech-layer:nth-child(3) { animation-delay: 0.3s; }
+        .tech-layer:nth-child(4) { animation-delay: 0.4s; }
+        .tech-layer:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .layer-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-radius: var(--ai-radius);
+            font-weight: 600;
+            color: white;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .layer-header:hover {
+            transform: translateX(10px);
+        }
+
+        .foundation-layer .layer-header { background: linear-gradient(135deg, #374151, #1f2937); }
+        .model-layer .layer-header { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .tools-layer .layer-header { background: linear-gradient(135deg, #ec4899, #f472b6); }
+        .application-layer .layer-header { background: linear-gradient(135deg, #10b981, #059669); }
+        .interface-layer .layer-header { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+        .layer-icon-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .layer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: var(--ai-bg-secondary);
+            border-radius: 0 0 var(--ai-radius) var(--ai-radius);
+            border: 1px solid var(--ai-border);
+            border-top: none;
+        }
+
+        .component-item {
+            padding: 15px;
+            background: white;
+            border-radius: var(--ai-radius-sm);
+            border: 1px solid var(--ai-border);
+            text-align: center;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .component-item:hover {
+            background: var(--ai-primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .integration-diagram {
+            background: white;
+            border-radius: var(--ai-radius-md);
+            padding: 40px;
+            box-shadow: var(--ai-shadow-lg);
+            text-align: center;
+        }
+
+        .integration-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .integration-step {
+            flex: 1;
+            min-width: 150px;
+            padding: 25px 15px;
+            background: var(--ai-gradient-secondary);
+            color: white;
+            border-radius: var(--ai-radius);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .integration-step::after {
+            content: '→';
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--ai-primary);
+        }
+
+        .integration-step:last-child::after {
+            display: none;
+        }
+
+        .integration-step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--ai-shadow-xl);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .step-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .ai-architecture-container {
+                padding: 100px 15px 30px;
+            }
+
+            .architecture-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .architecture-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .integration-flow {
+                flex-direction: column;
+            }
+
+            .integration-step::after {
+                content: '↓';
+                right: 50%;
+                bottom: -25px;
+                top: auto;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    <header role="banner" id="main-header">
+        <nav id="main-navbar" class="navbar" role="navigation" aria-label="主导航">
+            <!-- Logo区域 -->
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🏢</div>
+                <span class="logo-text">日本商务通</span>
+            </a>
+
+            <!-- 主导航菜单 -->
+            <ul class="nav-menu" id="main-nav-menu">
+                <li><a href="index.html" data-page="home" class="nav-link">🏠 首页</a></li>
+                <li><a href="ai-architecture.html" class="nav-link active">🧠 AI架构</a></li>
+                <li><a href="index.html#ailegal" class="nav-link">⚖️ AI法律</a></li>
+                <li><a href="index.html#aicrm" class="nav-link">🤖 AI CRM</a></li>
+                <li><a href="index.html#knowledge" class="nav-link">📚 知识库</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- AI架构主容器 -->
+    <div class="ai-architecture-container">
+        <!-- 英雄区域 -->
+        <div class="architecture-hero">
+            <h1>🧠 AI架构全景图</h1>
+            <p>基于大模型、Agent、RAG等先进AI技术，构建完整的日本商业服务生态系统</p>
+        </div>
+
+        <!-- 技术架构层级 -->
+        <div class="architecture-section">
+            <h2 class="section-title">🏗️ 技术架构层级</h2>
+            <p class="section-subtitle">从基础设施到用户界面的完整技术栈，确保系统的高效、安全和可扩展性</p>
+
+            <div class="tech-stack-diagram">
+                <div class="tech-stack-layers">
+                    <!-- 应用层 -->
+                    <div class="tech-layer interface-layer">
+                        <div class="layer-header">
+                            <div class="layer-icon-small">👤</div>
+                            <span>应用层 - 用户服务界面</span>
+                        </div>
+                        <div class="layer-content">
+                            <div class="component-item">📱 Web应用</div>
+                            <div class="component-item">🤖 AI助手</div>
+                            <div class="component-item">📊 管理后台</div>
+                            <div class="component-item">🌐 移动端</div>
+                        </div>
+                    </div>
+
+                    <!-- 业务层 -->
+                    <div class="tech-layer application-layer">
+                        <div class="layer-header">
+                            <div class="layer-icon-small">🎯</div>
+                            <span>业务层 - 服务矩阵</span>
+                        </div>
+                        <div class="layer-content">
+                            <div class="component-item">⚖️ AI法律服务</div>
+                            <div class="component-item">🤖 AI CRM系统</div>
+                            <div class="component-item">🌍 AI出海服务</div>
+                            <div class="component-item">💰 AI财务服务</div>
+                            <div class="component-item">🎓 AI教育服务</div>
+                            <div class="component-item">🏥 AI健康服务</div>
+                        </div>
+                    </div>
+
+                    <!-- 工具层 -->
+                    <div class="tech-layer tools-layer">
+                        <div class="layer-header">
+                            <div class="layer-icon-small">🔧</div>
+                            <span>工具层 - AI核心技术</span>
+                        </div>
+                        <div class="layer-content">
+                            <div class="component-item">🎨 AIGC内容生成</div>
+                            <div class="component-item">💬 AI智能客服</div>
+                            <div class="component-item">🔍 RAG检索增强</div>
+                            <div class="component-item">🤖 AI Agent</div>
+                            <div class="component-item">📝 语音识别合成</div>
+                            <div class="component-item">🖼️ 图像处理</div>
+                        </div>
+                    </div>
+
+                    <!-- 模型层 -->
+                    <div class="tech-layer model-layer">
+                        <div class="layer-header">
+                            <div class="layer-icon-small">🧠</div>
+                            <span>模型层 - 大语言模型</span>
+                        </div>
+                        <div class="layer-content">
+                            <div class="component-item">GPT-4 Turbo</div>
+                            <div class="component-item">Claude 3.5</div>
+                            <div class="component-item">Gemini Pro</div>
+                            <div class="component-item">LLaMA系列</div>
+                            <div class="component-item">国产大模型</div>
+                            <div class="component-item">领域微调模型</div>
+                        </div>
+                    </div>
+
+                    <!-- 基础设施层 -->
+                    <div class="tech-layer foundation-layer">
+                        <div class="layer-header">
+                            <div class="layer-icon-small">⚡</div>
+                            <span>基础设施层 - 算力与数据</span>
+                        </div>
+                        <div class="layer-content">
+                            <div class="component-item">☁️ 云计算平台</div>
+                            <div class="component-item">🗄️ 知识库</div>
+                            <div class="component-item">🔐 安全防护</div>
+                            <div class="component-item">📈 监控系统</div>
+                            <div class="component-item">🚀 部署平台</div>
+                            <div class="component-item">📊 数据分析</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI核心能力矩阵 -->
+        <div class="architecture-section">
+            <h2 class="section-title">🎯 AI核心能力矩阵</h2>
+            <p class="section-subtitle">基于大模型的智能技术栈，提供全方位的AI能力支持</p>
+
+            <div class="architecture-grid">
+                <!-- 大模型能力 -->
+                <div class="layer-card">
+                    <div class="layer-icon">🧠</div>
+                    <h3 class="layer-title">大语言模型</h3>
+                    <p class="layer-description">业界领先的预训练大模型，提供强大的自然语言理解和生成能力</p>
+                    <ul class="tech-list">
+                        <li class="tech-item">
+                            <span class="tech-icon">💡</span>
+                            <span class="tech-name">GPT-4 Turbo</span>
+                            <span class="tech-status">已集成</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">🎯</span>
+                            <span class="tech-name">Claude 3.5 Sonnet</span>
+                            <span class="tech-status">已集成</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">🌟</span>
+                            <span class="tech-name">Gemini Pro</span>
+                            <span class="tech-status">已集成</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">🏗️</span>
+                            <span class="tech-name">国产大模型</span>
+                            <span class="tech-status">测试中</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- AI Agent -->
+                <div class="layer-card">
+                    <div class="layer-icon">🤖</div>
+                    <h3 class="layer-title">AI智能代理</h3>
+                    <p class="layer-description">多模态AI Agent系统，能够自主规划、执行和监控复杂业务流程</p>
+                    <ul class="tech-list">
+                        <li class="tech-item">
+                            <span class="tech-icon">⚖️</span>
+                            <span class="tech-name">法律事务Agent</span>
+                            <span class="tech-status">生产环境</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">💼</span>
+                            <span class="tech-name">商业咨询Agent</span>
+                            <span class="tech-status">生产环境</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">📊</span>
+                            <span class="tech-name">数据分析Agent</span>
+                            <span class="tech-status">生产环境</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">🎓</span>
+                            <span class="tech-name">教育培训Agent</span>
+                            <span class="tech-status">开发中</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- RAG技术 -->
+                <div class="layer-card">
+                    <div class="layer-icon">🔍</div>
+                    <h3 class="layer-title">RAG检索增强</h3>
+                    <p class="layer-description">结合向量数据库和大模型的检索增强生成，提供准确可信的回答</p>
+                    <ul class="tech-list">
+                        <li class="tech-item">
+                            <span class="tech-icon">📚</span>
+                            <span class="tech-name">法律知识库</span>
+                            <span class="tech-status">生产环境</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">🗄️</span>
+                            <span class="tech-name">向量数据库</span>
+                            <span class="tech-status">生产环境</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">🎯</span>
+                            <span class="tech-name">智能检索</span>
+                            <span class="tech-status">生产环境</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">✅</span>
+                            <span class="tech-name">事实校验</span>
+                            <span class="tech-status">开发中</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- AIGC能力 -->
+                <div class="layer-card">
+                    <div class="layer-icon">🎨</div>
+                    <h3 class="layer-title">AIGC内容生成</h3>
+                    <p class="layer-description">多模态内容生成，包括文本、图像、语音等多种形式的AI创作</p>
+                    <ul class="tech-list">
+                        <li class="tech-item">
+                            <span class="tech-icon">📝</span>
+                            <span class="tech-name">文档生成</span>
+                            <span class="tech-status">生产环境</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">🖼️</span>
+                            <span class="tech-name">图像生成</span>
+                            <span class="tech-status">测试中</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">🎬</span>
+                            <span class="tech-name">视频生成</span>
+                            <span class="tech-status">规划中</span>
+                        </li>
+                        <li class="tech-item">
+                            <span class="tech-icon">🎵</span>
+                            <span class="tech-name">音频生成</span>
+                            <span class="tech-status">测试中</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 服务矩阵展示 -->
+        <div class="architecture-section">
+            <h2 class="section-title">🎪 AI服务矩阵</h2>
+            <p class="section-subtitle">覆盖法律、商业、生活等全方位领域的AI赋能服务</p>
+
+            <div class="services-matrix">
+                <div class="matrix-grid">
+                    <!-- AI法律服务 -->
+                    <div class="service-item">
+                        <span class="service-icon">⚖️</span>
+                        <h3 class="service-name">AI法律服务</h3>
+                        <p class="service-desc">智能法律咨询、合同审查、风险评估</p>
+                    </div>
+
+                    <!-- AI客服 -->
+                    <div class="service-item">
+                        <span class="service-icon">💬</span>
+                        <h3 class="service-name">AI智能客服</h3>
+                        <p class="service-desc">24/7在线客服、多语言支持、情感识别</p>
+                    </div>
+
+                    <!-- AIGC内容创作 -->
+                    <div class="service-item">
+                        <span class="service-icon">🎨</span>
+                        <h3 class="service-name">AIGC内容创作</h3>
+                        <p class="service-desc">营销文案、视频脚本、创意设计生成</p>
+                    </div>
+
+                    <!-- AI CRM -->
+                    <div class="service-item">
+                        <span class="service-icon">🤖</span>
+                        <h3 class="service-name">AI CRM系统</h3>
+                        <p class="service-desc">智能客户管理、销售预测、精准营销</p>
+                    </div>
+
+                    <!-- AI出海服务 -->
+                    <div class="service-item">
+                        <span class="service-icon">🌍</span>
+                        <h3 class="service-name">AI出海服务</h3>
+                        <p class="service-desc">市场分析、合规审查、本地化支持</p>
+                    </div>
+
+                    <!-- AI财务服务 -->
+                    <div class="service-item">
+                        <span class="service-icon">💰</span>
+                        <h3 class="service-name">AI财务服务</h3>
+                        <p class="service-desc">财务分析、税务筹划、风险预警</p>
+                    </div>
+
+                    <!-- AI教育培训 -->
+                    <div class="service-item">
+                        <span class="service-icon">🎓</span>
+                        <h3 class="service-name">AI教育培训</h3>
+                        <p class="service-desc">个性化学习、智能辅导、技能认证</p>
+                    </div>
+
+                    <!-- AI生活助手 -->
+                    <div class="service-item">
+                        <span class="service-icon">🏠</span>
+                        <h3 class="service-name">AI生活助手</h3>
+                        <p class="service-desc">智能家居、健康管理、日程规划</p>
+                    </div>
+
+                    <!-- AI人才匹配 -->
+                    <div class="service-item">
+                        <span class="service-icon">👥</span>
+                        <h3 class="service-name">AI人才匹配</h3>
+                        <p class="service-desc">智能招聘、技能评估、人才推荐</p>
+                    </div>
+
+                    <!-- AI健康管理 -->
+                    <div class="service-item">
+                        <span class="service-icon">🏥</span>
+                        <h3 class="service-name">AI健康管理</h3>
+                        <p class="service-desc">健康监测、疾病预测、医疗咨询</p>
+                    </div>
+
+                    <!-- AI宠物服务 -->
+                    <div class="service-item">
+                        <span class="service-icon">🐾</span>
+                        <h3 class="service-name">AI宠物服务</h3>
+                        <p class="service-desc">宠物健康、行为分析、智能喂养</p>
+                    </div>
+
+                    <!-- AI旅游规划 -->
+                    <div class="service-item">
+                        <span class="service-icon">✈️</span>
+                        <h3 class="service-name">AI旅游规划</h3>
+                        <p class="service-desc">行程推荐、智能翻译、紧急救助</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 系统集成流程 -->
+        <div class="architecture-section">
+            <h2 class="section-title">🔄 系统集成流程</h2>
+            <p class="section-subtitle">从用户请求到AI响应的完整工作流程</p>
+
+            <div class="integration-diagram">
+                <div class="integration-flow">
+                    <div class="integration-step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">用户请求输入</div>
+                    </div>
+                    <div class="integration-step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">意图识别分析</div>
+                    </div>
+                    <div class="integration-step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">AI Agent调度</div>
+                    </div>
+                    <div class="integration-step">
+                        <div class="step-number">4</div>
+                        <div class="step-text">大模型处理</div>
+                    </div>
+                    <div class="integration-step">
+                        <div class="step-number">5</div>
+                        <div class="step-text">RAG知识检索</div>
+                    </div>
+                    <div class="integration-step">
+                        <div class="step-number">6</div>
+                        <div class="step-text">智能响应生成</div>
+                    </div>
+                </div>
+
+                <p style="color: var(--ai-text-secondary); font-size: 1.1rem; margin-top: 30px;">
+                    整个流程采用微服务架构，确保高可用性和可扩展性，支持多租户并发访问
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>日本商务通</h3>
+                <p class="tagline">AI驱动的智能商业服务平台</p>
+                <p>基于先进AI技术，为在日华人及中日商业用户提供全方位智能化解决方案</p>
+            </div>
+
+            <div class="footer-section ai-services">
+                <h4>AI核心能力</h4>
+                <ul class="service-list">
+                    <li>
+                        <span class="service-icon">🧠</span>
+                        <div class="service-content">
+                            <span class="service-text">大语言模型</span>
+                            <span class="service-desc">GPT/Claude/Gemini</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="service-icon">🤖</span>
+                        <div class="service-content">
+                            <span class="service-text">AI智能代理</span>
+                            <span class="service-desc">自主规划执行</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="service-icon">🔍</span>
+                        <div class="service-content">
+                            <span class="service-text">RAG技术</span>
+                            <span class="service-desc">检索增强生成</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 日本商务通. AI技术驱动，服务在日华人及中日商业社区.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/nav.js"></script>
+    <script>
+        // 页面加载后的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 技术层级展开/收起功能
+            const layerHeaders = document.querySelectorAll('.layer-header');
+            layerHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    if (content.style.display === 'none' || !content.style.display) {
+                        content.style.display = 'grid';
+                        this.style.borderRadius = 'var(--ai-radius) var(--ai-radius) 0 0';
+                    } else {
+                        content.style.display = 'none';
+                        this.style.borderRadius = 'var(--ai-radius)';
+                    }
+                });
+            });
+
+            // 平滑滚动效果
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // 滚动时的视差效果
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('.architecture-hero');
+                if (hero) {
+                    hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
