@@ -21,7 +21,11 @@ class SecurityEventMonitor {
         };
 
         if (this.disabled) {
-            console.log('🛡️ Security Monitor disabled to prevent infinite loops');
+            if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+                window.APP_DEBUG.logger.info('🛡️ Security Monitor disabled to prevent infinite loops', null, 'SECURITY_DISABLED');
+            } else {
+                window.logInfo('🛡️ Security Monitor disabled to prevent infinite loops');
+            }
             return;
         }
 
@@ -29,7 +33,11 @@ class SecurityEventMonitor {
     }
 
     init() {
-        console.log('🛡️ Security Event Monitor initialized');
+        if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+            window.APP_DEBUG.logger.info('🛡️ Security Event Monitor initialized', null, 'SECURITY_INIT');
+        } else {
+            window.logInfo('🛡️ Security Event Monitor initialized');
+        }
         this.setupEventListeners();
         this.startPeriodicCleanup();
         this.loadBlockedIPs();
@@ -282,7 +290,7 @@ class SecurityEventMonitor {
 
     // 处理安全事件
     processSecurityEvent(event) {
-        console.warn('🚨 Security Event:', event.type, event.details);
+        window.logWarn('🚨 Security Event:', event.type, event.details);
 
         // 根据事件类型采取行动
         switch (event.type) {
@@ -299,7 +307,7 @@ class SecurityEventMonitor {
                 this.handleCSPViolation(event);
                 break;
             default:
-                console.log('Unknown security event type:', event.type);
+                window.logInfo('Unknown security event type:', event.type);
         }
 
         // 检查威胁阈值
@@ -312,7 +320,7 @@ class SecurityEventMonitor {
         if (element && element.parentNode) {
             // 安全地移除危险元素
             element.parentNode.removeChild(element);
-            console.log('🛡️ Dangerous element removed:', event.details.tag);
+            window.logInfo('🛡️ Dangerous element removed:', event.details.tag);
         }
     }
 
@@ -323,7 +331,7 @@ class SecurityEventMonitor {
         elements.forEach(el => {
             if (el[event.details.property] && el[event.details.property].includes(event.details.value)) {
                 el[event.details.property] = '';
-                console.log('🛡️ Suspicious content cleared');
+                window.logInfo('🛡️ Suspicious content cleared');
             }
         });
     }
@@ -334,25 +342,25 @@ class SecurityEventMonitor {
         const domain = this.extractDomain(event.details.url);
         this.threats.add(domain);
 
-        console.log('🚫 Rate limit exceeded for domain:', domain);
+        window.logInfo('🚫 Rate limit exceeded for domain:', domain);
 
         // 5分钟后自动解除阻止
         setTimeout(() => {
             this.threats.delete(domain);
-            console.log('✅ Rate limit lifted for domain:', domain);
+            window.logInfo('✅ Rate limit lifted for domain:', domain);
         }, 300000);
     }
 
     // 处理CSP违规
     handleCSPViolation(event) {
-        console.error('🚨 CSP Violation:', event.details);
+        window.logError('🚨 CSP Violation:', event.details);
         this.blockThreatSource(event.details.source);
     }
 
     // 阻止威胁源
     blockThreatSource(source) {
         this.threats.add(source);
-        console.log('🚫 Threat source blocked:', source);
+        window.logInfo('🚫 Threat source blocked:', source);
     }
 
     // 检查威胁阈值
@@ -375,11 +383,11 @@ class SecurityEventMonitor {
     // 触发安全响应
     triggerSecurityResponse(threatType, count) {
         if (this.debugMode) {
-            console.warn('🔍 Debug Mode - Security event detected:', threatType, 'Count:', count);
+            window.logWarn('🔍 Debug Mode - Security event detected:', threatType, 'Count:', count);
             return; // 调试模式下不触发安全响应
         }
 
-        console.error('🚨 Security threat detected:', threatType, 'Count:', count);
+        window.logError('🚨 Security threat detected:', threatType, 'Count:', count);
 
         // 根据威胁级别采取不同的响应
         const highThreshold = this.debugMode ? 200 : 50;
@@ -396,7 +404,7 @@ class SecurityEventMonitor {
 
     // 进入锁定模式
     enterLockdownMode() {
-        console.error('🔒 Entering security lockdown mode');
+        window.logError('🔒 Entering security lockdown mode');
 
         // 禁用所有交互
         document.body.style.pointerEvents = 'none';
@@ -412,14 +420,14 @@ class SecurityEventMonitor {
 
     // 退出锁定模式
     exitLockdownMode() {
-        console.log('🔓 Exiting security lockdown mode');
+        window.logInfo('🔓 Exiting security lockdown mode');
         document.body.style.pointerEvents = '';
         this.hideSecurityWarning();
     }
 
     // 增加监控级别
     increaseMonitoring() {
-        console.log('📈 Increasing security monitoring level');
+        window.logInfo('📈 Increasing security monitoring level');
         // 可以在这里增加更多的监控措施
     }
 
@@ -530,7 +538,7 @@ class SecurityEventMonitor {
         try {
             localStorage.setItem('security-blocked-ips', JSON.stringify([...this.blockedIPs]));
         } catch (e) {
-            console.warn('Failed to save blocked IPs:', e);
+            window.logWarn('Failed to save blocked IPs:', e);
         }
     }
 
@@ -542,7 +550,7 @@ class SecurityEventMonitor {
                 this.blockedIPs = new Set(JSON.parse(saved));
             }
         } catch (e) {
-            console.warn('Failed to load blocked IPs:', e);
+            window.logWarn('Failed to load blocked IPs:', e);
         }
     }
 
@@ -615,13 +623,13 @@ function initSecurityMonitoring() {
         securityMonitor = new SecurityEventMonitor();
         window.securityMonitor = securityMonitor;
 
-        console.log('🛡️ Security monitoring system initialized');
+        window.logInfo('🛡️ Security monitoring system initialized');
 
         // 定期输出安全报告
         setInterval(() => {
             const report = securityMonitor.getSecurityReport();
             if (report.threatLevel !== 'MINIMAL') {
-                console.log('🛡️ Security Report:', report);
+                window.logInfo('🛡️ Security Report:', report);
             }
         }, 60000); // 每分钟检查一次
     }

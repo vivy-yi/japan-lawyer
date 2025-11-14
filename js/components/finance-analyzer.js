@@ -16,7 +16,7 @@ class FinanceAnalyzer {
     init() {
         this.createModalContainer();
         this.bindEvents();
-        console.log('FinanceAnalyzer: 安全组件已初始化');
+        window.logInfo('FinanceAnalyzer: 安全组件已初始化');
     }
 
     /**
@@ -77,7 +77,7 @@ class FinanceAnalyzer {
             this.currentModal = modal;
             document.body.style.overflow = 'hidden';
         } catch (error) {
-            console.error('FinanceAnalyzer: 显示模态框时出错', error);
+            window.logError('FinanceAnalyzer: 显示模态框时出错', error);
             this.showError('显示分析界面时出现错误，请稍后重试。');
         }
     }
@@ -655,4 +655,4 @@ window.showRiskManagement = () => window.financeAnalyzer.showModal('风险管理
 window.showFinancialReporting = () => window.financeAnalyzer.showModal('财务报告', '📊', {});
 window.showBudgetManagement = () => window.financeAnalyzer.showModal('预算管理', '💰', {});
 
-console.log('FinanceAnalyzer: 安全组件加载完成，防XSS攻击已启用');
+window.logInfo('FinanceAnalyzer: 安全组件加载完成，防XSS攻击已启用');

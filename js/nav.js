@@ -9,8 +9,8 @@ import('./core/logger.js').then(({ logger }) => {
     // 性能监控开始
     logger.startPerformanceMark('navigation-system-load');
 }).catch(error => {
-    console.warn('Failed to load logger system:', error);
-    console.log('🧭 Loading secure navigation system (single header mode)...');
+    window.logWarn('Failed to load logger system:', error);
+    window.logInfo('🧭 Loading secure navigation system (single header mode)...');
 });
 
 // Secure HTML escaping utility
@@ -31,17 +31,17 @@ const sanitizeUrl = (url) => {
         const parsed = new URL(url, window.location.origin);
         // Only allow same-origin URLs
         if (parsed.origin !== window.location.origin) {
-            console.warn('Blocked external URL:', url);
+            window.logWarn('Blocked external URL:', url);
             return '#';
         }
         // Disallow javascript: protocol
         if (parsed.protocol === 'javascript:') {
-            console.warn('Blocked javascript URL:', url);
+            window.logWarn('Blocked javascript URL:', url);
             return '#';
         }
         return url;
     } catch (e) {
-        console.warn('Invalid URL:', url);
+        window.logWarn('Invalid URL:', url);
         return '#';
     }
 };
@@ -110,7 +110,7 @@ class SecureLanguageManager {
     getValidLanguage(lang) {
         // 如果语言无效或为空，默认返回中文
         if (!lang || typeof lang !== 'string') {
-            console.log('⚠️ 语言参数无效，使用默认中文');
+            window.logInfo('⚠️ 语言参数无效，使用默认中文');
             return 'zh';
         }
 
@@ -119,13 +119,13 @@ class SecureLanguageManager {
         if (this.supportedLanguages.includes(lang)) {
             return lang;
         } else {
-            console.log(`⚠️ 不支持的语言: ${lang}，使用默认中文`);
+            window.logInfo(`⚠️ 不支持的语言: ${lang}，使用默认中文`);
             return 'zh';
         }
     }
 
     init() {
-        console.log('🌐 Secure language manager initialized, current:', this.currentLanguage);
+        window.logInfo('🌐 Secure language manager initialized, current:', this.currentLanguage);
 
         // 确保与 simple-i18n 系统同步
         this.synchronizeWithI18n();
@@ -138,7 +138,7 @@ class SecureLanguageManager {
     synchronizeWithI18n() {
         // 如果 simple-i18n 可用，确保语言状态一致
         if (window.simpleI18n && window.simpleI18n.currentLanguage !== this.currentLanguage) {
-            console.log(`🔄 Synchronizing language: ${this.currentLanguage} -> ${window.simpleI18n.currentLanguage}`);
+            window.logInfo(`🔄 Synchronizing language: ${this.currentLanguage} -> ${window.simpleI18n.currentLanguage}`);
             this.currentLanguage = window.simpleI18n.currentLanguage;
             // 保存到 localStorage
             localStorage.setItem('preferred-language', this.currentLanguage);
@@ -212,13 +212,13 @@ class SecureLanguageManager {
         const langDropdown = document.querySelector('.language-dropdown');
 
         if (!langToggle || langOptions.length === 0) {
-            console.warn('Language dropdown elements not found');
+            window.logWarn('Language dropdown elements not found');
             return;
         }
 
         // 检查是否已经有事件监听器
         if (langToggle.hasAttribute('data-listeners-added')) {
-            console.log('🔄 Language switcher listeners already exist');
+            window.logInfo('🔄 Language switcher listeners already exist');
             this.updateLanguageDisplay(); // 只更新状态
             return;
         }
@@ -311,13 +311,13 @@ class SecureLanguageManager {
 
         // 设置初始状态
         this.updateLanguageDisplay();
-        console.log('🌐 Language dropdown switcher setup completed');
+        window.logInfo('🌐 Language dropdown switcher setup completed');
     }
 
     switchLanguage(lang) {
         lang = this.getValidLanguage(lang);
         if (!this.supportedLanguages.includes(lang)) {
-            console.warn(`Unsupported language: ${lang}`);
+            window.logWarn(`Unsupported language: ${lang}`);
             return;
         }
 
@@ -329,9 +329,9 @@ class SecureLanguageManager {
         // 2. 立即保存到本地存储
         try {
             localStorage.setItem('preferred-language', lang);
-            console.log(`💾 导航系统已保存语言: ${oldLang} -> ${lang}`);
+            window.logInfo(`💾 导航系统已保存语言: ${oldLang} -> ${lang}`);
         } catch (error) {
-            console.error('❌ 导航系统保存语言失败:', error);
+            window.logError('❌ 导航系统保存语言失败:', error);
         }
 
         // 3. 更新语言显示
@@ -344,7 +344,7 @@ class SecureLanguageManager {
             window.navigationController.updateNavigationLanguage(lang);
         }
 
-        console.log(`🌐 Language switched to: ${lang}`);
+        window.logInfo(`🌐 Language switched to: ${lang}`);
 
         // Trigger language change event
         const event = new CustomEvent('languageChanged', {
@@ -500,7 +500,7 @@ class SecureMobileMenuManager {
         });
         window.dispatchEvent(event);
 
-        console.log(`Mobile menu ${this.isMenuOpen ? 'opened' : 'closed'}`);
+        window.logInfo(`Mobile menu ${this.isMenuOpen ? 'opened' : 'closed'}`);
     }
 
     openMenu() {
@@ -521,7 +521,7 @@ class SecureMobileMenuManager {
 
             document.body.style.overflow = 'hidden';
 
-            console.log('Mobile menu opened via gesture');
+            window.logInfo('Mobile menu opened via gesture');
         }
     }
 
@@ -567,7 +567,7 @@ class SecureNavigationStateManager {
         if (!hash || typeof hash !== 'string') return 'home';
         // Allow only alphanumeric characters and hyphens
         if (!/^[a-zA-Z0-9-]+$/.test(hash)) {
-            console.warn('Invalid page hash:', hash);
+            window.logWarn('Invalid page hash:', hash);
             return 'home';
         }
         return hash;
@@ -601,7 +601,7 @@ class SecureNavigationStateManager {
                 navbar.classList.add('navbar-scrolled');
             }
 
-            console.log('🎯 Initial navbar state set:', {
+            window.logInfo('🎯 Initial navbar state set:', {
                 visible: navbar.classList.contains('navbar-visible'),
                 hidden: navbar.classList.contains('navbar-hidden'),
                 scrolled: navbar.classList.contains('navbar-scrolled'),
@@ -613,7 +613,7 @@ class SecureNavigationStateManager {
     setupNavigationHandlers() {
         // 注意：这个方法现在被setupNavigationEventListeners替代
         // 保留这个方法是为了向后兼容，但不添加重复的事件监听器
-        console.log('🔄 Navigation handlers method called - delegating to setupNavigationEventListeners');
+        window.logInfo('🔄 Navigation handlers method called - delegating to setupNavigationEventListeners');
 
         // 委托给控制器的setupNavigationEventListeners方法
         if (window.navigationController && typeof window.navigationController.setupNavigationEventListeners === 'function') {
@@ -652,7 +652,7 @@ class SecureNavigationStateManager {
     navigateToPage(page) {
         // Validate page
         if (!page || typeof page !== 'string' || !/^[a-zA-Z0-9-]+$/.test(page)) {
-            console.warn('Invalid page navigation:', page);
+            window.logWarn('Invalid page navigation:', page);
             return false;
         }
 
@@ -662,14 +662,14 @@ class SecureNavigationStateManager {
 
         // Special handling for "home" page - return to index.html
         if (page === 'home') {
-            console.log(`🏠 Navigating to home page (index.html)`);
+            window.logInfo(`🏠 Navigating to home page (index.html)`);
             try {
                 // Clear any hash and reload to main page
                 window.location.hash = '';
                 window.location.reload();
                 return true;
             } catch (e) {
-                console.error('Failed to navigate to home:', e);
+                window.logError('Failed to navigate to home:', e);
                 return false;
             }
         }
@@ -679,7 +679,7 @@ class SecureNavigationStateManager {
 
         // Delegate to SPA router for actual page loading
         if (window.spaRouter && typeof window.spaRouter.loadPage === 'function') {
-            console.log(`🧭 Delegating navigation to SPA router: ${page}`);
+            window.logInfo(`🧭 Delegating navigation to SPA router: ${page}`);
             return window.spaRouter.loadPage(page);
         }
 
@@ -687,7 +687,7 @@ class SecureNavigationStateManager {
         try {
             history.pushState({ page: page }, '', `#${page}`);
         } catch (e) {
-            console.error('Failed to update history:', e);
+            window.logError('Failed to update history:', e);
             return false;
         }
 
@@ -696,14 +696,14 @@ class SecureNavigationStateManager {
             window.mobileMenuManager.closeMenu();
         }
 
-        console.log(`🧭 Navigation state updated: ${page}`);
+        window.logInfo(`🧭 Navigation state updated: ${page}`);
         return true;
     }
 
     scrollToSection(sectionId) {
         // Validate section ID
         if (!sectionId || typeof sectionId !== 'string' || !/^[a-zA-Z0-9-_]+$/.test(sectionId)) {
-            console.warn('Invalid section ID:', sectionId);
+            window.logWarn('Invalid section ID:', sectionId);
             return;
         }
 
@@ -728,7 +728,7 @@ class SecureNavigationStateManager {
             window.mobileMenuManager.closeMenu();
         }
 
-        console.log(`📍 Scrolled to section: ${sectionId}`);
+        window.logInfo(`📍 Scrolled to section: ${sectionId}`);
     }
 
     setupScrollEffects() {
@@ -795,7 +795,7 @@ class SecureNavigationStateManager {
                     navbar.classList.remove('navbar-scrolled');
                 }
 
-                // console.log(`📜 Scroll ${scrollDirection}: hidden=${navbar.classList.contains('navbar-hidden')}, scrollY=${currentScrollY}`); // 减少日志输出
+                // window.logInfo(`📜 Scroll ${scrollDirection}: hidden=${navbar.classList.contains('navbar-hidden')}, scrollY=${currentScrollY}`); // 减少日志输出
             }
 
             lastScrollY = currentScrollY;
@@ -827,7 +827,7 @@ class SecureNavigationStateManager {
 
         eventManager.addGlobal('scroll', scrollHandler, { passive: true });
 
-        console.log('📜 Scroll effects initialized with hide/show behavior');
+        window.logInfo('📜 Scroll effects initialized with hide/show behavior');
     }
 }
 
@@ -1336,8 +1336,8 @@ class SecureNavigationRenderer {
         this.currentLanguage = language;
         this.navigationData = this.getNavigationData();
 
-        console.log('📝 Rendering navigation with language:', language);
-        console.log('📝 Navigation data:', this.navigationData);
+        window.logInfo('📝 Rendering navigation with language:', language);
+        window.logInfo('📝 Navigation data:', this.navigationData);
 
         // 创建导航栏容器
         const navbar = this.createElement('nav', {
@@ -1379,8 +1379,8 @@ class SecureNavigationRenderer {
         navbar.appendChild(mobileToggle);
 
         this.isRendered = true;
-        console.log('✅ Navigation rendered successfully');
-        console.log('📝 Navbar element:', navbar);
+        window.logInfo('✅ Navigation rendered successfully');
+        window.logInfo('📝 Navbar element:', navbar);
 
         return navbar;
     }
@@ -1423,7 +1423,7 @@ class DynamicNavigationLoader {
 
             return config;
         } catch (error) {
-            console.warn('Failed to fetch navigation config:', error);
+            window.logWarn('Failed to fetch navigation config:', error);
             return this.getDefaultConfig();
         }
     }
@@ -1606,7 +1606,7 @@ class DynamicNavigationLoader {
 
             return contextualMap[currentPage] || baseItems.contextual || [];
         } catch (error) {
-            console.warn('Failed to load contextual items:', error);
+            window.logWarn('Failed to load contextual items:', error);
             return [];
         }
     }
@@ -1622,7 +1622,7 @@ class DynamicNavigationLoader {
             try {
                 callback(type, data);
             } catch (error) {
-                console.warn('Update callback error:', error);
+                window.logWarn('Update callback error:', error);
             }
         });
     }
@@ -1630,7 +1630,7 @@ class DynamicNavigationLoader {
     // 预加载导航资源
     async preloadResources() {
         try {
-            console.log('🔄 Preloading navigation resources...');
+            window.logInfo('🔄 Preloading navigation resources...');
 
             // 并行加载所有必要资源
             const [config, items, settings, flags] = await Promise.all([
@@ -1640,10 +1640,10 @@ class DynamicNavigationLoader {
                 this.getFeatureFlags()
             ]);
 
-            console.log('✅ Navigation resources preloaded');
+            window.logInfo('✅ Navigation resources preloaded');
             return { config, items, settings, flags };
         } catch (error) {
-            console.warn('Failed to preload resources:', error);
+            window.logWarn('Failed to preload resources:', error);
             return null;
         }
     }
@@ -1685,7 +1685,7 @@ class SecureNavigationController {
     }
 
     async init() {
-        console.log('🚀 Initializing Secure Navigation Controller...');
+        window.logInfo('🚀 Initializing Secure Navigation Controller...');
 
         try {
             // Wait for DOM
@@ -1704,45 +1704,45 @@ class SecureNavigationController {
             // Initialize SEO and accessibility enhancer
             if (typeof NavigationSEOEnhancer !== 'undefined') {
                 this.seoEnhancer = new NavigationSEOEnhancer();
-                console.log('🔍 SEO enhancer initialized');
+                window.logInfo('🔍 SEO enhancer initialized');
             }
 
             // Initialize performance monitor
             if (typeof NavigationPerformanceMonitor !== 'undefined') {
                 this.performanceMonitor = new NavigationPerformanceMonitor();
-                console.log('📊 Performance monitor initialized');
+                window.logInfo('📊 Performance monitor initialized');
             }
 
             // Initialize keyboard shortcuts manager
             if (typeof KeyboardShortcutsManager !== 'undefined') {
                 this.keyboardManager = new KeyboardShortcutsManager();
                 this.setupNavigationShortcuts();
-                console.log('⌨️ Keyboard shortcuts manager initialized');
+                window.logInfo('⌨️ Keyboard shortcuts manager initialized');
             }
 
             // Preload dynamic content
             this.dynamicLoader.preloadResources().then(resources => {
                 if (resources) {
-                    console.log('📦 Dynamic navigation content loaded');
+                    window.logInfo('📦 Dynamic navigation content loaded');
                     this.updateDynamicNavigation();
                 }
             }).catch(error => {
-                console.warn('Failed to preload dynamic content:', error);
+                window.logWarn('Failed to preload dynamic content:', error);
             });
 
             // Check navigation bar and render if needed
             const navbar = document.getElementById('main-navbar');
             if (!navbar) {
-                console.error('❌ Navigation bar container not found!');
+                window.logError('❌ Navigation bar container not found!');
                 return;
             }
 
             // If navbar already has content, enhance existing navigation instead of re-rendering
             if (navbar.children.length > 0) {
-                console.log('📝 Enhancing existing navigation...');
+                window.logInfo('📝 Enhancing existing navigation...');
                 this.enhanceExistingNavigation();
             } else {
-                console.log('📝 Rendering default navigation...');
+                window.logInfo('📝 Rendering default navigation...');
                 const currentLanguage = localStorage.getItem('preferred-language') || 'zh';
                 const renderedNav = this.renderer.renderNavigation(currentLanguage);
                 navbar.appendChild(renderedNav);
@@ -1789,26 +1789,26 @@ class SecureNavigationController {
             window.testNavbarScroll = () => {
                 const navbar = document.querySelector('.navbar');
                 if (!navbar) {
-                    console.log('❌ Navbar not found');
+                    window.logInfo('❌ Navbar not found');
                     return;
                 }
 
-                console.log('🔍 Testing navbar scroll behavior:');
-                console.log('- Current classes:', navbar.className);
-                console.log('- Window width:', window.innerWidth);
-                console.log('- Is mobile:', window.innerWidth <= 1024);
-                console.log('- Scroll position:', window.scrollY);
+                window.logInfo('🔍 Testing navbar scroll behavior:');
+                window.logInfo('- Current classes:', navbar.className);
+                window.logInfo('- Window width:', window.innerWidth);
+                window.logInfo('- Is mobile:', window.innerWidth <= 1024);
+                window.logInfo('- Scroll position:', window.scrollY);
 
                 // 测试隐藏
                 navbar.classList.add('navbar-hidden');
                 navbar.classList.remove('navbar-visible');
-                console.log('✅ Added navbar-hidden class');
+                window.logInfo('✅ Added navbar-hidden class');
 
                 setTimeout(() => {
                     // 测试显示
                     navbar.classList.remove('navbar-hidden');
                     navbar.classList.add('navbar-visible');
-                    console.log('✅ Added navbar-visible class');
+                    window.logInfo('✅ Added navbar-visible class');
                 }, 2000);
             };
 
@@ -1820,10 +1820,10 @@ class SecureNavigationController {
                 this.enhanceAccessibility();
             }, 100);
 
-            console.log('✅ Secure Navigation Controller initialized successfully');
+            window.logInfo('✅ Secure Navigation Controller initialized successfully');
 
         } catch (error) {
-            console.error('❌ Failed to initialize navigation:', error);
+            window.logError('❌ Failed to initialize navigation:', error);
         }
     }
 
@@ -1836,12 +1836,12 @@ class SecureNavigationController {
         const checkI18n = () => {
             if (window.simpleI18n && window.simpleI18n.translations && Object.keys(window.simpleI18n.translations).length > 0) {
                 // simple-i18n 已完全加载，现在同步语言状态
-                console.log('🔄 simple-i18n is ready, synchronizing language...');
+                window.logInfo('🔄 simple-i18n is ready, synchronizing language...');
 
                 // 优先使用保存的语言设置
                 const savedLang = localStorage.getItem('preferred-language');
                 if (savedLang && ['zh', 'ja', 'en'].includes(savedLang)) {
-                    console.log(`📝 Using saved language: ${savedLang}`);
+                    window.logInfo(`📝 Using saved language: ${savedLang}`);
 
                     // 同步两个系统的语言状态
                     this.languageManager.currentLanguage = savedLang;
@@ -1851,7 +1851,7 @@ class SecureNavigationController {
                     window.simpleI18n.updatePageLanguage();
                     this.languageManager.updateLanguageDisplay();
 
-                    console.log(`✅ Language synchronized to: ${savedLang}`);
+                    window.logInfo(`✅ Language synchronized to: ${savedLang}`);
                 } else {
                     // 如果没有保存的语言，使用 simple-i18n 检测到的语言
                     this.languageManager.synchronizeWithI18n();
@@ -1861,7 +1861,7 @@ class SecureNavigationController {
                 waitedTime += checkInterval;
                 setTimeout(checkI18n, checkInterval);
             } else {
-                console.warn('⚠️ Timeout waiting for simple-i18n to initialize');
+                window.logWarn('⚠️ Timeout waiting for simple-i18n to initialize');
             }
         };
 
@@ -1874,7 +1874,7 @@ class SecureNavigationController {
         if (this.stateManager) {
             return this.stateManager.navigateToPage(page);
         }
-        console.warn('Navigation state manager not available');
+        window.logWarn('Navigation state manager not available');
     }
 
     switchLanguage(lang) {
@@ -1888,7 +1888,7 @@ class SecureNavigationController {
 
             return result;
         }
-        console.warn('Language manager not available');
+        window.logWarn('Language manager not available');
     }
 
     getCurrentLanguage() {
@@ -1912,7 +1912,7 @@ class SecureNavigationController {
         }
 
         try {
-            console.log('🔄 Updating dynamic navigation...');
+            window.logInfo('🔄 Updating dynamic navigation...');
 
             // 获取当前页面和权限
             const currentPage = this.getCurrentPage();
@@ -1943,14 +1943,14 @@ class SecureNavigationController {
 
                 // 如果有动态内容，重新渲染导航栏
                 if (filteredFeatured.length > 0 || contextualItems.length > 0) {
-                    console.log('📝 Rendering navigation with dynamic items');
+                    window.logInfo('📝 Rendering navigation with dynamic items');
                     this.renderNavigationWithDynamicItems();
                 }
             }
 
-            console.log('✅ Dynamic navigation updated');
+            window.logInfo('✅ Dynamic navigation updated');
         } catch (error) {
-            console.warn('Failed to update dynamic navigation:', error);
+            window.logWarn('Failed to update dynamic navigation:', error);
         }
     }
 
@@ -2004,7 +2004,7 @@ class SecureNavigationController {
     clearDynamicCache() {
         if (this.dynamicLoader) {
             this.dynamicLoader.clearCache();
-            console.log('🧹 Dynamic navigation cache cleared');
+            window.logInfo('🧹 Dynamic navigation cache cleared');
         }
     }
 
@@ -2105,7 +2105,7 @@ class SecureNavigationController {
         const navbar = document.getElementById('main-navbar');
         if (!navbar) return;
 
-        console.log('🔧 Enhancing existing navigation bar...');
+        window.logInfo('🔧 Enhancing existing navigation bar...');
 
         // 设置初始语言
         const currentLanguage = this.getCurrentLanguage() || 'zh';
@@ -2130,11 +2130,11 @@ class SecureNavigationController {
         // 应用无障碍增强
         this.enhanceAccessibility();
 
-        console.log('✅ Existing navigation enhanced successfully');
+        window.logInfo('✅ Existing navigation enhanced successfully');
 
         // 强制重新绑定事件监听器以确保可靠性
         setTimeout(() => {
-            console.log('🔄 Re-checking and re-binding navigation event listeners...');
+            window.logInfo('🔄 Re-checking and re-binding navigation event listeners...');
             this.setupNavigationEventListeners();
         }, 500);
 
@@ -2151,7 +2151,7 @@ class SecureNavigationController {
     setupNavigationEventListeners() {
         const navLinks = document.querySelectorAll('[data-page]');
         if (navLinks.length === 0) {
-            console.warn('❌ No navigation links with data-page found');
+            window.logWarn('❌ No navigation links with data-page found');
             return;
         }
 
@@ -2165,7 +2165,7 @@ class SecureNavigationController {
                         this.logger?.warn('❌ Could not find target with data-page attribute', {
                             event: e.type,
                             target: e.target.tagName
-                        }, 'NAVIGATION') || console.warn('❌ Could not find target with data-page attribute');
+                        }, 'NAVIGATION') || window.logWarn('❌ Could not find target with data-page attribute');
                         return;
                     }
 
@@ -2178,7 +2178,7 @@ class SecureNavigationController {
                         isExternalPage: isExternalPage,
                         href: target.href,
                         text: target.textContent
-                    }, 'NAVIGATION') || console.log(`🎯 Navigation clicked: ${page}, external: ${isExternalPage}`);
+                    }, 'NAVIGATION') || window.logInfo(`🎯 Navigation clicked: ${page}, external: ${isExternalPage}`);
 
                     if (page && /^[a-zA-Z0-9-]+$/.test(page)) {
                         // 特殊处理外部页面（如AI架构页面）
@@ -2187,7 +2187,7 @@ class SecureNavigationController {
                             this.logger?.info(`🔗 Navigating to external page: ${page}`, {
                                 targetUrl: target.href,
                                 navigationType: 'external'
-                            }, 'NAVIGATION') || console.log(`🔗 Navigating to external page: ${page}`);
+                            }, 'NAVIGATION') || window.logInfo(`🔗 Navigating to external page: ${page}`);
                             return; // 让浏览器处理默认跳转
                         }
 
@@ -2199,13 +2199,13 @@ class SecureNavigationController {
                             }, 'NAVIGATION');
                             this.navigateTo(page);
                         } else {
-                            this.logger?.error('❌ navigateTo method not available', null, 'NAVIGATION_ERROR') || console.warn('❌ navigateTo method not available');
+                            this.logger?.error('❌ navigateTo method not available', null, 'NAVIGATION_ERROR') || window.logWarn('❌ navigateTo method not available');
                         }
                     } else {
                         this.logger?.warn(`❌ Invalid page name: ${page}`, {
                             page: page,
                             pattern: /^[a-zA-Z0-9-]+$/.test(page)
-                        }, 'NAVIGATION_ERROR') || console.warn(`❌ Invalid page name: ${page}`);
+                        }, 'NAVIGATION_ERROR') || window.logWarn(`❌ Invalid page name: ${page}`);
                     }
                 });
 
@@ -2224,9 +2224,9 @@ class SecureNavigationController {
         });
 
         if (addedCount > 0) {
-            console.log(`👂 Added event listeners to ${addedCount} new navigation links (total: ${navLinks.length})`);
+            window.logInfo(`👂 Added event listeners to ${addedCount} new navigation links (total: ${navLinks.length})`);
         } else {
-            console.log(`🔄 All ${navLinks.length} navigation links already have listeners`);
+            window.logInfo(`🔄 All ${navLinks.length} navigation links already have listeners`);
         }
     }
 
@@ -2251,7 +2251,7 @@ class SecureNavigationController {
             }
         });
 
-        console.log(`🌐 Navigation language updated to: ${language}`);
+        window.logInfo(`🌐 Navigation language updated to: ${language}`);
     }
 
     // 获取导航翻译
@@ -2338,7 +2338,7 @@ class SecureNavigationController {
                 });
 
                 mobileToggle.setAttribute('data-listeners-added', 'true');
-                console.log('📱 Mobile menu toggle setup completed');
+                window.logInfo('📱 Mobile menu toggle setup completed');
             }
         }
     }
@@ -2471,7 +2471,7 @@ class SecureNavigationController {
             });
         }
 
-        console.log('♿ Accessibility enhancements applied to navigation');
+        window.logInfo('♿ Accessibility enhancements applied to navigation');
     }
 
     // 获取导航系统状态
@@ -2504,7 +2504,7 @@ class SecureNavigationController {
             this.dynamicLoader.clearCache();
         }
 
-        console.log('🧹 Secure navigation resources cleaned up');
+        window.logInfo('🧹 Secure navigation resources cleaned up');
     }
 }
 
@@ -2515,7 +2515,7 @@ const initializeNavigation = () => {
     try {
         navigationController = new SecureNavigationController();
     } catch (error) {
-        console.error('Failed to initialize navigation:', error);
+        window.logError('Failed to initialize navigation:', error);
     }
 };
 
@@ -2541,30 +2541,30 @@ window.navigationController = navigationController;
 // 添加调试命令
 window.checkRouterStatus = () => {
     console.group('🔍 Router Status Check');
-    console.log('window.spaRouter exists:', !!window.spaRouter);
+    window.logInfo('window.spaRouter exists:', !!window.spaRouter);
     if (window.spaRouter) {
-        console.log('spaRouter type:', typeof window.spaRouter);
-        console.log('loadPage method exists:', typeof window.spaRouter.loadPage);
-        console.log('currentPage:', window.spaRouter.currentPage);
+        window.logInfo('spaRouter type:', typeof window.spaRouter);
+        window.logInfo('loadPage method exists:', typeof window.spaRouter.loadPage);
+        window.logInfo('currentPage:', window.spaRouter.currentPage);
     }
-    console.log('Content container exists:', !!document.getElementById('page-content'));
+    window.logInfo('Content container exists:', !!document.getElementById('page-content'));
     console.groupEnd();
 };
 
 window.testPageLoad = (pageName) => {
-    console.log(`🧪 Testing page load for: ${pageName}`);
-    console.log('📊 SPA Router Status:', !!window.spaRouter);
+    window.logInfo(`🧪 Testing page load for: ${pageName}`);
+    window.logInfo('📊 SPA Router Status:', !!window.spaRouter);
     if (window.spaRouter) {
-        console.log('🔧 Available methods:', Object.getOwnPropertyNames(Object.getPrototypeOf(window.spaRouter)));
+        window.logInfo('🔧 Available methods:', Object.getOwnPropertyNames(Object.getPrototypeOf(window.spaRouter)));
         if (window.spaRouter.loadPage) {
-            console.log('✅ loadPage method found, attempting to load page...');
+            window.logInfo('✅ loadPage method found, attempting to load page...');
             window.spaRouter.loadPage(pageName);
         } else {
-            console.error('❌ loadPage method not found on spaRouter');
+            window.logError('❌ loadPage method not found on spaRouter');
         }
     } else {
-        console.error('❌ SPA router not available');
-        console.log('🔍 Checking global spaRouter variable:', typeof window.spaRouter);
+        window.logError('❌ SPA router not available');
+        window.logInfo('🔍 Checking global spaRouter variable:', typeof window.spaRouter);
     }
 };
 
@@ -2573,22 +2573,22 @@ window.testStaticNavigation = () => {
     console.group('🔍 Static Navigation Test');
 
     const navbar = document.getElementById('main-navbar');
-    console.log('Navbar exists:', !!navbar);
+    window.logInfo('Navbar exists:', !!navbar);
 
     const navLinks = document.querySelectorAll('[data-page]');
-    console.log('Navigation links found:', navLinks.length);
+    window.logInfo('Navigation links found:', navLinks.length);
 
     navLinks.forEach((link, index) => {
-        console.log(`${index + 1}. ${link.textContent.trim()} -> ${link.getAttribute('data-page')}`);
-        console.log(`   Has listeners: ${link.hasAttribute('data-listeners-added')}`);
-        console.log(`   Event listeners: ${getEventListeners ? Object.keys(getEventListeners(link)).length : 'N/A'}`);
+        window.logInfo(`${index + 1}. ${link.textContent.trim()} -> ${link.getAttribute('data-page')}`);
+        window.logInfo(`   Has listeners: ${link.hasAttribute('data-listeners-added')}`);
+        window.logInfo(`   Event listeners: ${getEventListeners ? Object.keys(getEventListeners(link)).length : 'N/A'}`);
     });
 
     const langButtons = document.querySelectorAll('.lang-btn');
-    console.log('Language buttons found:', langButtons.length);
+    window.logInfo('Language buttons found:', langButtons.length);
 
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    console.log('Mobile toggle exists:', !!mobileToggle);
+    window.logInfo('Mobile toggle exists:', !!mobileToggle);
 
     console.groupEnd();
 
@@ -2602,17 +2602,17 @@ window.testStaticNavigation = () => {
 
 // 测试导航点击
 window.testNavigationClick = (pageName) => {
-    console.log(`🧪 Testing navigation click for: ${pageName}`);
+    window.logInfo(`🧪 Testing navigation click for: ${pageName}`);
 
     // 查找对应的链接
     const link = document.querySelector(`[data-page="${pageName}"]`);
     if (!link) {
-        console.error(`❌ Link not found for page: ${pageName}`);
+        window.logError(`❌ Link not found for page: ${pageName}`);
         return false;
     }
 
-    console.log('✅ Link found:', link.textContent.trim());
-    console.log('🎯 Simulating click...');
+    window.logInfo('✅ Link found:', link.textContent.trim());
+    window.logInfo('🎯 Simulating click...');
 
     // 模拟点击事件
     const clickEvent = new MouseEvent('click', {
@@ -2628,17 +2628,17 @@ window.testNavigationClick = (pageName) => {
 // 检查SPA路由器状态
 window.checkSPAStatus = () => {
     console.group('🔍 SPA Router Status');
-    console.log('spaRouter exists:', !!window.spaRouter);
-    console.log('navController exists:', !!window.navigationController);
+    window.logInfo('spaRouter exists:', !!window.spaRouter);
+    window.logInfo('navController exists:', !!window.navigationController);
 
     if (window.spaRouter) {
-        console.log('spaRouter methods:', Object.getOwnPropertyNames(Object.getPrototypeOf(window.spaRouter)));
-        console.log('spaRouter.currentPage:', window.spaRouter.currentPage);
-        console.log('contentContainer exists:', !!window.spaRouter.contentContainer);
+        window.logInfo('spaRouter methods:', Object.getOwnPropertyNames(Object.getPrototypeOf(window.spaRouter)));
+        window.logInfo('spaRouter.currentPage:', window.spaRouter.currentPage);
+        window.logInfo('contentContainer exists:', !!window.spaRouter.contentContainer);
     }
 
     if (window.navigationController) {
-        console.log('navController currentPage:', window.navigationController.getCurrentPage());
+        window.logInfo('navController currentPage:', window.navigationController.getCurrentPage());
     }
 
     console.groupEnd();
@@ -2648,34 +2648,34 @@ window.getNavigationSystemStatus = () => {
     if (window.navigationController) {
         const status = window.navigationController.getNavigationStatus();
         console.group('🧭 Navigation System Status Report');
-        console.log('📊 Overall Status:', status.initialized ? '✅ Initialized' : '❌ Not Initialized');
-        console.log('📍 Current Page:', status.currentPage);
-        console.log('🌐 Current Language:', status.currentLanguage);
-        console.log('🎨 Renderer:', status.rendererActive ? '✅ Active' : '❌ Inactive');
-        console.log('📦 Dynamic Loader:', status.dynamicLoaderActive ? '✅ Active' : '❌ Inactive');
+        window.logInfo('📊 Overall Status:', status.initialized ? '✅ Initialized' : '❌ Not Initialized');
+        window.logInfo('📍 Current Page:', status.currentPage);
+        window.logInfo('🌐 Current Language:', status.currentLanguage);
+        window.logInfo('🎨 Renderer:', status.rendererActive ? '✅ Active' : '❌ Inactive');
+        window.logInfo('📦 Dynamic Loader:', status.dynamicLoaderActive ? '✅ Active' : '❌ Inactive');
 
         console.group('🔧 Managers Status:');
         Object.entries(status.managersActive).forEach(([name, active]) => {
-            console.log(`${name}: ${active ? '✅' : '❌'}`);
+            window.logInfo(`${name}: ${active ? '✅' : '❌'}`);
         });
         console.groupEnd();
 
         if (status.cacheStatus) {
             console.group('💾 Cache Status');
-            console.log('Size:', status.cacheStatus.size);
-            console.log('Last Updated:', new Date(status.cacheStatus.lastUpdated).toLocaleString());
+            window.logInfo('Size:', status.cacheStatus.size);
+            window.logInfo('Last Updated:', new Date(status.cacheStatus.lastUpdated).toLocaleString());
             console.groupEnd();
         }
 
         console.group('🎯 Performance Metrics');
         const navbar = document.querySelector('.navbar');
         if (navbar) {
-            console.log('Navbar Height:', navbar.offsetHeight + 'px');
-            console.log('Navbar Classes:', navbar.className);
-            console.log('Navbar Position:', getComputedStyle(navbar).position);
-            console.log('Current Scroll:', window.scrollY + 'px');
+            window.logInfo('Navbar Height:', navbar.offsetHeight + 'px');
+            window.logInfo('Navbar Classes:', navbar.className);
+            window.logInfo('Navbar Position:', getComputedStyle(navbar).position);
+            window.logInfo('Current Scroll:', window.scrollY + 'px');
         } else {
-            console.log('❌ Navbar element not found');
+            window.logInfo('❌ Navbar element not found');
         }
         console.groupEnd();
 
@@ -2683,17 +2683,17 @@ window.getNavigationSystemStatus = () => {
 
         return status;
     } else {
-        console.error('❌ Navigation controller not found');
+        window.logError('❌ Navigation controller not found');
         return null;
     }
 };
 
-console.log('🧭 Secure navigation system loaded');
-console.log('💡 Debug: Run window.testNavbarScroll() to test navbar hide/show');
+window.logInfo('🧭 Secure navigation system loaded');
+window.logInfo('💡 Debug: Run window.testNavbarScroll() to test navbar hide/show');
 
 // 强制重新绑定导航事件监听器
 window.forceRebindNavigation = () => {
-    console.log('🔄 Force rebinding navigation event listeners...');
+    window.logInfo('🔄 Force rebinding navigation event listeners...');
 
     // 清除所有现有的监听器标记
     document.querySelectorAll('[data-page]').forEach(link => {
@@ -2703,9 +2703,9 @@ window.forceRebindNavigation = () => {
     // 重新绑定
     if (window.navigationController && window.navigationController.enhanceExistingNavigation) {
         window.navigationController.setupNavigationEventListeners();
-        console.log('✅ Navigation event listeners rebound');
+        window.logInfo('✅ Navigation event listeners rebound');
     } else {
-        console.error('❌ Navigation controller not available');
+        window.logError('❌ Navigation controller not available');
     }
 };
 
@@ -2718,30 +2718,30 @@ window.checkNetworkStatus = () => {
     const hostname = window.location.hostname;
     const port = window.location.port;
 
-    console.log('Current URL:', currentURL);
-    console.log('Protocol:', protocol);
-    console.log('Hostname:', hostname);
-    console.log('Port:', port);
-    console.log('User Agent:', navigator.userAgent);
+    window.logInfo('Current URL:', currentURL);
+    window.logInfo('Protocol:', protocol);
+    window.logInfo('Hostname:', hostname);
+    window.logInfo('Port:', port);
+    window.logInfo('User Agent:', navigator.userAgent);
 
     // 检测是否在HTTPS环境中
     const isHTTPS = protocol === 'https:';
     if (isHTTPS) {
-        console.warn('⚠️ HTTPS detected - may cause TLS errors with local resources');
-        console.log('💡 Consider using HTTP for local development');
+        window.logWarn('⚠️ HTTPS detected - may cause TLS errors with local resources');
+        window.logInfo('💡 Consider using HTTP for local development');
     }
 
     // 测试服务器连接
     if (window.spaRouter) {
-        console.log('SPA Router Status:', '✅ Available');
+        window.logInfo('SPA Router Status:', '✅ Available');
     } else {
-        console.log('SPA Router Status:', '❌ Not available');
+        window.logInfo('SPA Router Status:', '❌ Not available');
     }
 
     if (window.navigationController) {
-        console.log('Navigation Controller Status:', '✅ Available');
+        window.logInfo('Navigation Controller Status:', '✅ Available');
     } else {
-        console.log('Navigation Controller Status:', '❌ Not available');
+        window.logInfo('Navigation Controller Status:', '❌ Not available');
     }
 
     console.groupEnd();
@@ -2758,17 +2758,17 @@ window.checkNetworkStatus = () => {
 
 // 解决TLS错误的工具函数
 window.fixTLSErrors = () => {
-    console.log('🔧 Attempting to fix TLS errors...');
+    window.logInfo('🔧 Attempting to fix TLS errors...');
 
     const networkStatus = window.checkNetworkStatus();
 
     if (networkStatus.isHTTPS && networkStatus.hostname === 'localhost') {
-        console.log('💡 Detected localhost HTTPS, suggesting HTTP alternative');
+        window.logInfo('💡 Detected localhost HTTPS, suggesting HTTP alternative');
         const httpURL = `http://localhost:8080`;
-        console.log(`🌐 Try accessing: ${httpURL}`);
+        window.logInfo(`🌐 Try accessing: ${httpURL}`);
         return httpURL;
     }
 
-    console.log('✅ No TLS fixes needed for current environment');
+    window.logInfo('✅ No TLS fixes needed for current environment');
     return null;
 };

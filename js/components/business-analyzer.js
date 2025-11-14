@@ -16,7 +16,7 @@ class BusinessAnalyzer {
     init() {
         this.createModalContainer();
         this.bindEvents();
-        console.log('BusinessAnalyzer: 完全安全的商务分析组件已初始化');
+        window.logInfo('BusinessAnalyzer: 完全安全的商务分析组件已初始化');
     }
 
     /**
@@ -82,7 +82,7 @@ class BusinessAnalyzer {
             this.currentModal = modal;
             document.body.style.overflow = 'hidden';
         } catch (error) {
-            console.error('BusinessAnalyzer: 显示模态框时出错', error);
+            window.logError('BusinessAnalyzer: 显示模态框时出错', error);
             this.showError('显示分析界面时出现错误，请稍后重试。');
         }
     }
@@ -1357,4 +1357,4 @@ window.requestDemo = function(service) {
     window.businessAnalyzer.requestDemo(service);
 };
 
-console.log('BusinessAnalyzer: 完全安全的商务分析组件加载完成，无XSS风险');
+window.logInfo('BusinessAnalyzer: 完全安全的商务分析组件加载完成，无XSS风险');

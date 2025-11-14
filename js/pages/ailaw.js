@@ -1,5 +1,5 @@
 // AI法律服务页面脚本
-console.log('✅ AI Legal Services page loaded successfully');
+window.logInfo('✅ AI Legal Services page loaded successfully');
 
 // AI法律服务筛选功能
 window.filterKnowledge = function(category) {
@@ -21,7 +21,7 @@ window.filterKnowledge = function(category) {
         }
     });
 
-    console.log(`筛选AI法律服务: ${category}`);
+    window.logInfo(`筛选AI法律服务: ${category}`);
 };
 
 // AI法律服务搜索功能
@@ -38,13 +38,13 @@ window.searchKnowledge = function() {
         }
     });
 
-    console.log(`搜索AI法律服务: ${searchTerm}`);
+    window.logInfo(`搜索AI法律服务: ${searchTerm}`);
 };
 
 // 页面加载完成后初始化
 // 注意：模态窗口逻辑现在由 legal-modal-manager.js 处理
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔍 AI Legal page content filtering initialized');
+    window.logInfo('🔍 AI Legal page content filtering initialized');
 
     // 页面特有的初始化逻辑可以在这里添加
     // 模态窗口相关逻辑已移动到 legal-modal-manager.js

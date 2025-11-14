@@ -28,7 +28,7 @@ class ErrorHandler {
     }
 
     init() {
-        console.log('🔧 Error Handler initialized');
+        window.logInfo('🔧 Error Handler initialized');
         this.setupGlobalErrorHandlers();
         this.setupNetworkErrorHandling();
         this.setupUnhandledRejectionHandling();
@@ -230,10 +230,10 @@ class ErrorHandler {
         try {
             localStorage.setItem('error-log', JSON.stringify(this.errorLog));
         } catch (e) {
-            console.warn('Failed to save error log to localStorage:', e);
+            window.logWarn('Failed to save error log to localStorage:', e);
         }
 
-        console.error('Error handled:', error);
+        window.logError('Error handled:', error);
 
         // 尝试错误恢复
         this.attemptErrorRecovery(error);
@@ -344,7 +344,7 @@ class ErrorHandler {
 
         switch (error.type) {
             case this.errorTypes.JAVASCRIPT_ERROR:
-                console.error(logMessage, {
+                window.logError(logMessage, {
                     ...logData,
                     filename: error.filename,
                     line: error.lineno,
@@ -353,7 +353,7 @@ class ErrorHandler {
                 });
                 break;
             case this.errorTypes.NETWORK_ERROR:
-                console.error(logMessage, {
+                window.logError(logMessage, {
                     ...logData,
                     url: error.url,
                     status: error.status,
@@ -361,14 +361,14 @@ class ErrorHandler {
                 });
                 break;
             case this.errorTypes.SECURITY_ERROR:
-                console.error(logMessage, {
+                window.logError(logMessage, {
                     ...logData,
                     blockedURI: error.blockedURI,
                     violatedDirective: error.violatedDirective
                 });
                 break;
             default:
-                console.error(logMessage, logData);
+                window.logError(logMessage, logData);
         }
     }
 
@@ -378,7 +378,7 @@ class ErrorHandler {
             const errors = this.errorLog.slice(-100); // 只保存最近100个错误
             localStorage.setItem('error-log', JSON.stringify(errors));
         } catch (e) {
-            console.warn('Failed to save errors to localStorage:', e);
+            window.logWarn('Failed to save errors to localStorage:', e);
         }
     }
 
@@ -390,7 +390,7 @@ class ErrorHandler {
                 this.errorLog = JSON.parse(stored);
             }
         } catch (e) {
-            console.warn('Failed to load errors from localStorage:', e);
+            window.logWarn('Failed to load errors from localStorage:', e);
         }
     }
 
@@ -426,7 +426,7 @@ class ErrorHandler {
                 const script = document.createElement('script');
                 script.src = error.url;
                 script.onerror = () => {
-                    console.warn('Failed to reload script:', error.url);
+                    window.logWarn('Failed to reload script:', error.url);
                 };
                 document.head.appendChild(script);
             }, this.config.retryDelay * 2);
@@ -436,7 +436,7 @@ class ErrorHandler {
     // 恢复网络错误
     recoverNetworkError(error) {
         // 可以在这里实现重试逻辑
-        console.log('Network error occurred, automatic retry could be implemented');
+        window.logInfo('Network error occurred, automatic retry could be implemented');
     }
 
     // 恢复JavaScript错误
@@ -454,7 +454,7 @@ class ErrorHandler {
         );
 
         if (isCritical) {
-            console.warn('Critical JavaScript error detected:', error);
+            window.logWarn('Critical JavaScript error detected:', error);
             // 可以在这里尝试重新加载关键脚本
         }
     }
@@ -571,7 +571,7 @@ class ErrorHandler {
             //     body: JSON.stringify(error)
             // });
         } catch (e) {
-            console.warn('Failed to send error to server:', e);
+            window.logWarn('Failed to send error to server:', e);
         }
     }
 
@@ -633,7 +633,7 @@ class ErrorHandler {
     clearErrorLog() {
         this.errorLog = [];
         localStorage.removeItem('error-log');
-        console.log('🧹 Error log cleared');
+        window.logInfo('🧹 Error log cleared');
     }
 
     // 手动记录错误 (without calling handleError to avoid infinite loop)
@@ -657,10 +657,10 @@ class ErrorHandler {
         try {
             localStorage.setItem('error-log', JSON.stringify(this.errorLog));
         } catch (e) {
-            console.warn('Failed to save error log to localStorage:', e);
+            window.logWarn('Failed to save error log to localStorage:', e);
         }
 
-        console.error('Error logged:', error);
+        window.logError('Error logged:', error);
     }
 
     // 设置配置
@@ -684,7 +684,7 @@ function initErrorHandler() {
         window.exportErrorLog = () => errorHandler.exportErrorLog();
         window.clearErrorLog = () => errorHandler.clearErrorLog();
 
-        console.log('🔧 Error handling system initialized');
+        window.logInfo('🔧 Error handling system initialized');
     }
 }
 

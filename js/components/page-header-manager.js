@@ -97,7 +97,7 @@ class PageHeaderManager {
      */
     init() {
         if (this.initialized) {
-            console.warn('PageHeaderManager already initialized');
+            window.logWarn('PageHeaderManager already initialized');
             return;
         }
 
@@ -106,9 +106,9 @@ class PageHeaderManager {
             this.setupEventListeners();
             this.enhanceHeaders();
             this.initialized = true;
-            console.log(`PageHeaderManager initialized with ${this.headers.size} headers`);
+            window.logInfo(`PageHeaderManager initialized with ${this.headers.size} headers`);
         } catch (error) {
-            console.error('Failed to initialize PageHeaderManager:', error);
+            window.logError('Failed to initialize PageHeaderManager:', error);
         }
     }
 
@@ -377,7 +377,7 @@ class PageHeaderManager {
     updateHeader(headerId, updates) {
         const headerData = this.headers.get(headerId);
         if (!headerData) {
-            console.warn(`Header with id ${headerId} not found`);
+            window.logWarn(`Header with id ${headerId} not found`);
             return;
         }
 
@@ -498,7 +498,7 @@ class PageHeaderManager {
         this.headers.clear();
 
         this.initialized = false;
-        console.log('PageHeaderManager destroyed');
+        window.logInfo('PageHeaderManager destroyed');
     }
 }
 

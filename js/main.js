@@ -41,7 +41,7 @@ class JapanBusinessHub {
     }
 
     async init() {
-        console.log('🏢 日本商务通 - Initializing Application...');
+        window.logInfo('🏢 日本商务通 - Initializing Application...');
 
         try {
             // Wait for DOM
@@ -57,10 +57,10 @@ class JapanBusinessHub {
             // Setup global handlers
             this.setupGlobalHandlers();
 
-            console.log('✅ Application initialized successfully');
+            window.logInfo('✅ Application initialized successfully');
 
         } catch (error) {
-            console.error('❌ Failed to initialize application:', error);
+            window.logError('❌ Failed to initialize application:', error);
         }
     }
 
@@ -70,37 +70,37 @@ class JapanBusinessHub {
 
         // i18n functionality has been disabled
         this.i18n = null;
-        console.log('🌐 i18n module disabled');
+        window.logInfo('🌐 i18n module disabled');
 
         // Initialize router
         if (typeof SPARouter !== 'undefined') {
             this.router = new SPARouter();
             window.spaRouter = this.router;
-            console.log('🔄 Router module loaded');
+            window.logInfo('🔄 Router module loaded');
         }
 
         // Initialize navbar (i18n disabled)
         if (typeof NavbarComponent !== 'undefined') {
             this.navbar = new NavbarComponent();
-            console.log('🧭 Navbar component loaded');
+            window.logInfo('🧭 Navbar component loaded');
         }
 
         // Fallback: use original nav.js if modules aren't available
         if (!this.router && typeof initNavigation === 'function') {
             await initNavigation();
-            console.log('📦 Fallback navigation loaded');
+            window.logInfo('📦 Fallback navigation loaded');
         }
     }
 
     setupGlobalHandlers() {
         // Global error handler
         window.addEventListener('error', (event) => {
-            console.error('Global error:', event.error);
+            window.logError('Global error:', event.error);
         });
 
         // Global unhandled promise rejection handler
         window.addEventListener('unhandledrejection', (event) => {
-            console.error('Unhandled promise rejection:', event.reason);
+            window.logError('Unhandled promise rejection:', event.reason);
         });
 
         // Cleanup on page unload
@@ -151,14 +151,14 @@ class JapanBusinessHub {
         if (this.router) {
             return this.router.loadPage(page);
         }
-        console.warn('Router not available');
+        window.logWarn('Router not available');
     }
 
     switchLanguage(lang) {
         if (typeof switchLanguage === 'function') {
             return switchLanguage(lang);
         }
-        console.warn('switchLanguage function not available');
+        window.logWarn('switchLanguage function not available');
     }
 
     getCurrentPage() {
@@ -175,7 +175,7 @@ window.switchLanguage = (lang) => {
     if (window.japanBusinessHub) {
         return window.japanBusinessHub.switchLanguage(lang);
     }
-    console.warn('Application not initialized');
+    window.logWarn('Application not initialized');
 };
 
 window.scrollToSection = (sectionId) => {

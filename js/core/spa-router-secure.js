@@ -6,7 +6,7 @@ import('./logger.js').then(({ logger }) => {
     window.spaLogger = logger;
     logger.info('🚀 Initializing Secure SPA Router', null, 'SPA_ROUTER');
 }).catch(error => {
-    console.warn('Failed to load logger system for SPA router:', error);
+    window.logWarn('Failed to load logger system for SPA router:', error);
 });
 
 class SecureSPARouter {
@@ -32,8 +32,8 @@ class SecureSPARouter {
     setupRouter() {
         this.contentContainer = document.getElementById('page-content');
         if (!this.contentContainer) {
-            console.error('❌ Page content container not found! Looking for element with id="page-content"');
-            console.log('🔍 Available elements with content in the page:',
+            window.logError('❌ Page content container not found! Looking for element with id="page-content"');
+            window.logInfo('🔍 Available elements with content in the page:',
                 document.querySelectorAll('main, [id*="content"], [class*="content"]').length);
             return;
         }
@@ -44,14 +44,14 @@ class SecureSPARouter {
         // 确保header存在且固定
         this.headerElement = document.querySelector('header');
         if (this.headerElement) {
-            console.log('✅ Single header architecture detected - header fixed:', this.headerElement);
+            window.logInfo('✅ Single header architecture detected - header fixed:', this.headerElement);
             // 确保header不会被意外移除
             this.headerElement.setAttribute('data-persistent', 'true');
         } else {
-            console.warn('⚠️ No header found - this may cause navigation issues');
+            window.logWarn('⚠️ No header found - this may cause navigation issues');
         }
 
-        console.log('✅ Secure SPA Router setup started - single header mode');
+        window.logInfo('✅ Secure SPA Router setup started - single header mode');
 
         // 根据URL hash加载对应页面内容
         const hash = window.location.hash.slice(1);
@@ -59,7 +59,7 @@ class SecureSPARouter {
             // 只有当有hash时才加载页面，保持主页内容不变
             this.loadPage(hash);
         } else {
-            console.log('🏠 Homepage loaded, keeping original content');
+            window.logInfo('🏠 Homepage loaded, keeping original content');
         }
 
         // 监听浏览器前进后退
@@ -68,7 +68,7 @@ class SecureSPARouter {
             if (hash && event.state && event.state.pageName) {
                 this.loadPage(event.state.pageName, false);
             } else if (!hash) {
-                console.log('🏠 Homepage loaded via back/forward, keeping original content');
+                window.logInfo('🏠 Homepage loaded via back/forward, keeping original content');
             }
         });
 
@@ -102,7 +102,7 @@ class SecureSPARouter {
             this.logger?.info('🏠 Homepage requested, keeping original content', {
                 pageName: pageName,
                 currentPage: this.currentPage
-            }, 'SPA_ROUTER') || console.log('🏠 Homepage requested, keeping original content');
+            }, 'SPA_ROUTER') || window.logInfo('🏠 Homepage requested, keeping original content');
             return;
         }
 
@@ -110,7 +110,7 @@ class SecureSPARouter {
             this.logger?.debug(`Already on page: ${pageName}`, {
                 pageName: pageName,
                 currentPage: this.currentPage
-            }, 'SPA_ROUTER') || console.log(`Already on page: ${pageName}`);
+            }, 'SPA_ROUTER') || window.logInfo(`Already on page: ${pageName}`);
             return;
         }
 
@@ -119,7 +119,7 @@ class SecureSPARouter {
             currentPage: this.currentPage,
             updateHistory: updateHistory,
             timestamp: Date.now()
-        }, 'SPA_ROUTER') || console.log(`🔄 Loading page: ${pageName}`);
+        }, 'SPA_ROUTER') || window.logInfo(`🔄 Loading page: ${pageName}`);
 
         // 显示加载状态
         this.showLoading();
@@ -142,10 +142,10 @@ class SecureSPARouter {
             // 标记加载完成
             this.contentContainer.classList.add('loaded');
 
-            console.log(`✅ Page loaded successfully: ${pageName}`);
+            window.logInfo(`✅ Page loaded successfully: ${pageName}`);
 
         } catch (error) {
-            console.error('❌ Failed to load page:', error);
+            window.logError('❌ Failed to load page:', error);
             this.showError(error);
         }
     }
@@ -187,7 +187,7 @@ class SecureSPARouter {
 
             // 如果header不在正确位置，重新定位
             if (this.headerElement.parentNode !== document.body) {
-                console.warn('⚠️ Header misplaced, repositioning to body');
+                window.logWarn('⚠️ Header misplaced, repositioning to body');
                 document.body.insertBefore(this.headerElement, document.body.firstChild);
             }
 
@@ -201,16 +201,16 @@ class SecureSPARouter {
     // 验证header完整性
     verifyHeaderIntegrity(pageName) {
         if (!this.headerElement) {
-            console.error(`❌ Header missing after loading page: ${pageName}`);
+            window.logError(`❌ Header missing after loading page: ${pageName}`);
             return;
         }
 
         // 检查导航是否还在
         const navbar = this.headerElement.querySelector('#main-navbar');
         if (!navbar) {
-            console.warn(`⚠️ Navigation missing in header after loading: ${pageName}`);
+            window.logWarn(`⚠️ Navigation missing in header after loading: ${pageName}`);
         } else {
-            console.log(`✅ Header integrity verified for page: ${pageName}`);
+            window.logInfo(`✅ Header integrity verified for page: ${pageName}`);
         }
     }
 
@@ -400,7 +400,7 @@ hashString(str) {
 
 async loadRealPageAsync(pageName, wrapper) {
         // 尝试加载html文件夹中的HTML文件 - 单header架构模式
-        console.log(`🔄 Loading real page (single header mode): ${pageName}`);
+        window.logInfo(`🔄 Loading real page (single header mode): ${pageName}`);
 
         try {
             // 首先尝试本地HTTP服务器
@@ -424,8 +424,8 @@ async loadRealPageAsync(pageName, wrapper) {
 
             const fileName = pageMapping[pageName];
             if (!fileName) {
-                console.error(`❌ Page mapping not found for: ${pageName}`);
-                console.log('📋 Available pages:', Object.keys(pageMapping));
+                window.logError(`❌ Page mapping not found for: ${pageName}`);
+                window.logInfo('📋 Available pages:', Object.keys(pageMapping));
                 throw new Error(`Page not found: ${pageName}`);
             }
 
@@ -436,7 +436,7 @@ async loadRealPageAsync(pageName, wrapper) {
             if (isLocalServer) {
                 // 特殊处理AI架构页面（在根目录）
                 const filePath = pageName === 'ai-architecture' ? fileName : `html/${fileName}`;
-                console.log(`📡 Fetching from server: ${filePath}`);
+                window.logInfo(`📡 Fetching from server: ${filePath}`);
 
                 try {
                     const response = await fetch(filePath);
@@ -446,18 +446,18 @@ async loadRealPageAsync(pageName, wrapper) {
                     const htmlContent = await response.text();
                     this.processPageContent(htmlContent, wrapper, pageName);
                 } catch (fetchError) {
-                    console.warn(`⚠️ Server fetch failed: ${fetchError.message}`);
+                    window.logWarn(`⚠️ Server fetch failed: ${fetchError.message}`);
                     // 如果HTTP服务器也失败了，使用备用内容
-                    console.log('📁 Using fallback content due to server error...');
+                    window.logInfo('📁 Using fallback content due to server error...');
                     this.loadFallbackPageContent(pageName, wrapper);
                 }
             } else {
                 // 本地文件系统 - 使用备用内容
-                console.log(`📁 Using fallback content for: ${pageName}`);
+                window.logInfo(`📁 Using fallback content for: ${pageName}`);
                 this.loadFallbackPageContent(pageName, wrapper);
             }
         } catch (error) {
-            console.error(`❌ Failed to load page ${pageName}:`, error);
+            window.logError(`❌ Failed to load page ${pageName}:`, error);
 
             const placeholder = wrapper.querySelector('.page-placeholder');
             if (placeholder) {
@@ -638,7 +638,7 @@ async loadRealPageAsync(pageName, wrapper) {
         }
 
         this.pageCache.clear();
-        console.log('🗑️ SPA Router destroyed');
+        window.logInfo('🗑️ SPA Router destroyed');
     }
 
     // 处理HTML页面内容
@@ -660,7 +660,7 @@ async loadRealPageAsync(pageName, wrapper) {
                         styleElement.setAttribute('data-page', pageName);
                         document.head.appendChild(styleElement);
                         this.loadedStyles.add(`style-${styleHash}`);
-                        console.log(`🎨 Loaded inline styles for page: ${pageName}`);
+                        window.logInfo(`🎨 Loaded inline styles for page: ${pageName}`);
                     }
                 } else if (style.tagName === 'LINK' && style.rel === 'stylesheet') {
                     // 外部样式表 - 使用href避免重复
@@ -671,44 +671,44 @@ async loadRealPageAsync(pageName, wrapper) {
                         linkElement.setAttribute('data-page', pageName);
                         document.head.appendChild(linkElement);
                         this.loadedStyles.add(style.href);
-                        console.log(`🎨 Loaded stylesheet: ${style.href}`);
+                        window.logInfo(`🎨 Loaded stylesheet: ${style.href}`);
                     }
                 }
             });
 
             // 动态加载页面所需的JavaScript文件（非阻塞）
             if (pageName === 'professionals') {
-                this.loadPageScript('js/pages/professionals.js', 'professionals').catch(e => console.warn('Script load failed:', e));
+                this.loadPageScript('js/pages/professionals.js', 'professionals').catch(e => window.logWarn('Script load failed:', e));
             } else if (pageName === 'ailegal') {
                 // 先加载共享工具和筛选管理器，再加载AI法律服务页面脚本
                 this.loadPageScript('js/shared/utils.js', 'utils').then(() => {
                     return this.loadPageScript('js/shared/filter-manager.js', 'filter-manager');
                 }).then(() => {
                     return this.loadPageScript('js/pages/ailaw.js', 'ailaw');
-                }).catch(e => console.warn('AI Legal script load failed:', e));
+                }).catch(e => window.logWarn('AI Legal script load failed:', e));
             } else if (pageName === 'aicrm') {
                 // 加载AI CRM系统页面脚本
-                this.loadPageScript('js/pages/aicrm.js', 'aicrm').catch(e => console.warn('AI CRM script load failed:', e));
+                this.loadPageScript('js/pages/aicrm.js', 'aicrm').catch(e => window.logWarn('AI CRM script load failed:', e));
             } else if (pageName === 'aiglobal') {
                 // 先加载共享工具和筛选管理器，再加载AI出海服务页面脚本
                 this.loadPageScript('js/shared/utils.js', 'utils').then(() => {
                     return this.loadPageScript('js/shared/filter-manager.js', 'filter-manager');
                 }).then(() => {
                     return this.loadPageScript('js/pages/aiglobal.js', 'aiglobal');
-                }).catch(e => console.warn('AI Global script load failed:', e));
+                }).catch(e => window.logWarn('AI Global script load failed:', e));
             } else if (pageName === 'aifinance') {
                 // 先加载共享工具和筛选管理器，再加载AI财务服务页面脚本
                 this.loadPageScript('js/shared/utils.js', 'utils').then(() => {
                     return this.loadPageScript('js/shared/filter-manager.js', 'filter-manager');
                 }).then(() => {
                     return this.loadPageScript('js/pages/aifinance.js', 'aifinance');
-                }).catch(e => console.warn('AI Finance script load failed:', e));
+                }).catch(e => window.logWarn('AI Finance script load failed:', e));
             } else if (['education', 'labor', 'tourism'].includes(pageName)) {
-                this.loadPageScript('js/pages/services.js', 'services').catch(e => console.warn('Script load failed:', e));
+                this.loadPageScript('js/pages/services.js', 'services').catch(e => window.logWarn('Script load failed:', e));
             } else if (pageName === 'pet') {
-                this.loadPageScript('js/pages/pet.js', 'pet').catch(e => console.warn('Script load failed:', e));
+                this.loadPageScript('js/pages/pet.js', 'pet').catch(e => window.logWarn('Script load failed:', e));
             } else if (pageName === 'lifestyle') {
-                this.loadPageScript('js/pages/services.js', 'lifestyle').catch(e => console.warn('Script load failed:', e));
+                this.loadPageScript('js/pages/services.js', 'lifestyle').catch(e => window.logWarn('Script load failed:', e));
             }
 
             // i18n系统已禁用 - 仅保留导航栏语言切换功能
@@ -726,7 +726,7 @@ async loadRealPageAsync(pageName, wrapper) {
                 throw new Error(`No content found in page: ${pageName}`);
             }
 
-            console.log(`✅ Successfully processed page: ${pageName}`);
+            window.logInfo(`✅ Successfully processed page: ${pageName}`);
         } finally {
             // 清理临时DOM元素
             tempDiv.remove();
@@ -738,19 +738,19 @@ async loadRealPageAsync(pageName, wrapper) {
         try {
             // 检查是否已经加载了窗口通信管理器
             if (window.windowCommManagerOptimized && window.windowCommManagerOptimized.getStatus().isInitialized) {
-                console.log('🔄 Optimized Window Communication Manager already initialized');
+                window.logInfo('🔄 Optimized Window Communication Manager already initialized');
                 return;
             }
 
-            console.log('🔄 Loading Optimized Window Communication Manager...');
+            window.logInfo('🔄 Loading Optimized Window Communication Manager...');
 
             // 动态加载窗口通信管理器脚本
             await this.loadPageScript('js/core/window-communication-optimized.js', 'window-communication-optimized');
 
-            console.log('✅ Optimized Window Communication Manager loaded successfully');
+            window.logInfo('✅ Optimized Window Communication Manager loaded successfully');
 
         } catch (error) {
-            console.warn('⚠️ Failed to load Optimized Window Communication Manager:', error);
+            window.logWarn('⚠️ Failed to load Optimized Window Communication Manager:', error);
             // 继续执行，不阻塞应用启动
         }
     }
@@ -759,7 +759,7 @@ async loadRealPageAsync(pageName, wrapper) {
     async loadPageScript(scriptPath, pageType) {
         // 避免重复加载同一个脚本
         if (this.loadedScripts && this.loadedScripts.has(scriptPath)) {
-            console.log(`⏩ Script already loaded: ${scriptPath}`);
+            window.logInfo(`⏩ Script already loaded: ${scriptPath}`);
             return;
         }
 
@@ -769,7 +769,7 @@ async loadRealPageAsync(pageName, wrapper) {
         }
 
         try {
-            console.log(`📜 Loading script: ${scriptPath}`);
+            window.logInfo(`📜 Loading script: ${scriptPath}`);
 
             // 动态创建script标签
             const script = document.createElement('script');
@@ -780,12 +780,12 @@ async loadRealPageAsync(pageName, wrapper) {
             await new Promise((resolve, reject) => {
                 script.onload = () => {
                     this.loadedScripts.add(scriptPath);
-                    console.log(`✅ Script loaded successfully: ${pageType}`);
+                    window.logInfo(`✅ Script loaded successfully: ${pageType}`);
                     resolve();
                 };
 
                 script.onerror = () => {
-                    console.warn(`⚠️ Failed to load script: ${scriptPath}`);
+                    window.logWarn(`⚠️ Failed to load script: ${scriptPath}`);
                     reject(new Error(`Failed to load script: ${scriptPath}`));
                 };
 
@@ -793,7 +793,7 @@ async loadRealPageAsync(pageName, wrapper) {
             });
 
         } catch (error) {
-            console.error(`❌ Error loading script ${scriptPath}:`, error);
+            window.logError(`❌ Error loading script ${scriptPath}:`, error);
             // 不抛出错误，允许页面继续加载
         }
     }
@@ -817,7 +817,7 @@ let spaRouter;
 function initializeRouter() {
     spaRouter = new SecureSPARouter();
     window.spaRouter = spaRouter;
-    console.log('✅ Secure SPA Router initialized');
+    window.logInfo('✅ Secure SPA Router initialized');
 }
 
 // 等待DOM完全加载后初始化路由器
@@ -834,7 +834,7 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 // 安全的备用页面加载方法
 SecureSPARouter.prototype.loadFallbackPageContent = function(pageName, wrapper) {
-    console.log(`📄 Loading safe fallback content for: ${pageName}`);
+    window.logInfo(`📄 Loading safe fallback content for: ${pageName}`);
 
     const contentDiv = document.createElement('div');
     contentDiv.className = 'page-content-wrapper fallback-content';
@@ -879,7 +879,7 @@ SecureSPARouter.prototype.loadFallbackPageContent = function(pageName, wrapper) 
         } else {
             // 备用方案：直接修改hash
             window.location.hash = '';
-            console.log('🏠 Navigating to home via hash');
+            window.logInfo('🏠 Navigating to home via hash');
         }
     };
     pageContent.appendChild(homeBtn);
@@ -887,5 +887,5 @@ SecureSPARouter.prototype.loadFallbackPageContent = function(pageName, wrapper) 
     contentDiv.appendChild(pageContent);
     wrapper.appendChild(contentDiv);
 
-    console.log(`✅ Safe fallback content loaded: ${pageName}`);
+    window.logInfo(`✅ Safe fallback content loaded: ${pageName}`);
 };

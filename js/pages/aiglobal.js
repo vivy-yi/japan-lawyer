@@ -1,14 +1,14 @@
 // AI出海服务页面脚本
-console.log('✅ AI Global Expansion Services page loaded successfully');
+window.logInfo('✅ AI Global Expansion Services page loaded successfully');
 
 // 确保共享工具已加载
 if (typeof window.escapeHtml === 'undefined') {
-    console.warn('⚠️ Shared utilities not loaded, using fallback');
+    window.logWarn('⚠️ Shared utilities not loaded, using fallback');
 }
 
 // AI出海服务筛选功能 - 使用统一筛选管理器
 window.filterGlobal = function(category) {
-    console.log('🌍 Using unified filter manager for AI Global services');
+    window.logInfo('🌍 Using unified filter manager for AI Global services');
     let manager = window.getFilterManager('aiglobal');
     if (!manager) {
         manager = window.createFilterManager('aiglobal');
@@ -18,7 +18,7 @@ window.filterGlobal = function(category) {
 
 // AI出海服务搜索功能 - 使用统一筛选管理器
 window.searchGlobal = function() {
-    console.log('🌍 Using unified filter manager for AI Global search');
+    window.logInfo('🌍 Using unified filter manager for AI Global search');
     let manager = window.getFilterManager('aiglobal');
     if (!manager) {
         manager = window.createFilterManager('aiglobal');
@@ -125,12 +125,12 @@ if (!document.querySelector('style[data-fade-animation]')) {
 
 // AI出海服务初始化
 window.initAiglobalPage = function() {
-    console.log('🌍 Initializing AI Global Expansion Services functionality...');
+    window.logInfo('🌍 Initializing AI Global Expansion Services functionality...');
 
     // 预先创建筛选管理器，确保筛选功能可用
     let manager = window.getFilterManager('aiglobal');
     if (!manager) {
-        console.log('🌍 Creating AI Global filter manager during initialization...');
+        window.logInfo('🌍 Creating AI Global filter manager during initialization...');
         manager = window.createFilterManager('aiglobal');
     }
 
@@ -144,12 +144,12 @@ window.initAiglobalPage = function() {
     setTimeout(() => {
         const cards = document.querySelectorAll('.global-card');
         const tags = document.querySelectorAll('.tag');
-        console.log(`🌍 Filter check: Found ${cards.length} cards and ${tags.length} tags`);
+        window.logInfo(`🌍 Filter check: Found ${cards.length} cards and ${tags.length} tags`);
 
         if (cards.length > 0) {
-            console.log('✅ AI Global filter manager initialized successfully');
+            window.logInfo('✅ AI Global filter manager initialized successfully');
         } else {
-            console.warn('⚠️ AI Global cards not found, filter may not work properly');
+            window.logWarn('⚠️ AI Global cards not found, filter may not work properly');
         }
     }, 100);
 };
@@ -157,7 +157,7 @@ window.initAiglobalPage = function() {
 // 处理AI出海服务操作
 function handleGlobalAction(event) {
     const action = event.target.getAttribute('data-global-action');
-    console.log(`🔍 Global action triggered: ${action}`);
+    window.logInfo(`🔍 Global action triggered: ${action}`);
 
     switch (action) {
         case 'market-analysis':
@@ -179,7 +179,7 @@ function handleGlobalAction(event) {
             window.showLocalization();
             break;
         default:
-            console.log(`Unknown global action: ${action}`);
+            window.logInfo(`Unknown global action: ${action}`);
     }
 }
 
@@ -735,7 +735,7 @@ window.submitGlobalDemoRequest = function() {
         `;
     }
 
-    console.log('📝 Global demo request submitted:', Object.fromEntries(formData));
+    window.logInfo('📝 Global demo request submitted:', Object.fromEntries(formData));
 };
 
 // 其他AI功能（简化实现）
@@ -795,7 +795,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // SPA页面加载时的额外初始化
 window.initAiglobalPageForSPA = function() {
-    console.log('🌍 AI Global SPA initialization triggered...');
+    window.logInfo('🌍 AI Global SPA initialization triggered...');
     // 立即初始化，不等待DOMContentLoaded
     if (document.body) {
         window.initAiglobalPage();

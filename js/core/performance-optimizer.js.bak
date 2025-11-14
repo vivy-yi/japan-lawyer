@@ -107,13 +107,13 @@ class PerformanceOptimizer {
                 });
 
                 this.checkPerformanceThreshold('LCP', this.metrics.get('LCP').value);
-                window.logInfo('📊 LCP:', this.metrics.get('LCP').value.toFixed(2) + 'ms');
+                console.log('📊 LCP:', this.metrics.get('LCP').value.toFixed(2) + 'ms');
             });
 
             observer.observe({ entryTypes: ['largest-contentful-paint'] });
             this.observers.push(observer);
         } catch (e) {
-            this.logWarn('LCP observation not supported:', e);
+            console.warn('LCP observation not supported:', e);
         }
     }
 
@@ -130,14 +130,14 @@ class PerformanceOptimizer {
                     });
 
                     this.checkPerformanceThreshold('FID', this.metrics.get('FID').value);
-                    window.logInfo('📊 FID:', this.metrics.get('FID').value.toFixed(2) + 'ms');
+                    console.log('📊 FID:', this.metrics.get('FID').value.toFixed(2) + 'ms');
                 });
             });
 
             observer.observe({ entryTypes: ['first-input'] });
             this.observers.push(observer);
         } catch (e) {
-            this.logWarn('FID observation not supported:', e);
+            console.warn('FID observation not supported:', e);
         }
     }
 
@@ -159,13 +159,13 @@ class PerformanceOptimizer {
                 });
 
                 this.checkPerformanceThreshold('CLS', clsValue);
-                window.logInfo('📊 CLS:', clsValue.toFixed(3));
+                console.log('📊 CLS:', clsValue.toFixed(3));
             });
 
             observer.observe({ entryTypes: ['layout-shift'] });
             this.observers.push(observer);
         } catch (e) {
-            this.logWarn('CLS observation not supported:', e);
+            console.warn('CLS observation not supported:', e);
         }
     }
 
@@ -182,14 +182,14 @@ class PerformanceOptimizer {
                     });
 
                     this.checkPerformanceThreshold('FCP', this.metrics.get('FCP').value);
-                    window.logInfo('📊 FCP:', this.metrics.get('FCP').value.toFixed(2) + 'ms');
+                    console.log('📊 FCP:', this.metrics.get('FCP').value.toFixed(2) + 'ms');
                 }
             });
 
             observer.observe({ entryTypes: ['paint'] });
             this.observers.push(observer);
         } catch (e) {
-            this.logWarn('FCP observation not supported:', e);
+            console.warn('FCP observation not supported:', e);
         }
     }
 
@@ -207,14 +207,14 @@ class PerformanceOptimizer {
                     });
 
                     this.checkPerformanceThreshold('TTFB', ttfb);
-                    window.logInfo('📊 TTFB:', ttfb.toFixed(2) + 'ms');
+                    console.log('📊 TTFB:', ttfb.toFixed(2) + 'ms');
                 }
             });
 
             observer.observe({ entryTypes: ['navigation'] });
             this.observers.push(observer);
         } catch (e) {
-            this.logWarn('TTFB observation not supported:', e);
+            console.warn('TTFB observation not supported:', e);
         }
     }
 
@@ -267,7 +267,7 @@ class PerformanceOptimizer {
             observer.observe({ entryTypes: ['resource'] });
             this.observers.push(observer);
         } catch (e) {
-            this.logWarn('Resource timing observation not supported:', e);
+            console.warn('Resource timing observation not supported:', e);
         }
     }
 
@@ -277,14 +277,14 @@ class PerformanceOptimizer {
             const observer = new PerformanceObserver((list) => {
                 const entries = list.getEntries();
                 entries.forEach(entry => {
-                    window.logInfo(`📊 User Timing: ${entry.name} - ${entry.startTime.toFixed(2)}ms`);
+                    console.log(`📊 User Timing: ${entry.name} - ${entry.startTime.toFixed(2)}ms`);
                 });
             });
 
             observer.observe({ entryTypes: ['measure', 'mark'] });
             this.observers.push(observer);
         } catch (e) {
-            this.logWarn('User timing observation not supported:', e);
+            console.warn('User timing observation not supported:', e);
         }
     }
 
@@ -302,7 +302,7 @@ class PerformanceOptimizer {
     checkPerformanceThreshold(metric, value) {
         const threshold = this.config.performanceThresholds[metric];
         if (threshold && value > threshold) {
-            this.logWarn(`⚠️ Performance issue detected: ${metric} (${value.toFixed(2)}) exceeds threshold (${threshold})`);
+            console.warn(`⚠️ Performance issue detected: ${metric} (${value.toFixed(2)}) exceeds threshold (${threshold})`);
             this.suggestOptimization(metric, value);
         }
     }
@@ -340,9 +340,9 @@ class PerformanceOptimizer {
 
         const metricSuggestions = suggestions[metric];
         if (metricSuggestions) {
-            window.logInfo(`💡 Optimization suggestions for ${metric}:`);
+            console.log(`💡 Optimization suggestions for ${metric}:`);
             metricSuggestions.forEach((suggestion, index) => {
-                window.logInfo(`  ${index + 1}. ${suggestion}`);
+                console.log(`  ${index + 1}. ${suggestion}`);
             });
         }
     }
@@ -362,7 +362,7 @@ class PerformanceOptimizer {
 
                 // 内存泄漏检测
                 if (memoryInfo.used > memoryInfo.limit * 0.9) {
-                    window.logWarn('⚠️ High memory usage detected:',
+                    console.warn('⚠️ High memory usage detected:',
                         (memoryInfo.used / 1024 / 1024).toFixed(2) + 'MB');
                 }
             }, 10000); // 每10秒检查一次
@@ -389,7 +389,7 @@ class PerformanceOptimizer {
                 });
 
                 if (fps < 30) {
-                    this.logWarn(`⚠️ Low frame rate detected: ${fps} FPS`);
+                    console.warn(`⚠️ Low frame rate detected: ${fps} FPS`);
                 }
 
                 frames = 0;
@@ -501,7 +501,7 @@ class PerformanceOptimizer {
         setInterval(() => {
             const report = this.generatePerformanceReport();
             if (report.issues.length > 0) {
-                window.logInfo('📊 Performance Report:', report);
+                console.log('📊 Performance Report:', report);
             }
         }, 30000); // 每30秒报告一次
     }
@@ -639,7 +639,7 @@ class PerformanceOptimizer {
         });
         this.observers = [];
         this.metrics.clear();
-        window.logInfo('🧹 Performance optimizer cleaned up');
+        console.log('🧹 Performance optimizer cleaned up');
     }
 }
 
@@ -658,7 +658,7 @@ function initPerformanceOptimization() {
         window.getPerformanceReport = () => performanceOptimizer.generatePerformanceReport();
         window.getPerformanceRecommendations = () => performanceOptimizer.getPerformanceRecommendations();
 
-        window.logInfo('⚡ Performance optimization system initialized');
+        console.log('⚡ Performance optimization system initialized');
     }
 }
 

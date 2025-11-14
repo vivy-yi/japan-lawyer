@@ -107,7 +107,7 @@ class Logger {
      */
     init() {
         if (!this.config.enabled) {
-            console.log('🔇 Logger disabled in production mode');
+            window.logInfo('🔇 Logger disabled in production mode');
             return;
         }
 
@@ -122,8 +122,8 @@ class Logger {
             this.setupPerformanceMonitoring();
         }
 
-        console.log(`🚀 Logger initialized in ${ENVIRONMENT.current} mode`);
-        console.log(`📊 Log level: ${this.getLevelName()}`);
+        window.logInfo(`🚀 Logger initialized in ${ENVIRONMENT.current} mode`);
+        window.logInfo(`📊 Log level: ${this.getLevelName()}`);
     }
 
     /**
@@ -236,16 +236,16 @@ class Logger {
         // 根据级别选择控制台方法
         switch (level) {
             case LOG_LEVELS.DEBUG:
-                console.debug(...args);
+                window.logDebug(...args);
                 break;
             case LOG_LEVELS.INFO:
                 console.info(...args);
                 break;
             case LOG_LEVELS.WARN:
-                console.warn(...args);
+                window.logWarn(...args);
                 break;
             case LOG_LEVELS.ERROR:
-                console.error(...args);
+                window.logError(...args);
                 break;
         }
     }
@@ -267,7 +267,7 @@ class Logger {
 
             localStorage.setItem(this.config.storageKey, JSON.stringify(storageData));
         } catch (error) {
-            console.warn('Failed to store logs:', error);
+            window.logWarn('Failed to store logs:', error);
         }
     }
 
@@ -294,7 +294,7 @@ class Logger {
                 throw new Error(`HTTP ${response.status}`);
             }
         } catch (error) {
-            console.warn('Failed to send logs to remote:', error);
+            window.logWarn('Failed to send logs to remote:', error);
         }
     }
 
@@ -328,7 +328,7 @@ class Logger {
                 startTime: measure.startTime
             }, 'PERFORMANCE');
         } catch (error) {
-            console.warn('Performance measurement failed:', error);
+            window.logWarn('Performance measurement failed:', error);
         }
 
         delete this.performanceMarks[name];
@@ -405,7 +405,7 @@ class Logger {
             const stored = localStorage.getItem(this.config.storageKey);
             return stored ? JSON.parse(stored).logs : [];
         } catch (error) {
-            console.warn('Failed to load stored logs:', error);
+            window.logWarn('Failed to load stored logs:', error);
             return [];
         }
     }
@@ -533,50 +533,47 @@ const logger = new Logger({
     performance: false,
     level: LOG_LEVELS.INFO,
 
-    // 可以通过 URL 参数或本地存储覆盖配置
+    // 可以通过本地存储覆盖配置 - 默认关闭
     ...(() => {
         const params = new URLSearchParams(window.location.search);
         const config = {};
         const localConfig = localStorage.getItem('logger_config');
 
-        // URL 参数优先级最高
-        if (params.get('debug') === 'true' || params.get('logger') === 'true') {
-            config.enabled = true;
-            config.console = true;
-            config.storage = true;
-            config.performance = true;
-            config.level = LOG_LEVELS.DEBUG;
-            console.log('🔧 Logger enabled via URL parameter');
-        }
-        if (params.get('silent') === 'true') {
-            config.enabled = false;
-        }
+        // 严格的安全策略：默认关闭，只有明确的本地配置才能开启
+        // URL参数不再自动开启日志，需要手动在localStorage配置
 
-        // 本地存储配置
-        if (localConfig && !params.has('debug')) {
+        // 本地存储配置 - 只有明确配置enabled=true才开启
+        if (localConfig) {
             try {
                 const parsed = JSON.parse(localConfig);
-                Object.assign(config, parsed);
-                if (config.enabled) {
-                    console.log('🔧 Logger enabled via localStorage');
+                // 只有明确设置enabled=true才开启，其他情况保持关闭
+                if (parsed.enabled === true) {
+                    config.enabled = true;
+                    config.console = parsed.console !== undefined ? parsed.console : true;
+                    config.storage = parsed.storage !== undefined ? parsed.storage : false;
+                    config.performance = parsed.performance !== undefined ? parsed.performance : false;
+                    config.level = parsed.level !== undefined ? parsed.level : LOG_LEVELS.INFO;
                 }
             } catch (error) {
-                console.warn('Failed to parse logger config from localStorage:', error);
+                // 配置解析失败，保持默认关闭状态
+                config.enabled = false;
             }
         }
 
-        // 开发环境友好提示
+        // 开发环境友好提示 - 静默模式，不输出到console
+        // 使用内部标记而不是logInfo避免循环调用
         if (!config.enabled && ENVIRONMENT.isDevelopment) {
-            console.log('📝 Logger is disabled. Use ?debug=true or localStorage.setItem("logger_config", \'{"enabled": true}\') to enable');
+            // 只在开发者明确检查时提供信息
+            window._LOGGER_DISABLED_HINT = 'Logger is disabled. Use localStorage.setItem("logger_config", \'{"enabled": true}\') to enable';
         }
 
         return config;
     })()
 });
 
-// 开发环境下的调试功能
-if (ENVIRONMENT.isDevelopment) {
-    // 添加全局调试方法
+// 开发环境下的调试功能 - 默认不暴露，除非日志系统明确开启
+if (ENVIRONMENT.isDevelopment && logger.config.enabled) {
+    // 只有在日志明确开启时才添加全局调试方法
     window.logger = logger;
     window.debug = (...args) => logger.debug(...args);
     window.logInfo = (...args) => logger.info(...args);
@@ -606,21 +603,27 @@ if (ENVIRONMENT.isDevelopment) {
         }
     };
 
-    console.log('🛠️ Development tools available:');
-    console.log('- window.logger: 核心日志实例');
-    console.log('- window.debug(): 快速调试日志');
-    console.log('- window.devTools: 开发者工具集');
-    console.log('- URL参数: ?debug=true 开启调试, ?silent=true 静默模式');
+    // 只在日志开启时显示开发工具信息
+    if (logger.config.enabled) {
+        console.log('🛠️ Development tools available:');
+        console.log('- window.logger: 核心日志实例');
+        console.log('- window.debug(): 快速调试日志');
+        console.log('- window.devTools: 开发者工具集');
+        console.log('- localStorage: logger_config 进行配置');
+    }
 }
 
-// 生产环境优化
+// 生产环境优化 - 默认关闭所有日志
 if (ENVIRONMENT.isProduction) {
-    // 只保留错误日志
-    logger.config.level = LOG_LEVELS.ERROR;
+    // 关闭所有日志功能
+    logger.config.enabled = false;
+    logger.config.level = LOG_LEVELS.SILENT;
     logger.config.storage = false;
     logger.config.performance = false;
+    logger.config.console = false;
 
-    console.log('🔒 Logger optimized for production');
+    // 生产环境不输出任何日志信息
+    // window.logInfo('🔒 Logger disabled in production');
 }
 
 // 导出日志系统

@@ -8,7 +8,32 @@
  * @version 1.0.0
  */
 
-console.log('🔍 Loading Filter Manager...');
+// 日志记录辅助方法
+const logInfo = (message, data = null, tag = 'FILTER') => {
+    if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+        window.APP_DEBUG.logger.info(message, data, tag);
+    } else {
+        console.log(message, data);
+    }
+};
+
+const logWarn = (message, data = null, tag = 'FILTER') => {
+    if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+        window.APP_DEBUG.logger.warn(message, data, tag);
+    } else {
+        console.warn(message, data);
+    }
+};
+
+const logError = (message, error = null, tag = 'FILTER_ERROR') => {
+    if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+        window.APP_DEBUG.logger.error(message, error, tag);
+    } else {
+        console.error(message, error);
+    }
+};
+
+logInfo('🔍 Loading Filter Manager...', null, 'FILTER_INIT');
 
 // ========================
 // 筛选配置定义
@@ -167,7 +192,7 @@ class FilterManager {
         this.noResultsMessageId = `no-results-${configKey}`;
 
         if (!this.config) {
-            console.error(`FilterManager: 未找到配置 "${configKey}"`);
+            logError(`FilterManager: 未找到配置 "${configKey}"`, { configKey }, 'FILTER_CONFIG_ERROR');
             return;
         }
 
@@ -199,7 +224,7 @@ class FilterManager {
      * 初始化筛选管理器
      */
     init() {
-        console.log(`🔍 Initializing ${this.config.pageName} filter manager...`);
+        logInfo(`🔍 Initializing ${this.config.pageName} filter manager...`, { pageName: this.config.pageName }, 'FILTER_INIT');
         this.addAnimationStyles();
         this.bindEvents();
     }
@@ -331,7 +356,7 @@ class FilterManager {
             }
         });
 
-        console.log(`筛选${this.config.pageName}: ${category}, 显示 ${visibleCount} 个结果`);
+        logInfo(`筛选${this.config.pageName}: ${category}, 显示 ${visibleCount} 个结果`, { pageName: this.config.pageName, category, visibleCount, totalCount: cards.length }, 'FILTER_RESULT');
         this.showNoResultsMessage(visibleCount, cards.length);
     }
 
@@ -350,7 +375,7 @@ class FilterManager {
             // 显示所有卡片
             cards.forEach((card, index) => this.showCard(card, index));
             this.showNoResultsMessage(cards.length, cards.length);
-            console.log(`搜索${this.config.pageName}: 清空搜索，显示所有 ${cards.length} 个结果`);
+            logInfo(`搜索${this.config.pageName}: 清空搜索，显示所有 ${cards.length} 个结果`, { pageName: this.config.pageName, totalCount: cards.length }, 'FILTER_CLEAR');
             return;
         }
 
@@ -367,7 +392,7 @@ class FilterManager {
             }
         });
 
-        console.log(`搜索${this.config.pageName}: "${searchTerm}", 找到 ${visibleCount} 个结果`);
+        logInfo(`搜索${this.config.pageName}: "${searchTerm}", 找到 ${visibleCount} 个结果`, { pageName: this.config.pageName, searchTerm, visibleCount, totalCount: cards.length }, 'FILTER_SEARCH');
         this.showNoResultsMessage(visibleCount, cards.length);
     }
 
@@ -614,7 +639,7 @@ if (!window.FILTER_MANAGER_LOADED) {
     // 初始化完成
     // ========================
 
-    console.log('✅ Filter Manager loaded successfully');
+    logInfo('✅ Filter Manager loaded successfully', null, 'FILTER_LOADED');
 
     // 向全局暴露工具已加载的标记
     window.FILTER_MANAGER_LOADED = true;

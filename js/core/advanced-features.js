@@ -27,7 +27,7 @@ class AdvancedFeaturesManager {
     init() {
         this.setupGlobalStyles();
         this.setupEventListeners();
-        console.log('🚀 Advanced Features Manager initialized');
+        window.logInfo('🚀 Advanced Features Manager initialized');
     }
 
     setupGlobalStyles() {
@@ -250,7 +250,7 @@ class AdvancedFeaturesManager {
     // 图表功能
     createChart(container, type, data, options = {}) {
         if (!this.config.enableCharts) {
-            console.warn('Charts are disabled');
+            window.logWarn('Charts are disabled');
             return null;
         }
 
@@ -317,7 +317,7 @@ class AdvancedFeaturesManager {
                 this.drawDoughnutChart(ctx, data, options, width, height, padding);
                 break;
             default:
-                console.warn('Unsupported chart type:', type);
+                window.logWarn('Unsupported chart type:', type);
         }
     }
 
@@ -574,7 +574,7 @@ class AdvancedFeaturesManager {
     // 通知功能
     showNotification(type, title, message, duration = 5000) {
         if (!this.config.enableNotifications) {
-            console.log(`[${type}] ${title}: ${message}`);
+            window.logInfo(`[${type}] ${title}: ${message}`);
             return;
         }
 
@@ -664,7 +664,7 @@ class AdvancedFeaturesManager {
             globalStyles.remove();
         }
 
-        console.log('🚀 Advanced Features Manager destroyed');
+        window.logInfo('🚀 Advanced Features Manager destroyed');
     }
 }
 
@@ -674,7 +674,7 @@ let advancedFeaturesManager;
 setTimeout(() => {
     advancedFeaturesManager = new AdvancedFeaturesManager();
     window.advancedFeatures = advancedFeaturesManager;
-    console.log('✅ Advanced Features Manager initialized');
+    window.logInfo('✅ Advanced Features Manager initialized');
 }, 800);
 
 // 导出模块

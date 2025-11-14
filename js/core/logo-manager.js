@@ -576,7 +576,7 @@ class LogoManager {
      */
     switchScenario(scenario, target = null) {
         if (!this.logoConfig.scenarios[scenario]) {
-            console.warn(`Unknown logo scenario: ${scenario}`);
+            window.logWarn(`Unknown logo scenario: ${scenario}`);
             return;
         }
 
@@ -691,7 +691,7 @@ class LogoManager {
             try {
                 callback(event, { ...data, logoManager: this });
             } catch (error) {
-                console.error('Logo observer error:', error);
+                window.logError('Logo observer error:', error);
             }
         });
     }

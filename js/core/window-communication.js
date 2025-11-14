@@ -78,11 +78,11 @@ class WindowCommunicationManager {
      */
     init() {
         try {
-            console.log('[WindowCommunication] 初始化窗口间通信管理器...');
+            window.logInfo('[WindowCommunication] 初始化窗口间通信管理器...');
 
             // 检测浏览器兼容性
             if (!this.checkBrowserSupport()) {
-                console.warn('[WindowCommunication] 当前浏览器不支持部分通信功能');
+                window.logWarn('[WindowCommunication] 当前浏览器不支持部分通信功能');
                 // 继续初始化，使用降级方案
             }
 
@@ -102,10 +102,10 @@ class WindowCommunicationManager {
             this.requestLanguageSync();
 
             this.state.isInitialized = true;
-            console.log('[WindowCommunication] ✅ 窗口通信管理器初始化完成');
+            window.logInfo('[WindowCommunication] ✅ 窗口通信管理器初始化完成');
 
         } catch (error) {
-            console.error('[WindowCommunication] 初始化失败:', error);
+            window.logError('[WindowCommunication] 初始化失败:', error);
             this.state.isEnabled = false;
         }
     }
@@ -121,7 +121,7 @@ class WindowCommunicationManager {
             customEvent: typeof CustomEvent === 'function'
         };
 
-        console.log('[WindowCommunication] 浏览器功能支持检查:', features);
+        window.logInfo('[WindowCommunication] 浏览器功能支持检查:', features);
         return Object.values(features).some(Boolean);
     }
 
@@ -137,10 +137,10 @@ class WindowCommunicationManager {
                     this.handleBroadcastMessage(event);
                 });
 
-                console.log('[WindowCommunication] ✅ 广播频道初始化成功');
+                window.logInfo('[WindowCommunication] ✅ 广播频道初始化成功');
             }
         } catch (error) {
-            console.warn('[WindowCommunication] 广播频道初始化失败，使用降级方案:', error);
+            window.logWarn('[WindowCommunication] 广播频道初始化失败，使用降级方案:', error);
         }
     }
 
@@ -191,7 +191,7 @@ class WindowCommunicationManager {
         };
         window.addEventListener('blur', this.listeners.blur);
 
-        console.log('[WindowCommunication] ✅ 事件监听器设置完成');
+        window.logInfo('[WindowCommunication] ✅ 事件监听器设置完成');
     }
 
     /**
@@ -204,7 +204,7 @@ class WindowCommunicationManager {
             return;
         }
 
-        console.log(`[WindowCommunication] 检测到语言切换事件: ${language} (来源: ${source})`);
+        window.logInfo(`[WindowCommunication] 检测到语言切换事件: ${language} (来源: ${source})`);
 
         // 更新当前状态
         this.state.currentLanguage = language;
@@ -234,9 +234,9 @@ class WindowCommunicationManager {
         if (this.state.broadcastChannel) {
             try {
                 this.state.broadcastChannel.postMessage(message);
-                console.log('[WindowCommunication] 通过BroadcastChannel发送语言切换消息');
+                window.logInfo('[WindowCommunication] 通过BroadcastChannel发送语言切换消息');
             } catch (error) {
-                console.warn('[WindowCommunication] BroadcastChannel发送失败:', error);
+                window.logWarn('[WindowCommunication] BroadcastChannel发送失败:', error);
             }
         }
 
@@ -246,7 +246,7 @@ class WindowCommunicationManager {
         // 方式3: 使用localStorage（降级方案）
         this.storeLanguageMessage(message);
 
-        console.log(`[WindowCommunication] 📢 广播语言切换: ${language}`);
+        window.logInfo(`[WindowCommunication] 📢 广播语言切换: ${language}`);
     }
 
     /**
@@ -258,7 +258,7 @@ class WindowCommunicationManager {
             try {
                 window.opener.postMessage(message, window.location.origin);
             } catch (error) {
-                console.warn('[WindowCommunication] 发送消息到opener窗口失败:', error);
+                window.logWarn('[WindowCommunication] 发送消息到opener窗口失败:', error);
             }
         }
 
@@ -272,7 +272,7 @@ class WindowCommunicationManager {
                 }
             });
         } catch (error) {
-            console.warn('[WindowCommunication] 广播到子窗口失败:', error);
+            window.logWarn('[WindowCommunication] 广播到子窗口失败:', error);
         }
     }
 
@@ -282,7 +282,7 @@ class WindowCommunicationManager {
     handleCrossWindowMessage(event) {
         // 安全检查：验证消息来源
         if (!this.isMessageAllowed(event)) {
-            console.warn('[WindowCommunication] 忽略未授权来源的消息:', event.origin);
+            window.logWarn('[WindowCommunication] 忽略未授权来源的消息:', event.origin);
             return;
         }
 
@@ -310,7 +310,7 @@ class WindowCommunicationManager {
                 break;
 
             default:
-                console.log('[WindowCommunication] 收到未知类型的消息:', message.type);
+                window.logInfo('[WindowCommunication] 收到未知类型的消息:', message.type);
         }
     }
 
@@ -343,11 +343,11 @@ class WindowCommunicationManager {
         // 检查消息时效性
         const now = Date.now();
         if (now - timestamp > this.config.messageTimeout) {
-            console.log('[WindowCommunication] 忽略过期的语言切换消息');
+            window.logInfo('[WindowCommunication] 忽略过期的语言切换消息');
             return;
         }
 
-        console.log(`[WindowCommunication] 收到语言切换消息: ${language} (来源: ${source})`);
+        window.logInfo(`[WindowCommunication] 收到语言切换消息: ${language} (来源: ${source})`);
 
         // 如果语言不同，则执行切换
         if (language !== this.state.currentLanguage) {
@@ -360,7 +360,7 @@ class WindowCommunicationManager {
      */
     async applyLanguageChange(language, source = 'external') {
         try {
-            console.log(`[WindowCommunication] 应用语言切换: ${language}`);
+            window.logInfo(`[WindowCommunication] 应用语言切换: ${language}`);
 
             // 更新状态
             this.state.currentLanguage = language;
@@ -380,10 +380,10 @@ class WindowCommunicationManager {
                 this.updatePageLanguage(language);
             }
 
-            console.log(`[WindowCommunication] ✅ 语言切换完成: ${language}`);
+            window.logInfo(`[WindowCommunication] ✅ 语言切换完成: ${language}`);
 
         } catch (error) {
-            console.error('[WindowCommunication] 语言切换失败:', error);
+            window.logError('[WindowCommunication] 语言切换失败:', error);
         }
     }
 
@@ -407,7 +407,7 @@ class WindowCommunicationManager {
                                               language === 'ja' ? 'ja-JP' : 'en-US';
 
         } catch (error) {
-            console.error('[WindowCommunication] 更新页面语言失败:', error);
+            window.logError('[WindowCommunication] 更新页面语言失败:', error);
         }
     }
 
@@ -430,7 +430,7 @@ class WindowCommunicationManager {
             this.state.broadcastChannel.postMessage(message);
         }
 
-        console.log('[WindowCommunication] 📤 发送语言同步请求');
+        window.logInfo('[WindowCommunication] 📤 发送语言同步请求');
     }
 
     /**
@@ -459,7 +459,7 @@ class WindowCommunicationManager {
             this.state.broadcastChannel.postMessage(response);
         }
 
-        console.log(`[WindowCommunication] 📥 响应语言同步请求: ${this.state.currentLanguage}`);
+        window.logInfo(`[WindowCommunication] 📥 响应语言同步请求: ${this.state.currentLanguage}`);
     }
 
     /**
@@ -471,7 +471,7 @@ class WindowCommunicationManager {
             return;
         }
 
-        console.log(`[WindowCommunication] 收到语言同步响应: ${payload.language}`);
+        window.logInfo(`[WindowCommunication] 收到语言同步响应: ${payload.language}`);
 
         // 如果响应的语言与当前不同，则应用切换
         if (payload.language !== this.state.currentLanguage) {
@@ -498,7 +498,7 @@ class WindowCommunicationManager {
             this.state.broadcastChannel.postMessage(message);
         }
 
-        console.log('[WindowCommunication] 📢 广播窗口准备就绪');
+        window.logInfo('[WindowCommunication] 📢 广播窗口准备就绪');
     }
 
     /**
@@ -510,7 +510,7 @@ class WindowCommunicationManager {
             return;
         }
 
-        console.log(`[WindowCommunication] 检测到新窗口准备就绪: ${payload.language}`);
+        window.logInfo(`[WindowCommunication] 检测到新窗口准备就绪: ${payload.language}`);
 
         // 记录连接的窗口
         this.state.connectedWindows.add(payload.windowId);
@@ -528,7 +528,7 @@ class WindowCommunicationManager {
      */
     handleStorageLanguageChange(event) {
         if (event.newValue && event.newValue !== this.state.currentLanguage) {
-            console.log(`[WindowCommunication] 检测到本地存储语言变化: ${event.newValue}`);
+            window.logInfo(`[WindowCommunication] 检测到本地存储语言变化: ${event.newValue}`);
             this.applyLanguageChange(event.newValue, 'localStorage');
         }
     }
@@ -537,7 +537,7 @@ class WindowCommunicationManager {
      * 处理窗口获得焦点
      */
     handleWindowFocus() {
-        console.log('[WindowCommunication] 窗口获得焦点，检查语言同步');
+        window.logInfo('[WindowCommunication] 窗口获得焦点，检查语言同步');
 
         // 重新请求语言同步（防止失焦期间错过消息）
         setTimeout(() => {
@@ -549,7 +549,7 @@ class WindowCommunicationManager {
      * 处理窗口失去焦点
      */
     handleWindowBlur() {
-        console.log('[WindowCommunication] 窗口失去焦点');
+        window.logInfo('[WindowCommunication] 窗口失去焦点');
     }
 
     /**
@@ -595,7 +595,7 @@ class WindowCommunicationManager {
                 localStorage.setItem('japan-hub-language-timestamp', Date.now().toString());
             }
         } catch (error) {
-            console.warn('[WindowCommunication] 存储语言偏好失败:', error);
+            window.logWarn('[WindowCommunication] 存储语言偏好失败:', error);
         }
     }
 
@@ -612,7 +612,7 @@ class WindowCommunicationManager {
                 }, this.config.messageTimeout);
             }
         } catch (error) {
-            console.warn('[WindowCommunication] 存储语言消息失败:', error);
+            window.logWarn('[WindowCommunication] 存储语言消息失败:', error);
         }
     }
 
@@ -633,7 +633,7 @@ class WindowCommunicationManager {
         this.state.lastHeartbeat = now;
 
         // 可以在这里实现连接健康检查
-        console.log('[WindowCommunication] 心跳检测');
+        window.logInfo('[WindowCommunication] 心跳检测');
     }
 
     /**
@@ -651,7 +651,7 @@ class WindowCommunicationManager {
      */
     setEnabled(enabled) {
         this.state.isEnabled = enabled;
-        console.log(`[WindowCommunication] 窗口通信${enabled ? '启用' : '禁用'}`);
+        window.logInfo(`[WindowCommunication] 窗口通信${enabled ? '启用' : '禁用'}`);
     }
 
     /**
@@ -673,11 +673,11 @@ class WindowCommunicationManager {
      */
     switchLanguage(language, source = 'manual') {
         if (!language || typeof language !== 'string') {
-            console.warn('[WindowCommunication] 无效的语言参数');
+            window.logWarn('[WindowCommunication] 无效的语言参数');
             return;
         }
 
-        console.log(`[WindowCommunication] 手动切换语言: ${language}`);
+        window.logInfo(`[WindowCommunication] 手动切换语言: ${language}`);
 
         // 触发语言切换事件（会被事件监听器捕获并广播）
         const event = new CustomEvent('languageChanged', {
@@ -690,7 +690,7 @@ class WindowCommunicationManager {
      * 清理资源
      */
     cleanup() {
-        console.log('[WindowCommunication] 清理资源...');
+        window.logInfo('[WindowCommunication] 清理资源...');
 
         // 停止心跳
         this.stopHeartbeat();
@@ -725,7 +725,7 @@ class WindowCommunicationManager {
         this.messageQueue.length = 0;
         this.state.pendingMessages.clear();
 
-        console.log('[WindowCommunication] ✅ 资源清理完成');
+        window.logInfo('[WindowCommunication] ✅ 资源清理完成');
     }
 
     /**
@@ -743,7 +743,7 @@ class WindowCommunicationManager {
             this.config[key] = null;
         });
 
-        console.log('[WindowCommunication] ✅ 窗口通信管理器已销毁');
+        window.logInfo('[WindowCommunication] ✅ 窗口通信管理器已销毁');
     }
 }
 
@@ -776,4 +776,4 @@ window.toggleWindowComm = (enabled) => {
     }
 };
 
-console.log('✅ Window Communication Manager loaded');
+window.logInfo('✅ Window Communication Manager loaded');

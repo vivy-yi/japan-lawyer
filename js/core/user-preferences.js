@@ -69,7 +69,7 @@ class UserPreferencesManager {
     }
 
     init() {
-        console.log('⚙️ User Preferences Manager initialized');
+        window.logInfo('⚙️ User Preferences Manager initialized');
         this.loadPreferences();
         this.applyPreferences();
         this.setupSystemPreferenceDetection();
@@ -85,10 +85,10 @@ class UserPreferencesManager {
             if (saved) {
                 const savedPreferences = JSON.parse(saved);
                 this.preferences = { ...this.preferences, ...savedPreferences };
-                console.log('📥 User preferences loaded');
+                window.logInfo('📥 User preferences loaded');
             }
         } catch (error) {
-            console.warn('❌ Failed to load user preferences:', error);
+            window.logWarn('❌ Failed to load user preferences:', error);
             this.preferences = { ...this.config.defaultPreferences };
         }
     }
@@ -99,10 +99,10 @@ class UserPreferencesManager {
     savePreferences() {
         try {
             localStorage.setItem(this.config.storageKey, JSON.stringify(this.preferences));
-            console.log('💾 User preferences saved');
+            window.logInfo('💾 User preferences saved');
             this.trigger('saved', { preferences: this.preferences });
         } catch (error) {
-            console.warn('❌ Failed to save user preferences:', error);
+            window.logWarn('❌ Failed to save user preferences:', error);
         }
     }
 
@@ -120,7 +120,7 @@ class UserPreferencesManager {
         this.applyPerformancePreferences();
         this.applyPrivacyPreferences();
 
-        console.log('✨ User preferences applied');
+        window.logInfo('✨ User preferences applied');
         this.trigger('applied', { preferences: this.preferences });
     }
 
@@ -191,7 +191,7 @@ class UserPreferencesManager {
                 this.dateFormatter = new Intl.DateTimeFormat(locale, dateOptions);
                 this.timeFormatter = new Intl.DateTimeFormat(locale, timeOptions);
             } catch (error) {
-                console.warn('❌ Failed to create formatters:', error);
+                window.logWarn('❌ Failed to create formatters:', error);
             }
         }
     }
@@ -259,7 +259,7 @@ class UserPreferencesManager {
     applySearchPreferences() {
         if (window.searchManager) {
             // 这里可以与搜索管理器集成
-            console.log('🔍 Search preferences applied:', {
+            window.logInfo('🔍 Search preferences applied:', {
                 history: this.preferences.searchHistory,
                 suggestions: this.preferences.searchSuggestions,
                 instant: this.preferences.instantSearch,
@@ -294,9 +294,9 @@ class UserPreferencesManager {
             // 添加一次性事件监听器来检测用户交互
             const requestNotificationPermission = () => {
                 Notification.requestPermission().then(permission => {
-                    console.log('🔔 Notification permission:', permission);
+                    window.logInfo('🔔 Notification permission:', permission);
                 }).catch(error => {
-                    console.log('🔔 Notification permission request failed:', error);
+                    window.logInfo('🔔 Notification permission request failed:', error);
                 });
 
                 // 移除事件监听器
@@ -337,12 +337,12 @@ class UserPreferencesManager {
     applyPrivacyPreferences() {
         if (!this.preferences.allowAnalytics) {
             // 禁用分析追踪
-            console.log('🚫 Analytics disabled by user preference');
+            window.logInfo('🚫 Analytics disabled by user preference');
         }
 
         if (!this.preferences.allowPersonalization) {
             // 禁用个性化功能
-            console.log('🚫 Personalization disabled by user preference');
+            window.logInfo('🚫 Personalization disabled by user preference');
         }
     }
 
@@ -389,13 +389,13 @@ class UserPreferencesManager {
 
             darkModeQuery.addEventListener('change', (e) => {
                 if (this.preferences.theme === 'auto') {
-                    console.log('🌙 System theme changed:', e.matches ? 'dark' : 'light');
+                    window.logInfo('🌙 System theme changed:', e.matches ? 'dark' : 'light');
                     this.applyThemePreferences();
                 }
             });
 
             reducedMotionQuery.addEventListener('change', (e) => {
-                console.log('🏃‍♂️ System motion preference changed:', e.matches);
+                window.logInfo('🏃‍♂️ System motion preference changed:', e.matches);
                 if (e.matches && !this.preferences.animations) {
                     this.preferences.reducedMotion = true;
                     this.applyContentPreferences();
@@ -403,7 +403,7 @@ class UserPreferencesManager {
             });
 
             highContrastQuery.addEventListener('change', (e) => {
-                console.log('👁️ System contrast preference changed:', e.matches);
+                window.logInfo('👁️ System contrast preference changed:', e.matches);
                 if (e.matches) {
                     this.preferences.highContrast = true;
                     this.applyContentPreferences();
@@ -434,7 +434,7 @@ class UserPreferencesManager {
      */
     set(key, value) {
         if (this.hasOwnProperty(key)) {
-            console.warn(`⚠️ Cannot set reserved property: ${key}`);
+            window.logWarn(`⚠️ Cannot set reserved property: ${key}`);
             return false;
         }
 
@@ -452,7 +452,7 @@ class UserPreferencesManager {
             this.savePreferences();
         }
 
-        console.log(`⚙️ Preference changed: ${key} = ${value}`);
+        window.logInfo(`⚙️ Preference changed: ${key} = ${value}`);
         return true;
     }
 
@@ -482,7 +482,7 @@ class UserPreferencesManager {
             this.savePreferences();
         }
 
-        console.log('⚙️ Multiple preferences changed:', changes);
+        window.logInfo('⚙️ Multiple preferences changed:', changes);
     }
 
     /**
@@ -541,7 +541,7 @@ class UserPreferencesManager {
         this.savePreferences();
 
         this.trigger('reset', { oldPreferences, newPreferences: this.preferences });
-        console.log('🔄 Preferences reset to defaults');
+        window.logInfo('🔄 Preferences reset to defaults');
     }
 
     /**
@@ -560,7 +560,7 @@ class UserPreferencesManager {
         this.savePreferences();
 
         this.trigger('categoryReset', { category, changes });
-        console.log(`🔄 ${category} preferences reset`);
+        window.logInfo(`🔄 ${category} preferences reset`);
     }
 
     /**
@@ -608,7 +608,7 @@ class UserPreferencesManager {
         link.click();
 
         URL.revokeObjectURL(url);
-        console.log('📤 Preferences exported');
+        window.logInfo('📤 Preferences exported');
     }
 
     /**
@@ -628,7 +628,7 @@ class UserPreferencesManager {
                         this.savePreferences();
 
                         this.trigger('imported', { data });
-                        console.log('📥 Preferences imported successfully');
+                        window.logInfo('📥 Preferences imported successfully');
                         resolve(data);
                     } else {
                         reject(new Error('Invalid preferences file format'));
@@ -675,7 +675,7 @@ class UserPreferencesManager {
                 try {
                     callback(data);
                 } catch (error) {
-                    console.error(`❌ Error in preference event listener for ${event}:`, error);
+                    window.logError(`❌ Error in preference event listener for ${event}:`, error);
                 }
             });
         }
@@ -741,7 +741,7 @@ class UserPreferencesManager {
         }
 
         this.listeners.clear();
-        console.log('🗑️ User Preferences Manager destroyed');
+        window.logInfo('🗑️ User Preferences Manager destroyed');
     }
 }
 
@@ -751,7 +751,7 @@ let userPreferencesManager;
 setTimeout(() => {
     userPreferencesManager = new UserPreferencesManager();
     window.userPreferencesManager = userPreferencesManager;
-    console.log('✅ User Preferences Manager ready');
+    window.logInfo('✅ User Preferences Manager ready');
 }, 100);
 
 // 导出模块

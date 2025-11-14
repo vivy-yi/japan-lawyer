@@ -21,7 +21,7 @@ window.filterKnowledge = function(category) {
         }
     });
 
-    console.log(`筛选知识库: ${category}`);
+    window.logInfo(`筛选知识库: ${category}`);
 };
 
 // 搜索知识库内容
@@ -38,7 +38,7 @@ window.searchKnowledge = function() {
         }
     });
 
-    console.log(`搜索知识库: ${searchTerm}`);
+    window.logInfo(`搜索知识库: ${searchTerm}`);
 };
 
-console.log('✅ Knowledge page functions loaded');
+window.logInfo('✅ Knowledge page functions loaded');

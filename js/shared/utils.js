@@ -8,7 +8,7 @@
  * @version 1.0.0
  */
 
-console.log('🔧 Loading shared utilities...');
+window.logInfo('🔧 Loading shared utilities...');
 
 // ========================
 // 安全工具函数
@@ -25,7 +25,7 @@ console.log('🔧 Loading shared utilities...');
  */
 window.escapeHtml = function(text) {
     if (typeof text !== 'string') {
-        console.warn('escapeHtml: 非字符串输入', typeof text, text);
+        window.logWarn('escapeHtml: 非字符串输入', typeof text, text);
         return String(text || '');
     }
 
@@ -57,7 +57,7 @@ window.isValidUrl = function(url) {
  */
 window.sanitizeUrl = function(url) {
     if (!isValidUrl(url)) {
-        console.warn('sanitizeUrl: 无效URL被过滤', url);
+        window.logWarn('sanitizeUrl: 无效URL被过滤', url);
         return '#';
     }
     return url;
@@ -223,7 +223,7 @@ window.deepClone = function(obj) {
     try {
         return JSON.parse(JSON.stringify(obj));
     } catch (e) {
-        console.warn('deepClone: 克隆失败', e);
+        window.logWarn('deepClone: 克隆失败', e);
         return obj;
     }
 };
@@ -280,7 +280,7 @@ window.safeExecute = function(func, fallback = null) {
         }
         return fallback;
     } catch (error) {
-        console.error('safeExecute: 函数执行出错', error);
+        window.logError('safeExecute: 函数执行出错', error);
         return fallback;
     }
 };
@@ -299,7 +299,7 @@ window.logError = function(message, context = {}) {
         userAgent: navigator.userAgent
     };
 
-    console.error('🚨 Error logged:', errorInfo);
+    window.logError('🚨 Error logged:', errorInfo);
 
     // 这里可以添加错误上报逻辑
     // 例如发送到错误监控服务
@@ -361,7 +361,7 @@ window.setLocalStorage = function(key, value, expireHours = null) {
 
         localStorage.setItem(key, JSON.stringify(data));
     } catch (error) {
-        console.error('setLocalStorage: 存储失败', error);
+        window.logError('setLocalStorage: 存储失败', error);
     }
 };
 
@@ -386,7 +386,7 @@ window.getLocalStorage = function(key, defaultValue = null) {
 
         return data.value;
     } catch (error) {
-        console.error('getLocalStorage: 读取失败', error);
+        window.logError('getLocalStorage: 读取失败', error);
         return defaultValue;
     }
 };
@@ -395,7 +395,7 @@ window.getLocalStorage = function(key, defaultValue = null) {
 // 初始化完成
 // ========================
 
-console.log('✅ Shared utilities loaded successfully');
+window.logInfo('✅ Shared utilities loaded successfully');
 
 // 向全局暴露工具已加载的标记
 window.SHARED_UTILS_LOADED = true;

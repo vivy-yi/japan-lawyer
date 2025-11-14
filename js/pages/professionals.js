@@ -21,7 +21,7 @@ window.filterProfessionals = function(category) {
         }
     });
 
-    console.log(`筛选专业人才: ${category}`);
+    window.logInfo(`筛选专业人才: ${category}`);
 };
 
 // 搜索专业人才
@@ -38,19 +38,19 @@ window.searchProfessionals = function() {
         }
     });
 
-    console.log(`搜索专业人才: ${searchTerm}`);
+    window.logInfo(`搜索专业人才: ${searchTerm}`);
 };
 
 // 联系专业人才
 window.contactProfessional = function(professionalName) {
     alert(`正在为您联系${professionalName}，我们的客服将在1小时内与您联系。`);
-    console.log(`联系专业人才: ${professionalName}`);
+    window.logInfo(`联系专业人才: ${professionalName}`);
 };
 
 // 查看专业人才详情
 window.viewProfile = function(profileId) {
     alert('详细页面正在开发中，敬请期待！');
-    console.log(`查看个人资料: ${profileId}`);
+    window.logInfo(`查看个人资料: ${profileId}`);
 };
 
-console.log('✅ Professionals page functions loaded');
+window.logInfo('✅ Professionals page functions loaded');

@@ -126,7 +126,7 @@ class PageContentManager {
      */
     init() {
         if (this.initialized) {
-            console.warn('PageContentManager already initialized');
+            window.logWarn('PageContentManager already initialized');
             return;
         }
 
@@ -138,9 +138,9 @@ class PageContentManager {
             this.setupEventListeners();
             this.initialized = true;
 
-            console.log(`PageContentManager initialized for page: ${this.currentPage}`);
+            window.logInfo(`PageContentManager initialized for page: ${this.currentPage}`);
         } catch (error) {
-            console.error('Failed to initialize PageContentManager:', error);
+            window.logError('Failed to initialize PageContentManager:', error);
         }
     }
 
@@ -179,7 +179,7 @@ class PageContentManager {
         const theme = this.pageThemes[this.currentPage];
 
         if (!theme) {
-            console.warn(`No theme found for page: ${this.currentPage}`);
+            window.logWarn(`No theme found for page: ${this.currentPage}`);
             return;
         }
 
@@ -393,7 +393,7 @@ class PageContentManager {
         this.detectCurrentPage();
 
         if (oldPage !== this.currentPage) {
-            console.log(`Page changed from ${oldPage} to ${this.currentPage}`);
+            window.logInfo(`Page changed from ${oldPage} to ${this.currentPage}`);
             this.setupPageTheme();
             this.updateContentAlignment();
 
@@ -463,7 +463,7 @@ class PageContentManager {
         document.body.removeAttribute('data-page');
 
         this.initialized = false;
-        console.log('PageContentManager destroyed');
+        window.logInfo('PageContentManager destroyed');
     }
 }
 

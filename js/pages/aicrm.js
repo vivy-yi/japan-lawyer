@@ -1,5 +1,5 @@
 // AI CRM系统页面脚本
-console.log('✅ AI CRM System page loaded successfully');
+window.logInfo('✅ AI CRM System page loaded successfully');
 
 // AI CRM系统筛选功能
 window.filterKnowledge = function(category) {
@@ -21,7 +21,7 @@ window.filterKnowledge = function(category) {
         }
     });
 
-    console.log(`筛选AI CRM系统: ${category}`);
+    window.logInfo(`筛选AI CRM系统: ${category}`);
 };
 
 // AI CRM系统搜索功能
@@ -38,12 +38,12 @@ window.searchKnowledge = function() {
         }
     });
 
-    console.log(`搜索AI CRM系统: ${searchTerm}`);
+    window.logInfo(`搜索AI CRM系统: ${searchTerm}`);
 };
 
 // AI CRM系统初始化
 window.initAicrmPage = function() {
-    console.log('🤖 Initializing AI CRM System functionality...');
+    window.logInfo('🤖 Initializing AI CRM System functionality...');
 
     // 添加页面特定的功能按钮事件
     const crmButtons = document.querySelectorAll('[data-crm-action]');
@@ -55,7 +55,7 @@ window.initAicrmPage = function() {
 // 处理CRM系统操作
 function handleCrmAction(event) {
     const action = event.target.getAttribute('data-crm-action');
-    console.log(`🔍 CRM action triggered: ${action}`);
+    window.logInfo(`🔍 CRM action triggered: ${action}`);
 
     switch (action) {
         case 'customer-management':
@@ -71,7 +71,7 @@ function handleCrmAction(event) {
             window.showAiAssistant();
             break;
         default:
-            console.log(`Unknown CRM action: ${action}`);
+            window.logInfo(`Unknown CRM action: ${action}`);
     }
 }
 

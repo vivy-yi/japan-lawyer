@@ -17,11 +17,44 @@ class NavigationPerformanceMonitor {
     }
 
     init() {
-        console.log('📊 Initializing Navigation Performance Monitor...');
+        this.logDebug('📊 Initializing Navigation Performance Monitor...', 'PERFORMANCE_INIT');
         this.setupPerformanceObserver();
         this.setupErrorHandling();
         this.setupMemoryMonitoring();
         this.startMonitoring();
+    }
+
+    // 日志记录辅助方法
+    logDebug(message, tag = 'PERFORMANCE') {
+        if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+            window.APP_DEBUG.logger.debug(message, null, tag);
+        } else {
+            console.log(message);
+        }
+    }
+
+    logInfo(message, data = null, tag = 'PERFORMANCE') {
+        if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+            window.APP_DEBUG.logger.info(message, data, tag);
+        } else {
+            console.log(message, data);
+        }
+    }
+
+    logWarn(message, data = null, tag = 'PERFORMANCE') {
+        if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+            window.APP_DEBUG.logger.warn(message, data, tag);
+        } else {
+            console.warn(message, data);
+        }
+    }
+
+    logError(message, error = null, tag = 'PERFORMANCE_ERROR') {
+        if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+            window.APP_DEBUG.logger.error(message, error, tag);
+        } else {
+            console.error(message, error);
+        }
     }
 
     // 设置性能观察器
@@ -44,7 +77,7 @@ class NavigationPerformanceMonitor {
                 navObserver.observe({ entryTypes: ['navigation'] });
                 this.observers.push(navObserver);
             } catch (error) {
-                console.warn('Navigation observer setup failed:', error);
+                this.logWarn('Navigation observer setup failed', error, 'PERFORMANCE_SETUP');
             }
 
             // 监控渲染性能
@@ -63,7 +96,7 @@ class NavigationPerformanceMonitor {
                 paintObserver.observe({ entryTypes: ['paint'] });
                 this.observers.push(paintObserver);
             } catch (error) {
-                console.warn('Paint observer setup failed:', error);
+                this.logWarn('Paint observer setup failed', error, 'PERFORMANCE_SETUP');
             }
 
             // 监控长任务
@@ -75,7 +108,7 @@ class NavigationPerformanceMonitor {
                                 duration: entry.duration,
                                 startTime: entry.startTime
                             });
-                            console.warn(`⚠️ Long task detected: ${entry.duration.toFixed(2)}ms`);
+                            this.logWarn(`⚠️ Long task detected: ${entry.duration.toFixed(2)}ms`, { duration: entry.duration }, 'LONG_TASK');
                         }
                     });
                 });
@@ -83,7 +116,7 @@ class NavigationPerformanceMonitor {
                 longTaskObserver.observe({ entryTypes: ['longtask'] });
                 this.observers.push(longTaskObserver);
             } catch (error) {
-                console.warn('Long task observer setup failed:', error);
+                this.logWarn('Long task observer setup failed', error, 'PERFORMANCE_SETUP');
             }
         }
     }
@@ -137,7 +170,7 @@ class NavigationPerformanceMonitor {
                     });
 
                     if (navigationTime > this.performanceThresholds.navigationTime) {
-                        console.warn(`⚠️ Slow navigation detected: ${navigationTime.toFixed(2)}ms`);
+                        this.logWarn(`⚠️ Slow navigation detected: ${navigationTime.toFixed(2)}ms`, { navigationTime }, 'SLOW_NAVIGATION');
                     }
                 };
 
@@ -176,7 +209,10 @@ class NavigationPerformanceMonitor {
                 });
 
                 if (memory.usedJSHeapSize > this.performanceThresholds.memoryUsage) {
-                    console.warn(`⚠️ High memory usage: ${(memory.usedJSHeapSize / 1024 / 1024).toFixed(2)}MB`);
+                    this.logWarn(`⚠️ High memory usage: ${(memory.usedJSHeapSize / 1024 / 1024).toFixed(2)}MB`, {
+                        usedMB: (memory.usedJSHeapSize / 1024 / 1024).toFixed(2),
+                        memory
+                    }, 'MEMORY_USAGE');
                     this.suggestMemoryOptimization();
                 }
             }, 30000); // 每30秒检查一次
@@ -186,7 +222,7 @@ class NavigationPerformanceMonitor {
     // 开始监控
     startMonitoring() {
         this.isMonitoring = true;
-        console.log('📊 Navigation performance monitoring started');
+        this.logInfo('📊 Navigation performance monitoring started', null, 'PERFORMANCE_START');
 
         // 记录初始性能指标
         this.recordInitialMetrics();
@@ -247,7 +283,7 @@ class NavigationPerformanceMonitor {
         // 根据错误类型决定处理方式
         this.categorizeAndHandleError(error);
 
-        console.error('🚨 Navigation Error:', error);
+        this.logError('🚨 Navigation Error:', error);
     }
 
     // 分类和处理错误
@@ -266,7 +302,7 @@ class NavigationPerformanceMonitor {
 
     // 处理关键错误
     handleCriticalError(error) {
-        console.error('🔥 Critical navigation error detected:', error);
+        this.logError('🔥 Critical navigation error detected:', error);
 
         // 尝试恢复
         this.attemptRecovery();
@@ -277,7 +313,7 @@ class NavigationPerformanceMonitor {
 
     // 处理Promise错误
     handlePromiseError(error) {
-        console.warn('⚠️ Promise rejection in navigation:', error);
+        this.logWarn('⚠️ Promise rejection in navigation:', error);
 
         // 检查是否与导航相关
         if (error.message.includes('fetch') || error.message.includes('load')) {
@@ -287,7 +323,7 @@ class NavigationPerformanceMonitor {
 
     // 处理加载错误
     handleLoadError(error) {
-        console.error('📡 Load error in navigation:', error);
+        this.logError('📡 Load error in navigation:', error);
 
         // 重试机制
         this.scheduleRetry();
@@ -295,7 +331,7 @@ class NavigationPerformanceMonitor {
 
     // 处理一般错误
     handleGeneralError(error) {
-        console.warn('⚠️ General error in navigation:', error);
+        this.logWarn('⚠️ General error in navigation:', error);
 
         // 记录但不中断用户体验
         this.logErrorForAnalysis(error);
@@ -304,13 +340,13 @@ class NavigationPerformanceMonitor {
     // 尝试恢复
     attemptRecovery() {
         try {
-            console.log('🔄 Attempting navigation recovery...');
+            this.logInfo('🔄 Attempting navigation recovery...');
 
             // 检查导航控制器状态
             if (window.navigationController) {
                 const status = window.navigationController.getNavigationStatus();
                 if (!status.initialized) {
-                    console.log('🔄 Reinitializing navigation controller...');
+                    this.logInfo('🔄 Reinitializing navigation controller...');
                     // 这里可以触发重新初始化
                 }
             }
@@ -318,12 +354,12 @@ class NavigationPerformanceMonitor {
             // 检查DOM完整性
             const navbar = document.getElementById('main-navbar');
             if (!navbar || navbar.children.length === 0) {
-                console.log('🔄 Restoring navigation DOM...');
+                this.logInfo('🔄 Restoring navigation DOM...');
                 // 这里可以触发DOM恢复
             }
 
         } catch (error) {
-            console.error('❌ Recovery attempt failed:', error);
+            this.logError('❌ Recovery attempt failed:', error);
         }
     }
 
@@ -367,7 +403,7 @@ class NavigationPerformanceMonitor {
     // 安排重试
     scheduleRetry() {
         setTimeout(() => {
-            console.log('🔄 Retrying failed navigation operation...');
+            this.logInfo('🔄 Retrying failed navigation operation...');
             // 这里可以触发重试逻辑
         }, 2000);
     }
@@ -375,15 +411,15 @@ class NavigationPerformanceMonitor {
     // 记录错误用于分析
     logErrorForAnalysis(error) {
         // 这里可以发送到分析服务
-        console.log('📝 Error logged for analysis:', error);
+        this.logInfo('📝 Error logged for analysis:', error);
     }
 
     // 建议内存优化
     suggestMemoryOptimization() {
-        console.log('💡 Memory optimization suggestions:');
-        console.log('- Clear unused caches');
-        console.log('- Remove event listeners');
-        console.log('- Close dropdown menus');
+        this.logInfo('💡 Memory optimization suggestions:');
+        this.logInfo('- Clear unused caches');
+        this.logInfo('- Remove event listeners');
+        this.logInfo('- Close dropdown menus');
 
         // 自动清理一些缓存
         if (window.navigationController && window.navigationController.clearDynamicCache) {
@@ -432,7 +468,7 @@ class NavigationPerformanceMonitor {
             }
         });
 
-        console.log('📊 Performance Report:', report);
+        this.logInfo('📊 Performance Report:', report);
 
         // 检查性能问题
         this.analyzePerformance(report);
@@ -473,22 +509,22 @@ class NavigationPerformanceMonitor {
 
         // 检查慢导航
         if (metrics['navigation-click'] && metrics['navigation-click'].average > this.performanceThresholds.navigationTime) {
-            console.warn(`⚠️ Slow navigation detected: ${metrics['navigation-click'].average.toFixed(2)}ms average`);
+            this.logWarn(`⚠️ Slow navigation detected: ${metrics['navigation-click'].average.toFixed(2)}ms average`);
         }
 
         // 检查长任务
         if (metrics['long-task'] && metrics['long-task'].count > 0) {
-            console.warn(`⚠️ ${metrics['long-task'].count} long tasks detected`);
+            this.logWarn(`⚠️ ${metrics['long-task'].count} long tasks detected`);
         }
 
         // 检查内存使用
         if (metrics.memory && metrics.memory.latest.used > this.performanceThresholds.memoryUsage) {
-            console.warn(`⚠️ High memory usage: ${(metrics.memory.latest.used / 1024 / 1024).toFixed(2)}MB`);
+            this.logWarn(`⚠️ High memory usage: ${(metrics.memory.latest.used / 1024 / 1024).toFixed(2)}MB`);
         }
 
         // 总体性能警告
         if (performanceScore < 70) {
-            console.warn(`⚠️ Performance score low: ${performanceScore}/100`);
+            this.logWarn(`⚠️ Performance score low: ${performanceScore}/100`);
         }
     }
 
@@ -531,7 +567,7 @@ class NavigationPerformanceMonitor {
             health.recommendations.push('Review recent errors and consider error recovery');
         }
 
-        console.log('🏥 Navigation Health Check:', health);
+        this.logInfo('🏥 Navigation Health Check:', health);
 
         return health;
     }
@@ -572,7 +608,7 @@ class NavigationPerformanceMonitor {
         this.errorLog = [];
         this.isMonitoring = false;
 
-        console.log('🧹 Navigation Performance Monitor cleaned up');
+        this.logInfo('🧹 Navigation Performance Monitor cleaned up');
     }
 }
 
@@ -584,4 +620,4 @@ if (typeof module !== 'undefined' && module.exports) {
 // 全局初始化
 window.NavigationPerformanceMonitor = NavigationPerformanceMonitor;
 
-console.log('📊 Navigation Performance Monitor loaded');
+window.logInfo('📊 Navigation Performance Monitor loaded');

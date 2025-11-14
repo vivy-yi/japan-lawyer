@@ -85,7 +85,7 @@ class LoggerToggle {
             const stored = localStorage.getItem(this.configKey);
             return stored ? JSON.parse(stored) : { enabled: false };
         } catch (error) {
-            console.warn('Failed to parse logger config:', error);
+            window.logWarn('Failed to parse logger config:', error);
             return { enabled: false };
         }
     }
@@ -103,7 +103,7 @@ class LoggerToggle {
 
                 // 重新初始化logger以应用新配置
                 if (config.enabled && !window.APP_LOGGER.config.enabled) {
-                    console.log('🔧 Logger reinitialized with new config');
+                    window.logInfo('🔧 Logger reinitialized with new config');
                 }
             }
 
@@ -112,7 +112,7 @@ class LoggerToggle {
                 window.location.reload();
             }
         } catch (error) {
-            console.error('Failed to save logger config:', error);
+            window.logError('Failed to save logger config:', error);
             this.notifyStatus('保存配置失败', 'error');
         }
     }
@@ -290,9 +290,9 @@ class LoggerToggle {
 
         navigator.clipboard.writeText(url).then(() => {
             this.notifyStatus(`已复制URL到剪贴板: ${full ? '完整模式' : '基础模式'}`, 'success');
-            console.log('📋 复制的URL:', url);
+            window.logInfo('📋 复制的URL:', url);
         }).catch(err => {
-            console.error('复制失败:', err);
+            window.logError('复制失败:', err);
             // 降级方案：选中文本
             const input = document.createElement('input');
             input.value = url;
@@ -339,7 +339,7 @@ class LoggerToggle {
    window.loggerToggle.copyEnableUrl(true) // 完整模式
         `;
 
-        console.log(usage);
+        window.logInfo(usage);
         this.notifyStatus('使用说明已输出到控制台', 'info');
     }
 }
@@ -359,10 +359,10 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
     window.showLoggerPanel = () => loggerToggle.createControlPanel();
     window.showLoggerUsage = () => loggerToggle.showUsage();
 
-    console.log('🔧 Logger toggle tools available:');
-    console.log('- enableLogger() / enableFullLogger() / disableLogger()');
-    console.log('- toggleLogger() / showLoggerPanel() / showLoggerUsage()');
-    console.log('- window.loggerToggle.* for advanced options');
+    window.logInfo('🔧 Logger toggle tools available:');
+    window.logInfo('- enableLogger() / enableFullLogger() / disableLogger()');
+    window.logInfo('- toggleLogger() / showLoggerPanel() / showLoggerUsage()');
+    window.logInfo('- window.loggerToggle.* for advanced options');
 }
 
 export { LoggerToggle, loggerToggle };

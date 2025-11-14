@@ -319,7 +319,7 @@ class LoggerConfigManager {
                 const parsed = JSON.parse(localConfig);
                 Object.assign(overrides, parsed);
             } catch (error) {
-                console.warn('Failed to parse logger config from localStorage:', error);
+                window.logWarn('Failed to parse logger config from localStorage:', error);
             }
         }
 
@@ -348,7 +348,7 @@ class LoggerConfigManager {
         try {
             localStorage.setItem('logger_config', JSON.stringify(this.config));
         } catch (error) {
-            console.warn('Failed to save logger config to localStorage:', error);
+            window.logWarn('Failed to save logger config to localStorage:', error);
         }
     }
 
@@ -377,7 +377,7 @@ class LoggerConfigManager {
             try {
                 callback(event, data);
             } catch (error) {
-                console.error('Observer callback error:', error);
+                window.logError('Observer callback error:', error);
             }
         });
     }

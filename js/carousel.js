@@ -29,17 +29,17 @@ class Carousel {
         this.controls = null;
         this.arrows = null;
 
-        console.log(`🎠 Carousel constructor: looking for ${containerSelector}`);
-        console.log(`🎠 Container found: ${this.container ? '✅ YES' : '❌ NO'}`);
+        window.logInfo(`🎠 Carousel constructor: looking for ${containerSelector}`);
+        window.logInfo(`🎠 Container found: ${this.container ? '✅ YES' : '❌ NO'}`);
 
         if (this.container) {
-            console.log(`🎠 Container element:`, this.container);
-            console.log(`🎠 Container classes:`, this.container.className);
+            window.logInfo(`🎠 Container element:`, this.container);
+            window.logInfo(`🎠 Container classes:`, this.container.className);
         } else {
-            console.error(`❌ Carousel container not found: ${containerSelector}`);
-            console.log(`🔍 Available elements with carousel class:`);
+            window.logError(`❌ Carousel container not found: ${containerSelector}`);
+            window.logInfo(`🔍 Available elements with carousel class:`);
             document.querySelectorAll('[class*="carousel"]').forEach((el, i) => {
-                console.log(`   ${i + 1}. ${el.tagName}.${el.className} - ${el.children.length} children`);
+                window.logInfo(`   ${i + 1}. ${el.tagName}.${el.className} - ${el.children.length} children`);
             });
         }
 
@@ -47,13 +47,13 @@ class Carousel {
         if (this.container) {
             this.init();
         } else {
-            console.error(`❌ Cannot initialize carousel - container not found`);
+            window.logError(`❌ Cannot initialize carousel - container not found`);
         }
     }
 
     // 初始化轮播图
     async init() {
-        console.log('初始化轮播图系统...');
+        window.logInfo('初始化轮播图系统...');
 
         try {
             // 等待DOM准备就绪
@@ -73,10 +73,10 @@ class Carousel {
                 this.startAutoScroll();
             }
 
-            console.log('轮播图初始化完成');
+            window.logInfo('轮播图初始化完成');
 
         } catch (error) {
-            console.error('轮播图初始化失败:', error);
+            window.logError('轮播图初始化失败:', error);
             this.showError();
         }
     }
@@ -95,7 +95,7 @@ class Carousel {
     // 模拟网络请求获取轮播图数据
     async fetchCarouselData() {
         try {
-            console.log('开始加载轮播图数据...');
+            window.logInfo('开始加载轮播图数据...');
 
             // 模拟网络延迟
             await new Promise(resolve => setTimeout(resolve, this.config.loadDelay));
@@ -132,12 +132,12 @@ class Carousel {
             ];
 
             this.carouselData = mockData;
-            console.log('轮播图数据加载成功:', this.carouselData);
+            window.logInfo('轮播图数据加载成功:', this.carouselData);
 
             return this.carouselData;
 
         } catch (error) {
-            console.error('轮播图数据加载失败:', error);
+            window.logError('轮播图数据加载失败:', error);
             // 返回默认数据
             return this.getDefaultCarouselData();
         }
@@ -183,7 +183,7 @@ class Carousel {
             this.slides = this.container.querySelectorAll('.carousel-slide');
             this.dots = this.container.querySelectorAll('.carousel-dot');
 
-            console.log(`找到 ${this.slides.length} 个轮播图 slide 和 ${this.dots.length} 个控制点`);
+            window.logInfo(`找到 ${this.slides.length} 个轮播图 slide 和 ${this.dots.length} 个控制点`);
 
             // 清理所有slide的内联样式，让CSS完全控制
             this.slides.forEach((slide, index) => {
@@ -225,22 +225,22 @@ class Carousel {
                 this.dots[0].classList.add('active');
             }
 
-            console.log(`轮播图初始化完成：${this.slides.length} 个slides，当前显示第 ${this.currentSlide + 1} 个`);
+            window.logInfo(`轮播图初始化完成：${this.slides.length} 个slides，当前显示第 ${this.currentSlide + 1} 个`);
 
         // 确保第一个slide是active的
         if (this.slides.length > 0 && !this.slides[0].classList.contains('active')) {
             this.slides[0].classList.add('active');
-            console.log('强制设置第一个slide为active');
+            window.logInfo('强制设置第一个slide为active');
         }
 
         // 确保第一个控制点是active的
         if (this.dots.length > 0 && !this.dots[0].classList.contains('active')) {
             this.dots[0].classList.add('active');
-            console.log('强制设置第一个控制点为active');
+            window.logInfo('强制设置第一个控制点为active');
         }
 
         } catch (error) {
-            console.error('轮播图初始化失败:', error);
+            window.logError('轮播图初始化失败:', error);
             this.showError();
         }
     }
@@ -517,7 +517,7 @@ class Carousel {
             }
         }, this.config.autoScrollInterval);
 
-        // console.log('轮播图自动滚动已启动'); // 减少控制台日志
+        // window.logInfo('轮播图自动滚动已启动'); // 减少控制台日志
     }
 
     // 停止自动滚动
@@ -525,7 +525,7 @@ class Carousel {
         if (this.autoScrollTimer) {
             clearInterval(this.autoScrollTimer);
             this.autoScrollTimer = null;
-            // console.log('轮播图自动滚动已停止'); // 减少控制台日志
+            // window.logInfo('轮播图自动滚动已停止'); // 减少控制台日志
         }
     }
 
@@ -571,7 +571,7 @@ class Carousel {
         this.arrows = null;
         this.carouselData = [];
 
-        console.log('轮播图已销毁');
+        window.logInfo('轮播图已销毁');
     }
 
     // 获取当前状态
@@ -591,46 +591,46 @@ let carouselInstance = null;
 
 // 初始化轮播图的便捷函数
 function initCarousel(containerSelector = '.carousel-container', options = {}) {
-    console.log(`🎠 initCarousel called with selector: ${containerSelector}`);
+    window.logInfo(`🎠 initCarousel called with selector: ${containerSelector}`);
 
     // 销毁现有实例
     if (window.carouselInstance) {
-        console.log('🎠 Destroying existing carousel instance...');
+        window.logInfo('🎠 Destroying existing carousel instance...');
         window.carouselInstance.destroy();
         window.carouselInstance = null;
     }
 
     // 创建新实例
-    console.log('🎠 Creating new carousel instance...');
+    window.logInfo('🎠 Creating new carousel instance...');
     const newInstance = new Carousel(containerSelector, options);
 
     // 更新全局实例
     window.carouselInstance = newInstance;
 
-    console.log(`🎠 Carousel instance created: ${newInstance ? '✅ SUCCESS' : '❌ FAILED'}`);
-    console.log(`🎠 Global instance reference: ${window.carouselInstance ? '✅ SET' : '❌ NOT SET'}`);
+    window.logInfo(`🎠 Carousel instance created: ${newInstance ? '✅ SUCCESS' : '❌ FAILED'}`);
+    window.logInfo(`🎠 Global instance reference: ${window.carouselInstance ? '✅ SET' : '❌ NOT SET'}`);
 
     return newInstance;
 }
 
 // 页面加载完成后自动初始化
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOMContentLoaded event fired, initializing carousel...');
+    window.logInfo('DOMContentLoaded event fired, initializing carousel...');
     setTimeout(initCarousel, 200); // 增加延迟确保DOM完全准备好
 });
 
 // 备用初始化 - 如果DOMContentLoaded已经触发
 if (document.readyState === 'interactive' || document.readyState === 'complete') {
-    console.log('Document already ready, initializing carousel immediately...');
+    window.logInfo('Document already ready, initializing carousel immediately...');
     setTimeout(initCarousel, 300); // 增加延迟
 }
 
 // 紧急备用初始化 - 确保轮播图能够初始化
 window.addEventListener('load', () => {
-    console.log('Window load event fired, checking carousel...');
+    window.logInfo('Window load event fired, checking carousel...');
     setTimeout(() => {
         if (!window.carouselInstance || !window.carouselInstance.container) {
-            console.log('Emergency carousel initialization...');
+            window.logInfo('Emergency carousel initialization...');
             initCarousel();
         }
     }, 500);

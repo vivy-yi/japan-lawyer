@@ -9,7 +9,7 @@ class NavigationSEOEnhancer {
     }
 
     init() {
-        console.log('🔍 Initializing Navigation SEO Enhancer...');
+        window.logInfo('🔍 Initializing Navigation SEO Enhancer...');
         this.setupStructuredData();
         this.setupAccessibilityRules();
         this.addSchemaMarkup();
@@ -167,7 +167,7 @@ class NavigationSEOEnhancer {
         // 插入到body开头
         document.body.insertBefore(skipLink, document.body.firstChild);
 
-        console.log('♿ Skip link added for accessibility');
+        window.logInfo('♿ Skip link added for accessibility');
     }
 
     // 增强键盘导航
@@ -204,7 +204,7 @@ class NavigationSEOEnhancer {
             this.addKeyboardEventListeners(link, navLinks, index);
         });
 
-        console.log('⌨️ Enhanced keyboard navigation for navigation');
+        window.logInfo('⌨️ Enhanced keyboard navigation for navigation');
     }
 
     // 添加键盘事件监听器
@@ -259,7 +259,7 @@ class NavigationSEOEnhancer {
             document.body.appendChild(navStatusRegion);
         }
 
-        console.log('📢 Live regions added for screen readers');
+        window.logInfo('📢 Live regions added for screen readers');
     }
 
     // 增强焦点管理
@@ -311,7 +311,7 @@ class NavigationSEOEnhancer {
             document.head.appendChild(style);
         }
 
-        console.log('🎯 Enhanced focus management');
+        window.logInfo('🎯 Enhanced focus management');
     }
 
     // 添加ARIA标签
@@ -357,7 +357,7 @@ class NavigationSEOEnhancer {
             }
         });
 
-        console.log('🏷️ Enhanced ARIA labels');
+        window.logInfo('🏷️ Enhanced ARIA labels');
     }
 
     // 设置减少动画偏好
@@ -365,7 +365,7 @@ class NavigationSEOEnhancer {
         // 监听用户的减少动画偏好
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             document.documentElement.setAttribute('data-reduced-motion', 'true');
-            console.log('🐌 Reduced motion preference detected');
+            window.logInfo('🐌 Reduced motion preference detected');
         }
 
         // 监听偏好变化
@@ -622,4 +622,4 @@ if (typeof module !== 'undefined' && module.exports) {
 // 全局初始化
 window.NavigationSEOEnhancer = NavigationSEOEnhancer;
 
-console.log('🔍 Navigation SEO and Accessibility Enhancer loaded');
+window.logInfo('🔍 Navigation SEO and Accessibility Enhancer loaded');

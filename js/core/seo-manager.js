@@ -23,7 +23,7 @@ class SEOManager {
     }
 
     init() {
-        console.log('🔍 SEO Manager initialized');
+        window.logInfo('🔍 SEO Manager initialized');
         this.setupAutoSEO();
         this.generateMetaTags();
         this.generateStructuredData();
@@ -548,7 +548,7 @@ class SEOManager {
                         firstContentfulPaint: this.getFirstContentfulPaint()
                     };
 
-                    console.log('📊 Page Performance Metrics:', metrics);
+                    window.logInfo('📊 Page Performance Metrics:', metrics);
                     this.trackPerformance(metrics);
                 }, 0);
             });
@@ -598,7 +598,7 @@ class SEOManager {
      * 追踪外链点击
      */
     trackOutboundLink(url) {
-        console.log('🔗 Outbound link clicked:', url);
+        window.logInfo('🔗 Outbound link clicked:', url);
         // 这里可以发送到分析服务
     }
 
@@ -607,7 +607,7 @@ class SEOManager {
      */
     trackSearchQueries() {
         // 这里需要与搜索管理器集成
-        console.log('🔍 Search tracking enabled');
+        window.logInfo('🔍 Search tracking enabled');
     }
 
     /**
@@ -628,7 +628,7 @@ class SEOManager {
                 thresholds.forEach(threshold => {
                     if (scrollPercent >= threshold && !this[`scrolled${threshold}`]) {
                         this[`scrolled${threshold}`] = true;
-                        console.log(`📜 Scrolled to ${threshold}%`);
+                        window.logInfo(`📜 Scrolled to ${threshold}%`);
                     }
                 });
             }
@@ -711,7 +711,7 @@ class SEOManager {
      */
     trackPerformance(metrics) {
         // 这里可以发送性能数据到分析服务
-        console.log('📈 Performance metrics tracked:', metrics);
+        window.logInfo('📈 Performance metrics tracked:', metrics);
     }
 
     /**
@@ -721,7 +721,7 @@ class SEOManager {
         if (!this.config.enableSitemap) return;
 
         // 这里可以实现客户端sitemap生成
-        console.log('🗺️ Sitemap generation enabled');
+        window.logInfo('🗺️ Sitemap generation enabled');
     }
 
     /**
@@ -792,7 +792,7 @@ class SEOManager {
         // 更新canonical URL
         this.setCanonicalUrl();
 
-        console.log('🏷️ Meta tags generated');
+        window.logInfo('🏷️ Meta tags generated');
     }
 
     /**
@@ -818,7 +818,7 @@ class SEOManager {
         this.setupAutoSEO();
         this.generateStructuredData();
         this.optimizeImages();
-        console.log('🔄 SEO re-optimization complete');
+        window.logInfo('🔄 SEO re-optimization complete');
     }
 }
 
@@ -828,7 +828,7 @@ let seoManager;
 setTimeout(() => {
     seoManager = new SEOManager();
     window.seoManager = seoManager;
-    console.log('✅ SEO Manager ready');
+    window.logInfo('✅ SEO Manager ready');
 }, 100);
 
 // 导出模块

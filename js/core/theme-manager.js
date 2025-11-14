@@ -242,7 +242,7 @@ class ThemeManager {
      */
     switchTheme(themeName, savePreference = true, showNotification = true) {
         if (!this.themes[themeName]) {
-            console.warn(`Unknown theme: ${themeName}`);
+            window.logWarn(`Unknown theme: ${themeName}`);
             return;
         }
 
@@ -857,7 +857,7 @@ class ThemeManager {
             try {
                 callback(event, { ...data, themeManager: this });
             } catch (error) {
-                console.error('Theme observer error:', error);
+                window.logError('Theme observer error:', error);
             }
         });
     }

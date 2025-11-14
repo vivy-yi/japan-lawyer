@@ -93,13 +93,13 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
     init() {
         try {
             if (this.config.enableLogging) {
-                console.log('[WindowCommunication-OPT] 初始化高性能窗口通信管理器...');
+                window.logInfo('[WindowCommunication-OPT] 初始化高性能窗口通信管理器...');
             }
 
             // 检测浏览器兼容性
             if (!this.checkBrowserSupport()) {
                 if (this.config.enableLogging) {
-                    console.warn('[WindowCommunication-OPT] 当前浏览器不支持部分通信功能');
+                    window.logWarn('[WindowCommunication-OPT] 当前浏览器不支持部分通信功能');
                 }
             }
 
@@ -120,11 +120,11 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
             this.state.isInitialized = true;
 
             if (this.config.enableLogging) {
-                console.log('[WindowCommunication-OPT] ✅ 高性能窗口通信管理器初始化完成');
+                window.logInfo('[WindowCommunication-OPT] ✅ 高性能窗口通信管理器初始化完成');
             }
 
         } catch (error) {
-            console.error('[WindowCommunication-OPT] 初始化失败:', error);
+            window.logError('[WindowCommunication-OPT] 初始化失败:', error);
             this.state.isEnabled = false;
         }
     }
@@ -157,7 +157,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
                 return; // 使用BroadcastChannel就足够了
             } catch (error) {
                 if (this.config.enableLogging) {
-                    console.warn('[WindowCommunication-OPT] BroadcastChannel初始化失败');
+                    window.logWarn('[WindowCommunication-OPT] BroadcastChannel初始化失败');
                 }
             }
         }
@@ -178,12 +178,12 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
      */
     setupOptimizedEventListeners() {
         // 语言切换事件监听器已禁用 - 不再进行跨窗口通信
-        console.log('[WindowCommunication-OPT] 语言跨窗口通信已禁用');
+        window.logInfo('[WindowCommunication-OPT] 语言跨窗口通信已禁用');
 
         this.listeners.languageChange = (event) => {
             // 不处理语言切换事件，仅记录日志
             if (this.config.enableLogging && event.detail) {
-                console.log(`[WindowCommunication-OPT] 忽略语言切换事件: ${event.detail.language}`);
+                window.logInfo(`[WindowCommunication-OPT] 忽略语言切换事件: ${event.detail.language}`);
             }
         };
         // 不再监听 languageChanged 事件
@@ -214,7 +214,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
         window.addEventListener('beforeunload', this.listeners.beforeUnload);
 
         if (this.config.enableLogging) {
-            console.log('[WindowCommunication-OPT] ✅ 优化事件监听器设置完成');
+            window.logInfo('[WindowCommunication-OPT] ✅ 优化事件监听器设置完成');
         }
     }
 
@@ -229,7 +229,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
         }
 
         if (this.config.enableLogging) {
-            console.log(`[WindowCommunication-OPT] 语言切换: ${language} (来源: ${source})`);
+            window.logInfo(`[WindowCommunication-OPT] 语言切换: ${language} (来源: ${source})`);
         }
 
         // 更新当前状态
@@ -299,7 +299,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
                 return; // BroadcastChannel足够了
             } catch (error) {
                 if (this.config.enableLogging) {
-                    console.warn('[WindowCommunication-OPT] BroadcastChannel发送失败');
+                    window.logWarn('[WindowCommunication-OPT] BroadcastChannel发送失败');
                 }
             }
         }
@@ -325,7 +325,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
         // 语言切换消息处理已禁用
         if (message.type === this.config.messageTypes.LANGUAGE_CHANGE) {
             if (this.config.enableLogging) {
-                console.log(`[WindowCommunication-OPT] 忽略语言切换消息: ${message.payload?.language}`);
+                window.logInfo(`[WindowCommunication-OPT] 忽略语言切换消息: ${message.payload?.language}`);
             }
             return;
         }
@@ -339,7 +339,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
         if (message && message.type === this.config.messageTypes.LANGUAGE_CHANGE) {
             // 忽略语言切换广播消息
             if (this.config.enableLogging) {
-                console.log(`[WindowCommunication-OPT] 忽略语言切换广播: ${message.payload?.language}`);
+                window.logInfo(`[WindowCommunication-OPT] 忽略语言切换广播: ${message.payload?.language}`);
             }
             return;
         }
@@ -386,7 +386,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
     async optimizedApplyLanguageChange(language, source = 'external') {
         try {
             if (this.config.enableLogging) {
-                console.log(`[WindowCommunication-OPT] 应用语言切换: ${language}`);
+                window.logInfo(`[WindowCommunication-OPT] 应用语言切换: ${language}`);
             }
 
             // 更新状态
@@ -418,7 +418,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
             }
 
         } catch (error) {
-            console.error('[WindowCommunication-OPT] 语言切换失败:', error);
+            window.logError('[WindowCommunication-OPT] 语言切换失败:', error);
         }
     }
 
@@ -459,7 +459,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
             });
 
         } catch (error) {
-            console.error('[WindowCommunication-OPT] 更新页面语言失败:', error);
+            window.logError('[WindowCommunication-OPT] 更新页面语言失败:', error);
         }
     }
 
@@ -469,7 +469,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
     handleStorageLanguageChangeOptimized(event) {
         // 忽略存储语言变化事件
         if (this.config.enableLogging && event.newValue) {
-            console.log(`[WindowCommunication-OPT] 忽略存储语言变化: ${event.newValue}`);
+            window.logInfo(`[WindowCommunication-OPT] 忽略存储语言变化: ${event.newValue}`);
         }
         return;
     }
@@ -584,7 +584,7 @@ if (typeof window.OptimizedWindowCommunicationManager === 'undefined') {
     setEnabled(enabled) {
         this.state.isEnabled = enabled;
         if (this.config.enableLogging) {
-            console.log(`[WindowCommunication-OPT] 窗口通信${enabled ? '启用' : '禁用'}`);
+            window.logInfo(`[WindowCommunication-OPT] 窗口通信${enabled ? '启用' : '禁用'}`);
         }
     }
 
@@ -700,6 +700,6 @@ window.getOptimizedCommStatus = () => {
     return window.windowCommManagerOptimized ? window.windowCommManagerOptimized.getStatus() : null;
 };
 
-console.log('✅ Optimized Window Communication Manager loaded');
+window.logInfo('✅ Optimized Window Communication Manager loaded');
 
 } // 闭合防护重复定义的if语句

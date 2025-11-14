@@ -27,7 +27,7 @@ window.showPetServiceDetails = function(serviceType) {
         'You selected a pet service. Please contact us for more details.';
     alert(message);
 
-    console.log(`显示宠物服务详情: ${serviceType}`);
+    window.logInfo(`显示宠物服务详情: ${serviceType}`);
 };
 
 // 显示套餐详情
@@ -56,7 +56,7 @@ window.showPackageDetails = function(packageType) {
     }
 
     alert(message);
-    console.log(`显示宠物套餐详情: ${packageType}`);
+    window.logInfo(`显示宠物套餐详情: ${packageType}`);
 };
 
-console.log('✅ Pet services page functions loaded');
+window.logInfo('✅ Pet services page functions loaded');

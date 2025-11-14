@@ -42,7 +42,7 @@ class DeveloperTools {
         this.monitorTheme();
         this.monitorErrors();
 
-        console.log('🛠️ Developer Tools initialized (Press Ctrl+Shift+D to activate)');
+        window.logInfo('🛠️ Developer Tools initialized (Press Ctrl+Shift+D to activate)');
     }
 
     monitorComponents() {
@@ -243,7 +243,7 @@ class DeveloperTools {
         if (this.panel) {
             this.panel.remove();
         }
-        console.log('🗑️ Developer Tools destroyed');
+        window.logInfo('🗑️ Developer Tools destroyed');
     }
 }
 

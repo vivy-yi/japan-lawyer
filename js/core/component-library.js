@@ -14,9 +14,34 @@ class ComponentLibrary {
     }
 
     init() {
-        console.log('🧩 Component Library initialized');
+        this.logInfo('🧩 Component Library initialized', null, 'COMPONENT_INIT');
         this.registerCoreComponents();
         this.loadComponentStyles();
+    }
+
+    // 日志记录辅助方法
+    logInfo(message, data = null, tag = 'COMPONENT') {
+        if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+            window.APP_DEBUG.logger.info(message, data, tag);
+        } else {
+            console.log(message, data);
+        }
+    }
+
+    logWarn(message, data = null, tag = 'COMPONENT') {
+        if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+            window.APP_DEBUG.logger.warn(message, data, tag);
+        } else {
+            console.warn(message, data);
+        }
+    }
+
+    logError(message, error = null, tag = 'COMPONENT_ERROR') {
+        if (window.APP_DEBUG && window.APP_DEBUG.logger) {
+            window.APP_DEBUG.logger.error(message, error, tag);
+        } else {
+            console.error(message, error);
+        }
     }
 
     /**
@@ -31,7 +56,7 @@ class ComponentLibrary {
         this.register('TabsComponent', TabsComponent);
         this.register('DropdownComponent', DropdownComponent);
 
-        console.log(`✅ Registered ${this.components.size} core components`);
+        this.logInfo(`✅ Registered ${this.components.size} core components`);
     }
 
     /**
@@ -41,12 +66,12 @@ class ComponentLibrary {
      */
     register(name, componentClass) {
         if (!this.isValidComponent(componentClass)) {
-            console.warn(`❌ Invalid component class: ${name}`);
+            this.logWarn(`❌ Invalid component class: ${name}`);
             return false;
         }
 
         this.components.set(name, componentClass);
-        console.log(`📝 Registered component: ${name}`);
+        this.logInfo(`📝 Registered component: ${name}`);
         return true;
     }
 
@@ -73,12 +98,12 @@ class ComponentLibrary {
     create(name, container, config = {}) {
         const ComponentClass = this.components.get(name);
         if (!ComponentClass) {
-            console.error(`❌ Component not found: ${name}`);
+            this.logError(`❌ Component not found: ${name}`);
             return null;
         }
 
         if (!container || !(container instanceof HTMLElement)) {
-            console.error(`❌ Invalid container for component: ${name}`);
+            this.logError(`❌ Invalid container for component: ${name}`);
             return null;
         }
 
@@ -103,11 +128,11 @@ class ComponentLibrary {
                 instance.mounted();
             }
 
-            console.log(`🎨 Created component: ${name} (${instanceId})`);
+            this.logInfo(`🎨 Created component: ${name} (${instanceId})`);
             return instance;
 
         } catch (error) {
-            console.error(`❌ Failed to create component ${name}:`, error);
+            this.logError(`❌ Failed to create component ${name}:`, error);
             return null;
         }
     }
@@ -120,7 +145,7 @@ class ComponentLibrary {
     destroy(instanceId) {
         const instance = this.componentInstances.get(instanceId);
         if (!instance) {
-            console.warn(`⚠️ Component instance not found: ${instanceId}`);
+            this.logWarn(`⚠️ Component instance not found: ${instanceId}`);
             return false;
         }
 
@@ -141,11 +166,11 @@ class ComponentLibrary {
             // 从存储中移除
             this.componentInstances.delete(instanceId);
 
-            console.log(`🗑️ Destroyed component: ${instanceId}`);
+            this.logInfo(`🗑️ Destroyed component: ${instanceId}`);
             return true;
 
         } catch (error) {
-            console.error(`❌ Failed to destroy component ${instanceId}:`, error);
+            this.logError(`❌ Failed to destroy component ${instanceId}:`, error);
             return false;
         }
     }
@@ -253,7 +278,7 @@ class ComponentLibrary {
         style.textContent = this.getComponentStyles();
         document.head.appendChild(style);
 
-        console.log('🎨 Component library styles loaded');
+        this.logInfo('🎨 Component library styles loaded');
     }
 
     /**
@@ -773,7 +798,7 @@ class ComponentLibrary {
     destroyAll() {
         const instanceIds = Array.from(this.componentInstances.keys());
         instanceIds.forEach(id => this.destroy(id));
-        console.log(`🗑️ Destroyed all ${instanceIds.length} component instances`);
+        this.logInfo(`🗑️ Destroyed all ${instanceIds.length} component instances`);
     }
 }
 
@@ -1620,7 +1645,7 @@ let componentLibrary;
 setTimeout(() => {
     componentLibrary = new ComponentLibrary();
     window.componentLibrary = componentLibrary;
-    console.log('✅ Component Library ready');
+    window.logInfo('✅ Component Library ready');
 }, 100);
 
 // 导出模块

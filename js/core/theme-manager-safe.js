@@ -10,7 +10,7 @@ class SafeThemeManager {
     }
 
     init() {
-        console.log('🎨 Safe Theme Manager initialized, current:', this.currentTheme);
+        window.logInfo('🎨 Safe Theme Manager initialized, current:', this.currentTheme);
 
         // 检测系统主题偏好
         this.detectSystemPreference();
@@ -32,7 +32,7 @@ class SafeThemeManager {
             this.systemPreference = 'light';
         }
 
-        console.log('🖥️ System preference detected:', this.systemPreference);
+        window.logInfo('🖥️ System preference detected:', this.systemPreference);
     }
 
     watchSystemPreference() {
@@ -41,7 +41,7 @@ class SafeThemeManager {
 
             mediaQuery.addEventListener('change', (e) => {
                 this.systemPreference = e.matches ? 'dark' : 'light';
-                console.log('🖥️ System preference changed to:', this.systemPreference);
+                window.logInfo('🖥️ System preference changed to:', this.systemPreference);
 
                 // 如果用户之前选择的是"跟随系统"，则立即切换
                 if (this.currentTheme === 'auto') {
@@ -121,7 +121,7 @@ class SafeThemeManager {
 
     switchTheme(theme) {
         if (!this.supportedThemes.includes(theme)) {
-            console.warn(`Unsupported theme: ${theme}`);
+            window.logWarn(`Unsupported theme: ${theme}`);
             return;
         }
 
@@ -153,7 +153,7 @@ class SafeThemeManager {
             }
         }));
 
-        console.log(`🎨 Theme switched to: ${theme} (${actualTheme})`);
+        window.logInfo(`🎨 Theme switched to: ${theme} (${actualTheme})`);
     }
 
     applyTheme(theme) {
@@ -277,7 +277,7 @@ class SafeThemeManager {
         this.applyTheme('light');
         this.updateThemeSwitcherState();
 
-        console.log('🔄 Theme reset to light');
+        window.logInfo('🔄 Theme reset to light');
     }
 
     // 切换到下一个主题
@@ -297,7 +297,7 @@ let themeManager;
 setTimeout(() => {
     themeManager = new SafeThemeManager();
     window.themeManager = themeManager;
-    console.log('✅ Safe Theme Manager initialized');
+    window.logInfo('✅ Safe Theme Manager initialized');
 }, 100);
 
 // 导出模块

@@ -25,7 +25,7 @@ class SearchManager {
 
     init() {
         // 搜索功能已禁用
-        console.log('🔍 Search Manager disabled - no search functionality will be created');
+        window.logInfo('🔍 Search Manager disabled - no search functionality will be created');
         return;
     }
 
@@ -47,7 +47,7 @@ class SearchManager {
      */
     createSearchWidget() {
         // 搜索功能已禁用，不再创建搜索控件
-        console.log('🔍 Search widget creation disabled');
+        window.logInfo('🔍 Search widget creation disabled');
         return;
     }
 
@@ -96,7 +96,7 @@ class SearchManager {
      */
     autoIndex() {
         this.isIndexing = true;
-        console.log('📚 Starting content indexing...');
+        window.logInfo('📚 Starting content indexing...');
 
         // 索引主要内容区域
         this.indexMainContent();
@@ -108,7 +108,7 @@ class SearchManager {
         this.indexPageTitle();
 
         this.isIndexing = false;
-        console.log(`✅ Indexing complete. Indexed ${this.documents.size} documents`);
+        window.logInfo(`✅ Indexing complete. Indexed ${this.documents.size} documents`);
     }
 
     /**
@@ -302,7 +302,7 @@ class SearchManager {
             return;
         }
 
-        console.log(`🔍 Searching for: "${query}"`);
+        window.logInfo(`🔍 Searching for: "${query}"`);
 
         const keywords = this.extractKeywords(query);
         const matchingDocs = this.findMatchingDocuments(keywords);
@@ -600,17 +600,17 @@ let searchManager;
 // setTimeout(() => {
 //     searchManager = new SearchManager();
 //     window.searchManager = searchManager;
-//     console.log('✅ Search Manager ready');
+//     window.logInfo('✅ Search Manager ready');
 // }, 150);
 
-console.log('🔍 Search Manager initialization disabled');
+window.logInfo('🔍 Search Manager initialization disabled');
 
 // 移除页面上可能存在的搜索框
 function removeExistingSearchWidget() {
     const existingWidgets = document.querySelectorAll('.search-widget');
     existingWidgets.forEach(widget => {
         widget.remove();
-        console.log('🗑️ Removed existing search widget');
+        window.logInfo('🗑️ Removed existing search widget');
     });
 }
 

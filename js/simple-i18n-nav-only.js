@@ -11,7 +11,7 @@ class SimpleI18nNavOnly {
         this.supportedLanguages = ['zh', 'ja', 'en'];
 
         // 跨窗口语言切换监听器已禁用
-        console.log('📡 跨窗口消息同步已禁用');
+        window.logInfo('📡 跨窗口消息同步已禁用');
 
         this.init();
     }
@@ -21,9 +21,9 @@ class SimpleI18nNavOnly {
             // 检测浏览器语言
             this.detectBrowserLanguage();
 
-            console.log('✅ 导航语言系统初始化完成');
+            window.logInfo('✅ 导航语言系统初始化完成');
         } catch (error) {
-            console.error('❌ 导航语言系统初始化失败:', error);
+            window.logError('❌ 导航语言系统初始化失败:', error);
         }
     }
 
@@ -32,7 +32,7 @@ class SimpleI18nNavOnly {
         const savedLang = localStorage.getItem('preferred-language');
         if (savedLang && ['zh', 'ja', 'en'].includes(savedLang)) {
             this.currentLanguage = savedLang;
-            console.log(`📝 使用保存的语言: ${savedLang}`);
+            window.logInfo(`📝 使用保存的语言: ${savedLang}`);
             return;
         }
 
@@ -43,11 +43,11 @@ class SimpleI18nNavOnly {
         // 3. 如果浏览器语言是支持的，使用浏览器语言
         if (langCode === 'zh' || langCode === 'ja' || langCode === 'en') {
             this.currentLanguage = langCode;
-            console.log(`🌍 使用浏览器语言: ${langCode}`);
+            window.logInfo(`🌍 使用浏览器语言: ${langCode}`);
         } else {
             // 4. 默认使用中文
             this.currentLanguage = 'zh';
-            console.log(`🇨🇳 浏览器语言不支持，使用默认中文: ${browserLang}`);
+            window.logInfo(`🇨🇳 浏览器语言不支持，使用默认中文: ${browserLang}`);
         }
     }
 
@@ -60,7 +60,7 @@ class SimpleI18nNavOnly {
     // 切换语言
     async switchLanguage(language) {
         if (!['zh', 'ja', 'en'].includes(language)) {
-            console.warn('不支持的语言:', language);
+            window.logWarn('不支持的语言:', language);
             return;
         }
 
@@ -72,12 +72,12 @@ class SimpleI18nNavOnly {
         // 2. 立即保存到本地存储
         try {
             localStorage.setItem('preferred-language', language);
-            console.log(`💾 语言已保存到本地存储: ${language}`);
+            window.logInfo(`💾 语言已保存到本地存储: ${language}`);
         } catch (error) {
-            console.error('❌ 保存语言设置失败:', error);
+            window.logError('❌ 保存语言设置失败:', error);
         }
 
-        console.log(`🌐 语言已切换到: ${language}`);
+        window.logInfo(`🌐 语言已切换到: ${language}`);
 
         // 触发自定义事件（仅限当前窗口）
         const event = new CustomEvent('languageChanged', {
@@ -86,7 +86,7 @@ class SimpleI18nNavOnly {
         window.dispatchEvent(event);
 
         // 跨窗口消息发送已禁用
-        console.log('📡 跨窗口消息发送已禁用');
+        window.logInfo('📡 跨窗口消息发送已禁用');
     }
 
     // 更新页面语言（简化版本，不再处理内容翻译）
@@ -137,15 +137,15 @@ class SimpleI18nNavOnly {
                             });
                         }
                     } catch (error) {
-                        console.warn('⚠️ 解析语言切换消息失败:', error);
+                        window.logWarn('⚠️ 解析语言切换消息失败:', error);
                     }
                 }
             });
 
-            console.log('👂 语言消息监听器已设置');
+            window.logInfo('👂 语言消息监听器已设置');
 
         } catch (error) {
-            console.warn('⚠️ 设置语言消息监听器失败:', error);
+            window.logWarn('⚠️ 设置语言消息监听器失败:', error);
         }
     }
 
@@ -161,7 +161,7 @@ class SimpleI18nNavOnly {
 
             // 验证语言
             if (!this.supportedLanguages.includes(language)) {
-                console.warn(`⚠️ 收到无效语言消息: ${language}`);
+                window.logWarn(`⚠️ 收到无效语言消息: ${language}`);
                 return;
             }
 
@@ -170,13 +170,13 @@ class SimpleI18nNavOnly {
                 return;
             }
 
-            console.log(`🔄 收到来自 ${source} 的语言切换请求: ${this.currentLanguage} -> ${language}`);
+            window.logInfo(`🔄 收到来自 ${source} 的语言切换请求: ${this.currentLanguage} -> ${language}`);
 
             // 切换语言（不再次发送消息，避免循环）
             this.switchLanguageSilently(language);
 
         } catch (error) {
-            console.warn('⚠️ 处理语言切换消息失败:', error);
+            window.logWarn('⚠️ 处理语言切换消息失败:', error);
         }
     }
 
@@ -195,10 +195,10 @@ class SimpleI18nNavOnly {
         try {
             localStorage.setItem('preferred-language', language);
         } catch (error) {
-            console.warn('⚠️ 保存语言设置失败:', error);
+            window.logWarn('⚠️ 保存语言设置失败:', error);
         }
 
-        console.log(`🔇 静默切换语言: ${oldLanguage} -> ${language}`);
+        window.logInfo(`🔇 静默切换语言: ${oldLanguage} -> ${language}`);
     }
 
     // 发送语言切换消息给其他窗口
@@ -209,7 +209,7 @@ class SimpleI18nNavOnly {
                 const commManager = window.OptimizedWindowCommunicationManager;
                 if (commManager && commManager.notifyLanguageChange) {
                     commManager.notifyLanguageChange(this.currentLanguage, 'simple-i18n-init');
-                    console.log(`📡 通过窗口通信发送语言消息: ${this.currentLanguage}`);
+                    window.logInfo(`📡 通过窗口通信发送语言消息: ${this.currentLanguage}`);
                     return;
                 }
             }
@@ -223,7 +223,7 @@ class SimpleI18nNavOnly {
                     source: 'simple-i18n-init',
                     timestamp: Date.now()
                 });
-                console.log(`📡 通过 BroadcastChannel 发送语言消息: ${this.currentLanguage}`);
+                window.logInfo(`📡 通过 BroadcastChannel 发送语言消息: ${this.currentLanguage}`);
                 return;
             }
 
@@ -249,10 +249,10 @@ class SimpleI18nNavOnly {
                 localStorage.removeItem('language-change-sync');
             }, 100);
 
-            console.log(`📡 通过 localStorage 发送语言消息: ${this.currentLanguage}`);
+            window.logInfo(`📡 通过 localStorage 发送语言消息: ${this.currentLanguage}`);
 
         } catch (error) {
-            console.warn('⚠️ 发送语言切换消息失败:', error);
+            window.logWarn('⚠️ 发送语言切换消息失败:', error);
         }
     }
 }
@@ -265,4 +265,4 @@ window.t = (key, fallback) => window.simpleI18n.t(key, fallback);
 window.switchLanguage = (lang) => window.simpleI18n.switchLanguage(lang);
 window.getCurrentLanguage = () => window.simpleI18n.getCurrentLanguage();
 
-console.log('✅ 简化导航语言系统已加载');
+window.logInfo('✅ 简化导航语言系统已加载');

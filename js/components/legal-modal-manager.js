@@ -15,18 +15,18 @@ class LegalModalManager {
     init() {
         if (this.initialized) return;
 
-        console.log('⚖️ Initializing Legal Modal Manager...');
+        window.logInfo('⚖️ Initializing Legal Modal Manager...');
 
         // 确保ModalComponent已加载
         if (typeof ModalComponent === 'undefined') {
-            console.warn('ModalComponent not found, waiting for it to load...');
+            window.logWarn('ModalComponent not found, waiting for it to load...');
             setTimeout(() => this.init(), 100);
             return;
         }
 
         this.setupEventListeners();
         this.initialized = true;
-        console.log('✅ Legal Modal Manager initialized');
+        window.logInfo('✅ Legal Modal Manager initialized');
     }
 
     /**
@@ -69,14 +69,14 @@ class LegalModalManager {
             });
         });
 
-        console.log(`🔗 Bound events to ${legalButtons.length + otherButtons.length} buttons`);
+        window.logInfo(`🔗 Bound events to ${legalButtons.length + otherButtons.length} buttons`);
     }
 
     /**
      * 处理法律服务操作
      */
     handleLegalAction(action) {
-        console.log(`🔍 Legal action triggered: ${action}`);
+        window.logInfo(`🔍 Legal action triggered: ${action}`);
 
         switch (action) {
             case 'consultation':
@@ -89,7 +89,7 @@ class LegalModalManager {
                 this.showRiskAnalysis();
                 break;
             default:
-                console.log(`Unknown legal action: ${action}`);
+                window.logInfo(`Unknown legal action: ${action}`);
                 this.showGenericModal('功能开发中', '该功能正在开发中，敬请期待！');
         }
     }
@@ -99,7 +99,7 @@ class LegalModalManager {
      */
     createModal(title, content, buttonText = '确定', options = {}) {
         if (typeof ModalComponent === 'undefined') {
-            console.warn('ModalComponent not available, using fallback');
+            window.logWarn('ModalComponent not available, using fallback');
             alert(`${title}\n\n${content}`);
             return null;
         }
@@ -116,7 +116,7 @@ class LegalModalManager {
                     text: buttonText,
                     variant: 'primary',
                     onClick: () => {
-                        console.log(`Modal button clicked: ${buttonText}`);
+                        window.logInfo(`Modal button clicked: ${buttonText}`);
                         if (options.onButtonClick) {
                             options.onButtonClick();
                         }
@@ -166,7 +166,7 @@ class LegalModalManager {
             {
                 size: 'large',
                 onButtonClick: () => {
-                    console.log('Legal consultation started');
+                    window.logInfo('Legal consultation started');
                     // 这里可以添加具体的咨询逻辑
                 }
             }
@@ -196,7 +196,7 @@ class LegalModalManager {
             {
                 size: 'large',
                 onButtonClick: () => {
-                    console.log('Document review started');
+                    window.logInfo('Document review started');
                     // 这里可以添加文档上传逻辑
                 }
             }
@@ -231,7 +231,7 @@ class LegalModalManager {
             {
                 size: 'large',
                 onButtonClick: () => {
-                    console.log('Risk analysis started');
+                    window.logInfo('Risk analysis started');
                     // 这里可以添加风险评估逻辑
                 }
             }

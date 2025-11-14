@@ -8,7 +8,7 @@
  * @version 1.0.0
  */
 
-console.log('🔍 Loading Search Manager...');
+window.logInfo('🔍 Loading Search Manager...');
 
 // ========================
 // 搜索配置定义
@@ -195,7 +195,7 @@ class SearchManager {
         this.searchTimeout = null;
 
         if (!this.config) {
-            console.error(`SearchManager: 未找到配置 "${configKey}"`);
+            window.logError(`SearchManager: 未找到配置 "${configKey}"`);
             return;
         }
 
@@ -227,7 +227,7 @@ class SearchManager {
      * 初始化搜索管理器
      */
     init() {
-        console.log(`🔍 Initializing ${this.config.pageName} search manager...`);
+        window.logInfo(`🔍 Initializing ${this.config.pageName} search manager...`);
         this.bindEvents();
     }
 
@@ -279,7 +279,7 @@ class SearchManager {
         if (!searchTerm.trim()) {
             this.showAllCards(cards);
             this.showNoResultsMessage(cards.length, cards.length);
-            console.log(`搜索${this.config.pageName}: 清空搜索，显示所有 ${cards.length} 个结果`);
+            window.logInfo(`搜索${this.config.pageName}: 清空搜索，显示所有 ${cards.length} 个结果`);
             return;
         }
 
@@ -308,7 +308,7 @@ class SearchManager {
         // 按搜索分数排序
         this.sortSearchResults(searchResults);
 
-        console.log(`搜索${this.config.pageName}: "${searchTerm}", 找到 ${visibleCount} 个结果`);
+        window.logInfo(`搜索${this.config.pageName}: "${searchTerm}", 找到 ${visibleCount} 个结果`);
         this.showNoResultsMessage(visibleCount, cards.length);
     }
 
@@ -677,7 +677,7 @@ addSearchStyles();
 // 初始化完成
 // ========================
 
-console.log('✅ Search Manager loaded successfully');
+window.logInfo('✅ Search Manager loaded successfully');
 
 // 向全局暴露工具已加载的标记
 window.SEARCH_MANAGER_LOADED = true;

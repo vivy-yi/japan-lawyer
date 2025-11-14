@@ -53,24 +53,24 @@
 
                     // 添加控制台信息
                     console.group('🚀 日志系统已初始化');
-                    console.log('📊 环境:', ENVIRONMENT.current);
-                    console.log('🔧 调试工具:', window.APP_DEBUG);
-                    console.log('⚙️ 配置:', logger.config);
-                    console.log('💡 快捷方法:');
-                    console.log('  - enableLogger() / enableFullLogger() / disableLogger()');
-                    console.log('  - toggleLogger() / showLoggerPanel()');
-                    console.log('  - APP_DEBUG.debug("调试信息")');
-                    console.log('  - showLoggerUsage() 查看完整说明');
+                    window.logInfo('📊 环境:', ENVIRONMENT.current);
+                    window.logInfo('🔧 调试工具:', window.APP_DEBUG);
+                    window.logInfo('⚙️ 配置:', logger.config);
+                    window.logInfo('💡 快捷方法:');
+                    window.logInfo('  - enableLogger() / enableFullLogger() / disableLogger()');
+                    window.logInfo('  - toggleLogger() / showLoggerPanel()');
+                    window.logInfo('  - APP_DEBUG.debug("调试信息")');
+                    window.logInfo('  - showLoggerUsage() 查看完整说明');
                     console.groupEnd();
 
                     // 如果日志被关闭，显示开启提示
                     if (!logger.config.enabled) {
-                        console.log('📝 日志系统已关闭。使用以下方式开启:');
-                        console.log('  - enableLogger() 开启基础日志');
-                        console.log('  - enableFullLogger() 开启完整日志');
-                        console.log('  - 在URL添加 ?debug=true');
-                        console.log('  - showLoggerPanel() 打开控制面板');
-                        console.log('  - showLoggerUsage() 查看详细说明');
+                        window.logInfo('📝 日志系统已关闭。使用以下方式开启:');
+                        window.logInfo('  - enableLogger() 开启基础日志');
+                        window.logInfo('  - enableFullLogger() 开启完整日志');
+                        window.logInfo('  - 在URL添加 ?debug=true');
+                        window.logInfo('  - showLoggerPanel() 打开控制面板');
+                        window.logInfo('  - showLoggerUsage() 查看详细说明');
                     }
 
                     // 监听页面性能
@@ -81,22 +81,22 @@
                                 logger.info('📈 页面加载完成统计', stats, 'PAGE_METRICS');
 
                                 console.group('📊 页面日志统计');
-                                console.log('总日志数:', stats.total);
-                                console.log('错误数:', stats.byLevel.ERROR || 0);
-                                console.log('警告数:', stats.byLevel.WARN || 0);
-                                console.log('信息数:', stats.byLevel.INFO || 0);
+                                window.logInfo('总日志数:', stats.total);
+                                window.logInfo('错误数:', stats.byLevel.ERROR || 0);
+                                window.logInfo('警告数:', stats.byLevel.WARN || 0);
+                                window.logInfo('信息数:', stats.byLevel.INFO || 0);
                                 console.groupEnd();
                             }
                         }, 1000);
                     });
                 }).catch(error => {
-                    console.warn('Failed to load logger toggle tools:', error);
+                    window.logWarn('Failed to load logger toggle tools:', error);
 
                     // 降级：基本控制台信息
                     console.group('🚀 日志系统已初始化');
-                    console.log('📊 环境:', ENVIRONMENT.current);
-                    console.log('⚙️ 配置:', logger.config);
-                    console.log('📝 日志开关工具加载失败');
+                    window.logInfo('📊 环境:', ENVIRONMENT.current);
+                    window.logInfo('⚙️ 配置:', logger.config);
+                    window.logInfo('📝 日志开关工具加载失败');
                     console.groupEnd();
                 });
             }
@@ -160,7 +160,7 @@
             }));
 
         } catch (error) {
-            console.error('❌ 日志系统初始化失败:', error);
+            window.logError('❌ 日志系统初始化失败:', error);
 
             // 降级处理：提供基础的控制台日志
             window.APP_DEBUG = {

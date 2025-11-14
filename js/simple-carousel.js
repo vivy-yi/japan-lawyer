@@ -21,11 +21,11 @@ function initSimpleCarousel() {
     const dots = document.querySelectorAll('.carousel-dot');
 
     if (slides.length === 0) {
-        console.log('❌ 没有找到轮播slides');
+        window.logInfo('❌ 没有找到轮播slides');
         return;
     }
 
-    console.log(`✅ 找到 ${slides.length} 个轮播slides`);
+    window.logInfo(`✅ 找到 ${slides.length} 个轮播slides`);
 
     // 设置第一个slide为活动状态
     slides.forEach((slide, index) => {
@@ -89,7 +89,7 @@ function initSimpleCarousel() {
         startAutoScroll();
     }
 
-    console.log('✅ 简单轮播图初始化完成');
+    window.logInfo('✅ 简单轮播图初始化完成');
 }
 
 function setupHoverPause() {
@@ -98,12 +98,12 @@ function setupHoverPause() {
 
     container.addEventListener('mouseenter', () => {
         isAutoScrolling = false;
-        console.log('🎠 鼠标悬停，暂停自动轮播');
+        window.logInfo('🎠 鼠标悬停，暂停自动轮播');
     });
 
     container.addEventListener('mouseleave', () => {
         isAutoScrolling = true;
-        console.log('🎠 鼠标离开，恢复自动轮播');
+        window.logInfo('🎠 鼠标离开，恢复自动轮播');
     });
 }
 
@@ -147,7 +147,7 @@ function showSlide(index) {
     }
 
     currentSlide = index;
-    console.log(`🎠 显示第 ${index + 1} 个slide`);
+    window.logInfo(`🎠 显示第 ${index + 1} 个slide`);
 
     // 解除过渡状态
     setTimeout(() => {
@@ -232,5 +232,5 @@ window.updateCarouselConfig = (newConfig) => {
     }
 };
 
-console.log('🎠 简单轮播图脚本已加载');
-console.log('🎠 功能: 自动滚动、悬停暂停、平滑过渡、防抖处理');
+window.logInfo('🎠 简单轮播图脚本已加载');
+window.logInfo('🎠 功能: 自动滚动、悬停暂停、平滑过渡、防抖处理');

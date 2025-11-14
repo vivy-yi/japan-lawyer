@@ -19,32 +19,32 @@ class HeaderManager {
     }
 
     init() {
-        console.log('🧭 Header Protection Service initializing...');
+        window.logInfo('🧭 Header Protection Service initializing...');
         this.locateHeader();
         this.setupProtection();
         this.startMonitoring();
         this.setupIntegration();
         this.isInitialized = true;
-        console.log('✅ Header Protection Service initialized - DOM protection active');
+        window.logInfo('✅ Header Protection Service initialized - DOM protection active');
     }
 
     // 定位header
     locateHeader() {
         this.headerElement = document.querySelector('header');
         if (!this.headerElement) {
-            console.error('❌ No header element found in the document');
+            window.logError('❌ No header element found in the document');
             return false;
         }
 
         this.navbarElement = this.headerElement.querySelector('#main-navbar');
         if (!this.navbarElement) {
-            console.error('❌ No navbar element found in header');
+            window.logError('❌ No navbar element found in header');
             return false;
         }
 
         // 安全地备份原始header内容结构
         this.backupHeaderStructure();
-        console.log('📍 Header located and backed up');
+        window.logInfo('📍 Header located and backed up');
         return true;
     }
 
@@ -103,7 +103,7 @@ class HeaderManager {
             this.ensureFixedPosition();
         }
 
-        console.log('🛡️ Header protection mechanisms activated');
+        window.logInfo('🛡️ Header protection mechanisms activated');
     }
 
     // 设置防删除保护
@@ -115,13 +115,13 @@ class HeaderManager {
                     if (mutation.type === 'childList') {
                         // 检查header是否被意外移除
                         if (!document.contains(this.headerElement)) {
-                            console.warn('⚠️ Header was removed! Restoring...');
+                            window.logWarn('⚠️ Header was removed! Restoring...');
                             this.restoreHeader();
                         }
 
                         // 检查navbar是否还在header中
                         if (this.headerElement && !this.headerElement.contains(this.navbarElement)) {
-                            console.warn('⚠️ Navbar was removed from header! Restoring...');
+                            window.logWarn('⚠️ Navbar was removed from header! Restoring...');
                             this.restoreNavbar();
                         }
                     }
@@ -130,7 +130,7 @@ class HeaderManager {
                     if (mutation.type === 'attributes' && mutation.target === this.headerElement) {
                         if (mutation.attributeName === 'data-persistent' &&
                             !this.headerElement.hasAttribute('data-persistent')) {
-                            console.warn('⚠️ Persistent attribute removed! Re-adding...');
+                            window.logWarn('⚠️ Persistent attribute removed! Re-adding...');
                             this.headerElement.setAttribute('data-persistent', 'true');
                         }
                     }
@@ -156,7 +156,7 @@ class HeaderManager {
         // 检查计算样式
         const computedStyle = window.getComputedStyle(this.headerElement);
         if (computedStyle.position !== 'fixed') {
-            console.warn('⚠️ Header is not positioned as fixed! Applying fix...');
+            window.logWarn('⚠️ Header is not positioned as fixed! Applying fix...');
             this.headerElement.style.position = 'fixed';
             this.headerElement.style.top = '0';
             this.headerElement.style.left = '0';
@@ -173,7 +173,7 @@ class HeaderManager {
     // 安全地恢复header
     restoreHeader() {
         if (!this.originalContent) {
-            console.error('❌ No backup content available for header restoration');
+            window.logError('❌ No backup content available for header restoration');
             return;
         }
 
@@ -210,7 +210,7 @@ class HeaderManager {
         this.headerElement = restoredHeader;
         this.navbarElement = navbar;
 
-        console.log('✅ Header restored safely');
+        window.logInfo('✅ Header restored safely');
     }
 
     // 安全地恢复navbar
@@ -235,7 +235,7 @@ class HeaderManager {
         // 更新引用
         this.navbarElement = navbar;
 
-        console.log('✅ Navbar restored safely');
+        window.logInfo('✅ Navbar restored safely');
     }
 
     // 开始监控
@@ -297,7 +297,7 @@ class HeaderManager {
         if (issues.length > 0) {
             // 限制警告日志的频率
             if (!this.lastWarningTime || Date.now() - this.lastWarningTime > 5000) {
-                console.warn('🔍 Header integrity issues detected:', issues);
+                window.logWarn('🔍 Header integrity issues detected:', issues);
                 this.lastWarningTime = Date.now();
             }
             if (this.config.autoRestore) {
@@ -310,7 +310,7 @@ class HeaderManager {
     autoFixIssues(issues) {
         // 限制修复日志的频率
         if (!this.lastFixTime || Date.now() - this.lastFixTime > 5000) {
-            console.log('🔧 Auto-fixing header issues...');
+            window.logInfo('🔧 Auto-fixing header issues...');
             this.lastFixTime = Date.now();
         }
 
@@ -339,11 +339,11 @@ class HeaderManager {
             if (remainingIssues.length === 0) {
                 // 限制成功日志的频率
                 if (!this.lastSuccessTime || Date.now() - this.lastSuccessTime > 5000) {
-                    console.log('✅ All header issues auto-fixed successfully');
+                    window.logInfo('✅ All header issues auto-fixed successfully');
                     this.lastSuccessTime = Date.now();
                 }
             } else {
-                console.error('❌ Unable to auto-fix issues:', remainingIssues);
+                window.logError('❌ Unable to auto-fix issues:', remainingIssues);
             }
         }, 100);
     }
@@ -352,13 +352,13 @@ class HeaderManager {
     setupIntegration() {
         // 为导航系统提供DOM保护服务
         if (window.navigationController) {
-            console.log('🔗 Providing DOM protection service to navigation controller...');
+            window.logInfo('🔗 Providing DOM protection service to navigation controller...');
             window.navigationController.headerProtectionService = this;
         }
 
         // 为SPA路由器提供DOM保护服务
         if (window.spaRouter) {
-            console.log('🔗 Providing DOM protection service to SPA router...');
+            window.logInfo('🔗 Providing DOM protection service to SPA router...');
             window.spaRouter.domProtectionService = this;
         }
     }
@@ -379,7 +379,7 @@ class HeaderManager {
     // 强制刷新导航
     refreshNavigation() {
         if (this.navbarElement && window.navigationController) {
-            console.log('🔄 Refreshing navigation in header...');
+            window.logInfo('🔄 Refreshing navigation in header...');
             // 触发导航系统重新渲染
             window.navigationController.destroy();
             setTimeout(() => {
@@ -405,10 +405,10 @@ class HeaderManager {
             // 重新定位元素
             this.locateHeader();
 
-            console.log('✅ Header content updated safely');
+            window.logInfo('✅ Header content updated safely');
             return result;
         } catch (error) {
-            console.error('❌ Failed to update header content:', error);
+            window.logError('❌ Failed to update header content:', error);
             this.resumeMonitoring();
             return false;
         }
@@ -428,7 +428,7 @@ class HeaderManager {
 
     // 销毁管理器
     destroy() {
-        console.log('🗑️ Destroying Header Manager...');
+        window.logInfo('🗑️ Destroying Header Manager...');
 
         // 停止所有监控
         this.observers.forEach(observer => observer.disconnect());
@@ -440,7 +440,7 @@ class HeaderManager {
         this.originalContent = null;
         this.isInitialized = false;
 
-        console.log('✅ Header Manager destroyed');
+        window.logInfo('✅ Header Manager destroyed');
     }
 }
 
@@ -453,7 +453,7 @@ function initHeaderManager() {
         headerManager = new HeaderManager();
         window.headerManager = headerManager;
 
-        console.log('🧭 Header management system initialized');
+        window.logInfo('🧭 Header management system initialized');
     }
 }
 

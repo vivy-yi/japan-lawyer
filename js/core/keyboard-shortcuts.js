@@ -24,7 +24,7 @@ class KeyboardShortcutsManager {
     init() {
         this.setupDefaultShortcuts();
         this.bindEvents();
-        console.log('⌨️ Keyboard Shortcuts Manager initialized');
+        window.logInfo('⌨️ Keyboard Shortcuts Manager initialized');
     }
 
     setupDefaultShortcuts() {
@@ -197,7 +197,7 @@ class KeyboardShortcutsManager {
                 this.clearBrowserCache();
                 break;
             default:
-                console.log(`Unknown shortcut callback: ${callback}`);
+                window.logInfo(`Unknown shortcut callback: ${callback}`);
         }
 
         // 触发自定义事件
@@ -614,7 +614,7 @@ class KeyboardShortcutsManager {
             });
             notification.show();
         } else {
-            console.log(`[快捷键] ${message}`);
+            window.logInfo(`[快捷键] ${message}`);
         }
     }
 
@@ -626,12 +626,12 @@ class KeyboardShortcutsManager {
     // 公共API
     enable() {
         this.active = true;
-        console.log('⌨️ Keyboard shortcuts enabled');
+        window.logInfo('⌨️ Keyboard shortcuts enabled');
     }
 
     disable() {
         this.active = false;
-        console.log('⌨️ Keyboard shortcuts disabled');
+        window.logInfo('⌨️ Keyboard shortcuts disabled');
     }
 
     getAllShortcuts() {
@@ -651,7 +651,7 @@ class KeyboardShortcutsManager {
         this.active = false;
         this.hideHelp();
         this.shortcuts.clear();
-        console.log('⌨️ Keyboard shortcuts manager destroyed');
+        window.logInfo('⌨️ Keyboard shortcuts manager destroyed');
     }
 }
 
@@ -661,7 +661,7 @@ let keyboardShortcutsManager;
 setTimeout(() => {
     keyboardShortcutsManager = new KeyboardShortcutsManager();
     window.keyboardShortcuts = keyboardShortcutsManager;
-    console.log('✅ Keyboard Shortcuts Manager initialized');
+    window.logInfo('✅ Keyboard Shortcuts Manager initialized');
 }, 500);
 
 // 导出模块

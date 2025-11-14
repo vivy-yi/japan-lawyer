@@ -32,7 +32,7 @@ class UnifiedCardsManager {
      */
     init() {
         if (this.initialized) {
-            console.warn('UnifiedCardsManager already initialized');
+            window.logWarn('UnifiedCardsManager already initialized');
             return;
         }
 
@@ -43,9 +43,9 @@ class UnifiedCardsManager {
             this.setupKeyboardNavigation();
 
             this.initialized = true;
-            console.log(`UnifiedCardsManager initialized with ${this.cards.size} cards`);
+            window.logInfo(`UnifiedCardsManager initialized with ${this.cards.size} cards`);
         } catch (error) {
-            console.error('Failed to initialize UnifiedCardsManager:', error);
+            window.logError('Failed to initialize UnifiedCardsManager:', error);
         }
     }
 
@@ -539,7 +539,7 @@ class UnifiedCardsManager {
         this.grids.clear();
 
         this.initialized = false;
-        console.log('UnifiedCardsManager destroyed');
+        window.logInfo('UnifiedCardsManager destroyed');
     }
 }
 

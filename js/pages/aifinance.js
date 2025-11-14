@@ -1,9 +1,9 @@
 // AI财务服务页面脚本
-console.log('✅ AI Finance Services page loaded successfully');
+window.logInfo('✅ AI Finance Services page loaded successfully');
 
 // 确保filterFinance函数在全局作用域中可用
 window.filterFinance = window.filterFinance || function(category) {
-    console.log('🔧 Fallback filterFinance called with category:', category);
+    window.logInfo('🔧 Fallback filterFinance called with category:', category);
     // 临时实现，等待主函数加载
     setTimeout(() => {
         if (window.filterFinance && window.filterFinance !== arguments.callee) {
@@ -19,7 +19,7 @@ window.filterFinance = window.filterFinance || function(category) {
 
 // AI财务服务筛选功能 - 使用统一筛选管理器
 window.filterFinance = function(category) {
-    console.log('💰 Using unified filter manager for AI Finance services');
+    window.logInfo('💰 Using unified filter manager for AI Finance services');
     let manager = window.getFilterManager('aifinance');
     if (!manager) {
         manager = window.createFilterManager('aifinance');
@@ -29,7 +29,7 @@ window.filterFinance = function(category) {
 
 // AI财务服务搜索功能 - 使用统一筛选管理器
 window.searchFinance = function() {
-    console.log('💰 Using unified filter manager for AI Finance search');
+    window.logInfo('💰 Using unified filter manager for AI Finance search');
     let manager = window.getFilterManager('aifinance');
     if (!manager) {
         manager = window.createFilterManager('aifinance');
@@ -140,12 +140,12 @@ if (!document.querySelector('style[data-finance-animation]')) {
 
 // AI财务服务初始化
 window.initAifinancePage = function() {
-    console.log('💰 Initializing AI Finance Services functionality...');
+    window.logInfo('💰 Initializing AI Finance Services functionality...');
 
     // 预先创建筛选管理器，确保筛选功能可用
     let manager = window.getFilterManager('aifinance');
     if (!manager) {
-        console.log('💰 Creating AI Finance filter manager during initialization...');
+        window.logInfo('💰 Creating AI Finance filter manager during initialization...');
         manager = window.createFilterManager('aifinance');
     }
 
@@ -159,12 +159,12 @@ window.initAifinancePage = function() {
     setTimeout(() => {
         const cards = document.querySelectorAll('.finance-card');
         const tags = document.querySelectorAll('.tag');
-        console.log(`💰 Filter check: Found ${cards.length} cards and ${tags.length} tags`);
+        window.logInfo(`💰 Filter check: Found ${cards.length} cards and ${tags.length} tags`);
 
         if (cards.length > 0) {
-            console.log('✅ AI Finance filter manager initialized successfully');
+            window.logInfo('✅ AI Finance filter manager initialized successfully');
         } else {
-            console.warn('⚠️ AI Finance cards not found, filter may not work properly');
+            window.logWarn('⚠️ AI Finance cards not found, filter may not work properly');
         }
     }, 100);
 };
@@ -172,7 +172,7 @@ window.initAifinancePage = function() {
 // 处理AI财务服务操作
 function handleFinanceAction(event) {
     const action = event.target.getAttribute('data-finance-action');
-    console.log(`💰 Finance action triggered: ${action}`);
+    window.logInfo(`💰 Finance action triggered: ${action}`);
 
     switch (action) {
         case 'smart-accounting':
@@ -194,7 +194,7 @@ function handleFinanceAction(event) {
             window.showBudgetManagement();
             break;
         default:
-            console.log(`Unknown finance action: ${action}`);
+            window.logInfo(`Unknown finance action: ${action}`);
     }
 }
 
@@ -752,7 +752,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // SPA页面加载时的额外初始化
 window.initAifinancePageForSPA = function() {
-    console.log('💰 AI Finance SPA initialization triggered...');
+    window.logInfo('💰 AI Finance SPA initialization triggered...');
     // 立即初始化，不等待DOMContentLoaded
     if (document.body) {
         window.initAifinancePage();

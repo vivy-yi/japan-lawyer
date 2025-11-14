@@ -40,7 +40,7 @@ class PerformanceMonitor {
         this.setupPerformanceObservers();
         this.collectInitialMetrics();
         this.startMonitoring();
-        console.log('📊 Performance Monitor initialized');
+        window.logInfo('📊 Performance Monitor initialized');
     }
 
     setupPerformanceObservers() {
@@ -55,7 +55,7 @@ class PerformanceMonitor {
                 });
                 this.observer.observe({ entryTypes: ['largest-contentful-paint'] });
             } catch (e) {
-                console.warn('LCP observer not supported:', e);
+                window.logWarn('LCP observer not supported:', e);
             }
 
             // FID (First Input Delay)
@@ -70,7 +70,7 @@ class PerformanceMonitor {
                 });
                 fidObserver.observe({ entryTypes: ['first-input'] });
             } catch (e) {
-                console.warn('FID observer not supported:', e);
+                window.logWarn('FID observer not supported:', e);
             }
 
             // CLS (Cumulative Layout Shift)
@@ -86,7 +86,7 @@ class PerformanceMonitor {
                 });
                 clsObserver.observe({ entryTypes: ['layout-shift'] });
             } catch (e) {
-                console.warn('CLS observer not supported:', e);
+                window.logWarn('CLS observer not supported:', e);
             }
         }
     }
@@ -211,7 +211,7 @@ class PerformanceMonitor {
         }
 
         if (this.config.enableLogging && this.recommendations.length > 0) {
-            console.log('📊 Performance Recommendations:', this.recommendations);
+            window.logInfo('📊 Performance Recommendations:', this.recommendations);
         }
     }
 
@@ -395,7 +395,7 @@ class PerformanceMonitor {
             this.monitoringInterval = null;
         }
         this.isMonitoring = false;
-        console.log('📊 Performance monitoring stopped');
+        window.logInfo('📊 Performance monitoring stopped');
     }
 
     restartMonitoring() {
@@ -405,7 +405,7 @@ class PerformanceMonitor {
 
     clearHistory() {
         this.metricsHistory = [];
-        console.log('📊 Performance metrics history cleared');
+        window.logInfo('📊 Performance metrics history cleared');
     }
 
     destroy() {
@@ -419,7 +419,7 @@ class PerformanceMonitor {
         this.metricsHistory = [];
         this.recommendations = [];
 
-        console.log('📊 Performance Monitor destroyed');
+        window.logInfo('📊 Performance Monitor destroyed');
     }
 }
 
@@ -429,7 +429,7 @@ let performanceMonitor;
 setTimeout(() => {
     performanceMonitor = new PerformanceMonitor();
     window.performanceMonitor = performanceMonitor;
-    console.log('✅ Performance Monitor initialized');
+    window.logInfo('✅ Performance Monitor initialized');
 }, 1000);
 
 // 导出模块

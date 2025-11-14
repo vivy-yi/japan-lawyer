@@ -13,7 +13,7 @@ window.showServiceDetails = function(serviceType) {
             '您选择了宠物服务，请联系我们获取更多详情。' :
             'You selected a pet service. Please contact us for more details.';
         alert(message);
-        console.log(`显示宠物服务详情: ${serviceType}`);
+        window.logInfo(`显示宠物服务详情: ${serviceType}`);
         return;
     }
 
@@ -100,7 +100,7 @@ window.showServiceDetails = function(serviceType) {
         alert(pageServices[serviceType][currentLanguage]);
     }
 
-    console.log(`显示${currentPage}页面服务详情: ${serviceType}`);
+    window.logInfo(`显示${currentPage}页面服务详情: ${serviceType}`);
 };
 
 // 辅助函数：检测当前页面类型
@@ -182,7 +182,7 @@ window.submitConsultation = function(event) {
         timestamp: new Date().toISOString()
     };
 
-    console.log('Education consultation submitted:', consultationData);
+    window.logInfo('Education consultation submitted:', consultationData);
 
     // 显示成功消息
     const currentLanguage = window.currentLanguage || 'zh';
@@ -211,7 +211,7 @@ window.initializeServicePage = function() {
         }
     });
 
-    console.log('✅ Service page initialized');
+    window.logInfo('✅ Service page initialized');
 };
 
 // 筛选服务功能 - 适用于劳务、生活、教育页面
@@ -272,7 +272,7 @@ window.filterServices = function(category) {
         });
     }
 
-    console.log(`筛选${currentPage}页面服务: ${category}`);
+    window.logInfo(`筛选${currentPage}页面服务: ${category}`);
 };
 
 // 搜索服务功能 - 适用于劳务、生活、教育页面
@@ -290,7 +290,7 @@ window.searchServices = function() {
         }
     });
 
-    console.log(`搜索${currentPage}页面服务: ${searchTerm}`);
+    window.logInfo(`搜索${currentPage}页面服务: ${searchTerm}`);
 };
 
 // 劳务页面专用功能
@@ -314,7 +314,7 @@ window.filterLaborServices = function(category) {
         }
     });
 
-    console.log(`筛选劳务服务: ${category}`);
+    window.logInfo(`筛选劳务服务: ${category}`);
 };
 
 window.searchLaborServices = function() {
@@ -330,7 +330,7 @@ window.searchLaborServices = function() {
         }
     });
 
-    console.log(`搜索劳务服务: ${searchTerm}`);
+    window.logInfo(`搜索劳务服务: ${searchTerm}`);
 };
 
 // 生活方式页面专用功能
@@ -354,7 +354,7 @@ window.filterLifestyleServices = function(category) {
         }
     });
 
-    console.log(`筛选生活方式服务: ${category}`);
+    window.logInfo(`筛选生活方式服务: ${category}`);
 };
 
 window.searchLifestyleServices = function() {
@@ -370,7 +370,7 @@ window.searchLifestyleServices = function() {
         }
     });
 
-    console.log(`搜索生活方式服务: ${searchTerm}`);
+    window.logInfo(`搜索生活方式服务: ${searchTerm}`);
 };
 
 // 教育页面专用功能
@@ -394,7 +394,7 @@ window.filterEducationServices = function(category) {
         }
     });
 
-    console.log(`筛选教育服务: ${category}`);
+    window.logInfo(`筛选教育服务: ${category}`);
 };
 
 window.searchEducationServices = function() {
@@ -410,7 +410,7 @@ window.searchEducationServices = function() {
         }
     });
 
-    console.log(`搜索教育服务: ${searchTerm}`);
+    window.logInfo(`搜索教育服务: ${searchTerm}`);
 };
 
 // 联系服务提供商
@@ -429,14 +429,14 @@ window.contactServiceProvider = function(serviceName, providerName = '') {
     }
 
     alert(message);
-    console.log(`联系服务提供商: ${serviceName} - ${providerName}`);
+    window.logInfo(`联系服务提供商: ${serviceName} - ${providerName}`);
 };
 
 // 查看服务详情
 window.viewServiceDetails = function(serviceId) {
     const currentPage = detectCurrentPage();
     alert(`${currentPage}服务详情页面正在开发中，敬请期待！`);
-    console.log(`查看服务详情: ${serviceId}`);
+    window.logInfo(`查看服务详情: ${serviceId}`);
 };
 
-console.log('✅ Services page functions loaded');
+window.logInfo('✅ Services page functions loaded');

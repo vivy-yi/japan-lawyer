@@ -291,22 +291,22 @@ window.SmartGridLayout = SmartGridLayout;
 // 开发者工具
 window.testSmartGrid = function() {
     const grids = document.querySelectorAll('.capabilities-grid');
-    console.log('🎯 智能网格布局测试结果:');
-    console.log('=====================================');
+    window.logInfo('🎯 智能网格布局测试结果:');
+    window.logInfo('=====================================');
 
     grids.forEach((grid, index) => {
         const info = window.smartGridLayout.getGridInfo('.capabilities-grid');
         if (info) {
-            console.log(`网格 ${index + 1}:`);
-            console.log(`  - 子元素数量: ${info.childCount}`);
-            console.log(`  - 视口类型: ${info.viewport}`);
-            console.log(`  - 当前布局: ${info.currentLayout}`);
-            console.log(`  - 最大宽度: ${info.maxWidth}`);
+            window.logInfo(`网格 ${index + 1}:`);
+            window.logInfo(`  - 子元素数量: ${info.childCount}`);
+            window.logInfo(`  - 视口类型: ${info.viewport}`);
+            window.logInfo(`  - 当前布局: ${info.currentLayout}`);
+            window.logInfo(`  - 最大宽度: ${info.maxWidth}`);
         }
     });
 
-    console.log('💡 调整浏览器窗口大小查看动态变化');
+    window.logInfo('💡 调整浏览器窗口大小查看动态变化');
 };
 
-console.log('🎯 智能网格布局管理器已加载');
-console.log('💡 测试命令: testSmartGrid()');
+window.logInfo('🎯 智能网格布局管理器已加载');
+window.logInfo('💡 测试命令: testSmartGrid()');
