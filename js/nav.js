@@ -958,6 +958,36 @@ class SecureNavigationRenderer {
             },
             mainNav: [
                 {
+                    id: 'nav-home',
+                    page: 'home',
+                    text: {
+                        zh: '首页',
+                        ja: 'ホーム',
+                        en: 'Home'
+                    },
+                    icon: '🏠',
+                    description: {
+                        zh: '回到主页',
+                        ja: 'ホームページ',
+                        en: 'Back to Homepage'
+                    }
+                },
+                {
+                    id: 'nav-ai-architecture',
+                    page: 'ai-architecture',
+                    text: {
+                        zh: 'AI架构',
+                        ja: 'AIアーキテクチャ',
+                        en: 'AI Architecture'
+                    },
+                    icon: '🧠',
+                    description: {
+                        zh: 'AI技术架构全景图',
+                        ja: 'AI技術アーキテクチャ全景図',
+                        en: 'AI Technology Architecture Overview'
+                    }
+                },
+                {
                     id: 'nav-ailegal',
                     page: 'ailegal',
                     text: {
@@ -1144,14 +1174,24 @@ class SecureNavigationRenderer {
     renderMainNavItem(navItem, index = 0) {
         const li = this.createElement('li');
 
+        // 特殊处理AI架构页面，使用直接链接而不是SPA导航
+        const isExternalPage = navItem.page === 'ai-architecture';
+        const linkHref = isExternalPage ? 'ai-architecture.html' : `#${navItem.page}`;
+
         const link = this.createElement('a', {
-            href: `#${navItem.page}`,
+            href: linkHref,
             'data-page': navItem.page,
             'role': 'menuitem',
             'aria-label': `${navItem.text[this.currentLanguage]} - ${navItem.description[this.currentLanguage]}`,
             'title': navItem.description[this.currentLanguage],
             'tabindex': index === 0 ? '0' : '-1'
         });
+
+        // 如果是外部页面，添加特殊样式和属性
+        if (isExternalPage) {
+            link.setAttribute('target', '_self');
+            link.setAttribute('data-external-page', 'true');
+        }
 
         const icon = this.createElement('span', {
             className: 'nav-icon',
