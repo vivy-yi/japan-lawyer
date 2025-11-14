@@ -2151,7 +2151,6 @@ class SecureNavigationController {
             // 检查每个链接是否已经有监听器（通过自定义属性标记）
             if (!link.hasAttribute('data-listeners-added')) {
                 eventManager.add(link, 'click', (e) => {
-                    e.preventDefault();
                     const target = e.target.closest('[data-page]');
                     if (!target) {
                         console.warn('❌ Could not find target with data-page attribute');
@@ -2159,10 +2158,19 @@ class SecureNavigationController {
                     }
 
                     const page = target.getAttribute('data-page');
-                    console.log(`🎯 Navigation clicked: ${page}`);
+                    const isExternalPage = target.hasAttribute('data-external-page');
+                    console.log(`🎯 Navigation clicked: ${page}, external: ${isExternalPage}`);
 
                     if (page && /^[a-zA-Z0-9-]+$/.test(page)) {
-                        // 使用控制器的navigateTo方法
+                        // 特殊处理外部页面（如AI架构页面）
+                        if (isExternalPage || page === 'ai-architecture') {
+                            // 直接跳转到外部页面，不阻止默认行为
+                            console.log(`🔗 Navigating to external page: ${page}`);
+                            return; // 让浏览器处理默认跳转
+                        }
+
+                        // 内部SPA页面导航
+                        e.preventDefault();
                         if (this.navigateTo) {
                             this.navigateTo(page);
                         } else {

@@ -394,7 +394,8 @@ async loadRealPageAsync(pageName, wrapper) {
                 'professionals': 'professionals.html',
                 'services': 'services.html',
                 'tourism': 'tourism.html',
-                'complete-demo': 'complete-demo.html'
+                'complete-demo': 'complete-demo.html',
+                'ai-architecture': 'ai-architecture.html'  // Special case: root directory file
             };
 
             const fileName = pageMapping[pageName];
@@ -404,15 +405,17 @@ async loadRealPageAsync(pageName, wrapper) {
                 throw new Error(`Page not found: ${pageName}`);
             }
 
-            
+
             // 检查是否在本地服务器环境下
             const isLocalServer = window.location.protocol === 'http:' || window.location.protocol === 'https:';
 
             if (isLocalServer) {
-                // 使用HTTP服务器加载
-                console.log(`📡 Fetching from server: html/${fileName}`);
+                // 特殊处理AI架构页面（在根目录）
+                const filePath = pageName === 'ai-architecture' ? fileName : `html/${fileName}`;
+                console.log(`📡 Fetching from server: ${filePath}`);
+
                 try {
-                    const response = await fetch(`html/${fileName}`);
+                    const response = await fetch(filePath);
                     if (!response.ok) {
                         throw new Error(`Server error loading ${fileName}: ${response.status}`);
                     }
